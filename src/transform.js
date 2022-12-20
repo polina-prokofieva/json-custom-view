@@ -1,6 +1,6 @@
-import { isFieldShouldBeVisible } from './utils/converting';
-import { valueAppearence } from './utils/appearence';
-import { convertKey } from './utils/formatKeys';
+import { isFieldShouldBeVisible } from './utils/converting.js';
+import { valueAppearence } from './utils/appearence.js';
+import { convertKey } from './utils/formatKeys.js';
 
 export const transform = (data, settings) => {
   if (!settings || !Object.keys(settings).length) return data;

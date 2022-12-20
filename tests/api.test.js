@@ -8,7 +8,7 @@ import {
   jsonTwoLevels,
 } from '../data/constants.js';
 import { defaultSettings, removeFalseFields } from '../data/settings';
-import { convert } from '../source/api.js';
+import { convert } from '../src/api.js';
 
 describe('Convert w/o settings object', () => {
   it('Invalid JSON', () => {

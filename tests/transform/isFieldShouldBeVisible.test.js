@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { isFieldShouldBeVisible } from '../../source/utils/converting';
+import { isFieldShouldBeVisible } from '../../src/utils/converting';
 import {
   removeFalseFields,
   hideFalseAndNull,

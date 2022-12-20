@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { transform } from '../../source/transform';
+import { transform } from '../../src/transform';
 import { removeFalseFields, removeNullFields } from '../../data/settings';
 import {
   simple,

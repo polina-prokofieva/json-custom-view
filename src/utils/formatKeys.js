@@ -1,5 +1,3 @@
-import { indigo } from 'color-name';
-
 const removeAbbrFromBegin = word => {
   const count = (word.match(/[A-Z]/g) || []).length;
   const isAbbr = /^[A-Z]+$/.test(word);

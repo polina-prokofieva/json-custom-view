@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { transform } from '../../source/transform';
+import { transform } from '../../src/transform';
 import { simple, twoLevelsData, deep } from '../../data/dataExamples';
 
 describe('Single level', () => {

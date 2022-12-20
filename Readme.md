@@ -13,7 +13,6 @@
 {
   "root": "",
   "formatKeys": false,
-  "formatDate": false,
   "nullAppearence": "-",
   "boolAppearence": ["No", "Yes"],
   "hidePropertiesByValue": [
@@ -43,8 +42,6 @@
 **`root`** — root of json which should be presented. Could be `string` or `array`. If it is `""` the whole json will be presented. If it is a `string` will be returned `data[root]`. `Array` is a path to concrete value. E.g. if to use `['key1', 'key2', ... 'keyn']` you will get `data[key1][key2]...[keyn]`.
 
 **`formatKeys`** — if it is **`true`** all keys in CamesCase, snake_case and kebab-case will be formatted to separate words.
-
-<!-- **`formatDate`** — format of date values. -->
 
 **`nullAppearence`** — string by which will be replaced **`null`** values.
 

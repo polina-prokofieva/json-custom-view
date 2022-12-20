@@ -1,4 +1,4 @@
-import { isObject } from './isObject';
+import { isObject } from './isObject.js';
 
 export const isFieldShouldBeVisible = (key, value, settings) => {
   const { hidePropertiesByValue, hidePropertiesByKey } = settings;

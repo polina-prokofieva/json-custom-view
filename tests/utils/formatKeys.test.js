@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { convertKey } from '../../source/utils/formatKeys';
+import { convertKey } from '../../src/utils/formatKeys';
 
 describe('Convert Camel Case to separated words', () => {
   it('Invalid values', () => {

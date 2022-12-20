@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { getDataByRoot } from '../../source/utils/getDataByRoot';
+import { getDataByRoot } from '../../src/utils/getDataByRoot';
 
 describe('getDataByRoot first level', () => {
   const twoLevelsData = {
