@@ -27,7 +27,7 @@
 .object {
   cursor: pointer;
 
-  .key::before {
+  & > .key::before {
     display: inline-block;
     content: '';
     width: 0;
@@ -38,6 +38,26 @@
     border-color: transparent transparent transparent #ccc;
     margin-left: -17px;
     margin-right: 7px;
+    transition: transform 0.1s ease-in-out;
+  }
+
+  & > .value {
+    display: grid;
+    gap: 7px;
+    visibility: hidden;
+    height: 0;
+  }
+
+  &.opened {
+    & > .key::before {
+      transform: rotateZ(0.25turn);
+    }
+
+    & > .value {
+      visibility: visible;
+      height: auto;
+      margin-top: 7px;
+    }
   }
 }
 
