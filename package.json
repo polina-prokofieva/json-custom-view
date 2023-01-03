@@ -6,6 +6,11 @@
   "directories": {
     "test": "tests"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/node_modules/jest-css-modules"
+    }
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve",
     "build-dev": "cross-env NODE_ENV=development webpack",
@@ -119,6 +124,7 @@
     "jest-circus": "^29.3.1",
     "jest-cli": "^29.3.1",
     "jest-config": "^29.3.1",
+    "jest-css-modules": "^2.1.0",
     "jest-diff": "^29.3.1",
     "jest-docblock": "^29.2.0",
     "jest-each": "^29.3.1",
