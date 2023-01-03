@@ -1,7 +1,10 @@
 import { transform } from './transform.js';
 import { render } from './render.js';
+import { defaultSettings } from './defaultSettings.js';
 
-export const convert = (data, settings = {}) => {
+export const convert = (data, customSettings = {}) => {
+  const settings = { ...defaultSettings, ...customSettings };
+
   try {
     const parsed = JSON.parse(data);
     const converted = transform(parsed, settings);

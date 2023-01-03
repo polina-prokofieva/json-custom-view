@@ -51,6 +51,8 @@
 
 **`hidePropertiesByKey`** — array of keys by which will be hided parameters of your json.
 
+**`hideEmpty`** — hide fields with an empty object and empty arrays as a value. Fields could also become empty after hiding inner fields.
+
 <!-- **`dateAppearence`** — key which will be detected as date. -->
 
 <!-- **`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table. -->
