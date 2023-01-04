@@ -1,5 +1,6 @@
 import { transform } from './transform.js';
 import { render } from './render.js';
+import { addNotification } from './notifications.js';
 import { defaultSettings } from './defaultSettings.js';
 
 export const convert = (data, customSettings = {}) => {
@@ -11,8 +12,8 @@ export const convert = (data, customSettings = {}) => {
 
     return converted;
   } catch (error) {
-    // console.error && console.error(error.message);
-    return 'Invalid JSON';
+    addNotification('error', error.message);
+    return null;
   }
 };
 

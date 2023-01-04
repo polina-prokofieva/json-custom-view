@@ -1,6 +1,8 @@
 :root {
   --key: #538cc6;
   --value: #7a0;
+  --warning: chocolate;
+  --error: crimson;
 }
 
 .main {
@@ -63,4 +65,29 @@
 
 .field {
   margin-left: 20px;
+}
+
+.notifications {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 15px;
+
+  .error,
+  .warning {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #000;
+  }
+
+  .error {
+    border-color: var(--error);
+    color: var(--error);
+    background-color: mistyrose;
+  }
+
+  .warning {
+    border-color: var(--warning);
+    color: var(--warning);
+    background-color: floralwhite;
+  }
 }

@@ -7,7 +7,7 @@
 
 ## Settings Syntax
 
-**`settings`** shoud have next fromat:
+**`settings`** shoud have next format:
 
 ```
 {

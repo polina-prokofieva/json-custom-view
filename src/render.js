@@ -1,4 +1,5 @@
 import { isObject } from './utils/isObject.js';
+import { notifications } from './notifications.js';
 import styles from './assets/style.module.less';
 
 const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
@@ -73,7 +74,27 @@ const renderField = (key, value) => {
   return { keyElement, fragment };
 };
 
+const renderNotifications = () => {
+  const notificationsElement = createSimpleDOMElement(
+    'div',
+    null,
+    styles.notifications
+  );
+
+  notifications.forEach(({ type, text }) => {
+    notificationsElement.appendChild(
+      createSimpleDOMElement('div', text, styles[type])
+    );
+  });
+
+  return notificationsElement;
+};
+
 export const render = (convertedData, rootElement) => {
+  if (notifications.length) {
+    rootElement.appendChild(renderNotifications());
+  }
+
   const mainElement = renderObject(convertedData);
 
   rootElement.appendChild(mainElement);
