@@ -1,6 +1,7 @@
 export const defaultSettings = {
   root: '',
-  formatKeys: false,
+  isFormatKeys: false,
   hideArrayElements: false,
   hideEmpty: true,
+  isSplitSingleFields: false,
 };

@@ -14,7 +14,7 @@ export const isFieldShouldBeVisible = (key, value, settings) => {
     return false;
   }
 
-  if (hidePropertiesByKey && hidePropertiesByKey.includes(key)) {
+  if (key && hidePropertiesByKey && hidePropertiesByKey.includes(key)) {
     return false;
   }
 

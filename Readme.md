@@ -11,37 +11,32 @@
 
 ```
 {
-  "root": "",
-  "formatKeys": false,
-  "nullAppearence": "-",
-  "boolAppearence": ["No", "Yes"],
-  "hidePropertiesByValue": [
+  root: "",
+  isFormatKeys: false,
+  nullAppearence: "-",
+  boolAppearence: ["No", "Yes"],
+  hidePropertiesByValue: [
     null,
     0,
     ""
   ],
-  "hidePropertiesByKey": [
+  hidePropertiesByKey: [
     "OverdraftLimit",
     "Description",
     "Id"
   ],
-  "dateAppearence": {
-    "keys": [
-      "Date"
-    ]
-  },
-  "arraysAsTable": [
+  arraysAsTable: [
     "Transactions"
   ],
-  "keysForArrays": {
-    "Accounts": "Title"
+  keysForArrays: {
+    Accounts: "Title"
   }
 }
 ```
 
 **`root`** — root of json which should be presented. Could be `string` or `array`. If it is `""` the whole json will be presented. If it is a `string` will be returned `data[root]`. `Array` is a path to concrete value. E.g. if to use `['key1', 'key2', ... 'keyn']` you will get `data[key1][key2]...[keyn]`.
 
-**`formatKeys`** — if it is **`true`** all keys in CamesCase, snake_case and kebab-case will be formatted to separate words.
+**`isFormatKeys`** — if it is **`true`** all keys in CamesCase, snake_case and kebab-case will be formatted to separate words.
 
 **`nullAppearence`** — string by which will be replaced **`null`** values.
 
@@ -53,7 +48,7 @@
 
 **`hideEmpty`** — hide fields with an empty object and empty arrays as a value. Fields could also become empty after hiding inner fields.
 
-<!-- **`dateAppearence`** — key which will be detected as date. -->
+**`isSplitSingleFields`** — if there is only one field in an Object or only one element is in an Array it splits to parents field.
 
 <!-- **`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table. -->
 
