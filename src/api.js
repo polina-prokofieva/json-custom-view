@@ -3,12 +3,12 @@ import { render } from './render.js';
 import { addNotification } from './notifications.js';
 import { defaultSettings } from './defaultSettings.js';
 
-export const convert = (data, customSettings = {}) => {
-  const settings = { ...defaultSettings, ...customSettings };
+export let settings = defaultSettings;
 
+export const convert = data => {
   try {
     const parsed = JSON.parse(data);
-    const converted = transform(parsed, settings);
+    const converted = transform(parsed);
 
     return converted;
   } catch (error) {
@@ -17,7 +17,12 @@ export const convert = (data, customSettings = {}) => {
   }
 };
 
-export const generate = (data, settings, nodeElement) => {
-  const { keysForArrays } = settings;
-  render(convert(data, settings), nodeElement, { keysForArrays });
+export const setSettings = customSettings => {
+  settings = { ...defaultSettings, ...customSettings };
+  Object.freeze(settings);
+};
+
+export const generate = (data, customSettings, nodeElement) => {
+  setSettings(customSettings);
+  render(convert(data), nodeElement);
 };

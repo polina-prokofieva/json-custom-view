@@ -8,10 +8,12 @@ import {
   dataWithArray,
   dataWithObjectsInArray,
 } from '../../data/dataExamples';
+import { setSettings } from '../../src/api';
 
 describe('Single level', () => {
   it('Remove field w/ false values', () => {
-    const transformed = transform(simple, removeFalseFields);
+    setSettings(removeFalseFields);
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       first: 123,
@@ -35,7 +37,8 @@ describe('Single level', () => {
   });
 
   it('Remove field w/ null values', () => {
-    const transformed = transform(simple, removeNullFields);
+    setSettings(removeNullFields);
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       first: 123,
@@ -59,9 +62,10 @@ describe('Single level', () => {
   });
 
   it('Remove field w/ 0 values', () => {
-    const transformed = transform(simple, {
+    setSettings({
       hidePropertiesByValue: [0],
     });
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       first: 123,
@@ -85,9 +89,10 @@ describe('Single level', () => {
   });
 
   it('Remove field w/ false, 0 and "zero" values', () => {
-    const transformed = transform(simple, {
+    setSettings({
       hidePropertiesByValue: [false, 0, 'zero'],
     });
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       first: 123,
@@ -114,7 +119,8 @@ describe('Single level', () => {
 
 describe('Two levels', () => {
   it('Remove false (only) fields from two levels (objects)', () => {
-    const converted = transform(twoLevelsData, removeFalseFields);
+    setSettings(removeFalseFields);
+    const converted = transform(twoLevelsData);
     expect(converted).toMatchObject({
       first: true,
       third: {
@@ -153,7 +159,8 @@ describe('Two levels', () => {
 
 describe('Deep', () => {
   it('Remove false (only) fields from deep levels (objects)', () => {
-    const converted = transform(deep, removeFalseFields);
+    setSettings(removeFalseFields);
+    const converted = transform(deep);
     expect(converted).toMatchObject({
       first: 123,
       third: {
@@ -202,7 +209,8 @@ describe('Deep', () => {
 
 describe('Hide field by value in arrays', () => {
   it('Hide null array elements', () => {
-    const converted = transform(dataWithArray, removeNullFields);
+    setSettings(removeNullFields);
+    const converted = transform(dataWithArray);
     expect(converted).toMatchObject({
       first: true,
       third: [123, , false, 0, 'zero', 'something else'],
@@ -210,7 +218,8 @@ describe('Hide field by value in arrays', () => {
   });
 
   it('Hide null in object in array', () => {
-    const converted = transform(dataWithObjectsInArray, removeNullFields);
+    setSettings(removeNullFields);
+    const converted = transform(dataWithObjectsInArray);
 
     expect(converted).toMatchObject({
       id: 'sdkjfsjf20348',

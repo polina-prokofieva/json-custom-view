@@ -3,8 +3,9 @@ import { isEmptyObjectOrArray } from './utils/isEmpty.js';
 import { valueAppearence } from './utils/appearence.js';
 import { convertKey } from './utils/formatKeys.js';
 import { splitSingleFields } from './utils/splitFields.js';
+import { settings } from './api.js';
 
-export const transform = (data, settings) => {
+export const transform = data => {
   if (!settings || !Object.keys(settings).length) return data;
 
   const isArray = Array.isArray(data);
@@ -17,7 +18,7 @@ export const transform = (data, settings) => {
     if (!isFieldShouldBeVisible(key, data[key], settings)) continue;
 
     if (data[key] && typeof data[key] === 'object') {
-      let transformedBranch = transform(data[key], settings);
+      let transformedBranch = transform(data[key]);
 
       if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) continue;
 
@@ -29,7 +30,11 @@ export const transform = (data, settings) => {
 
       transformed[newKey] = transformedBranch;
     } else {
-      transformed[newKey] = valueAppearence(data[key], settings);
+      const { nullAppearence, boolAppearence } = settings;
+      transformed[newKey] = valueAppearence(data[key], {
+        nullAppearence,
+        boolAppearence,
+      });
     }
   }
 

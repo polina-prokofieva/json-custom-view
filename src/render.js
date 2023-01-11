@@ -1,6 +1,7 @@
 import { isObject } from './utils/isObject.js';
 import { notifications } from './notifications.js';
 import { convertByMask } from './utils/formatKeys.js';
+import { settings } from './api.js';
 import styles from './assets/style.module.less';
 
 const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
@@ -36,11 +37,7 @@ const toggleVisibility = objectElement => {
   }
 };
 
-const renderObject = (
-  data,
-  className = styles.main,
-  { keysForArrays, specialKeys }
-) => {
+const renderObject = (data, className = styles.main, specialKeys) => {
   const mainElement = createSimpleDOMElement('div', null, className);
 
   for (const key in data) {
@@ -52,8 +49,13 @@ const renderObject = (
       styles[type],
     ]);
 
+    const { keysForArrays } = settings;
+
     const specialKeysForInnerArray =
-      keysForArrays && keysForArrays[key] ? keysForArrays[key] : null;
+      keysForArrays && keysForArrays[key] && type === 'array'
+        ? keysForArrays[key]
+        : null;
+
     const specialKey = specialKeys ? convertByMask(value, specialKeys) : key;
 
     const { keyElement, fragment } = renderField(
@@ -79,9 +81,7 @@ const renderField = (key, value, specialKeysForInnerArray) => {
 
   if (typeof value === 'object') {
     fragment.appendChild(
-      renderObject(value, styles.value, {
-        specialKeys: specialKeysForInnerArray,
-      })
+      renderObject(value, styles.value, specialKeysForInnerArray)
     );
   } else {
     fragment.appendChild(createSimpleDOMElement('span', ': ', styles.value));
@@ -107,14 +107,12 @@ const renderNotifications = () => {
   return notificationsElement;
 };
 
-export const render = (convertedData, rootElement, settings) => {
-  const { keysForArrays } = settings;
-
+export const render = (convertedData, rootElement) => {
   if (notifications.length) {
     rootElement.appendChild(renderNotifications());
   }
 
-  const mainElement = renderObject(convertedData, null, settings);
+  const mainElement = renderObject(convertedData);
 
   rootElement.appendChild(mainElement);
 };

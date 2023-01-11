@@ -3,9 +3,11 @@ import { valueAppearence } from '../../src/utils/appearence';
 import { nullAndBoolSettings } from '../../data/settings';
 import { transform } from '../../src/transform';
 import { dataWithObjectsInArray } from '../../data/dataExamples';
+import { setSettings } from '../../src/api';
 
 describe('Convert booleans and null values', () => {
   it('Convert bool to "yes" and "no" and null to "-"', () => {
+    setSettings(nullAndBoolSettings);
     expect(valueAppearence(false, nullAndBoolSettings)).toBe('No');
     expect(valueAppearence(true, nullAndBoolSettings)).toBe('Yes');
     expect(valueAppearence(null, nullAndBoolSettings)).toBe('-');
@@ -15,7 +17,8 @@ describe('Convert booleans and null values', () => {
 
 describe('Convert data with changing nulls', () => {
   it('Convert data with null', () => {
-    const transformed = transform(dataWithObjectsInArray, nullAndBoolSettings);
+    setSettings(nullAndBoolSettings);
+    const transformed = transform(dataWithObjectsInArray);
 
     expect(transformed).toStrictEqual({
       id: 'sdkjfsjf20348',

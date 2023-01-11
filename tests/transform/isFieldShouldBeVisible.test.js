@@ -7,6 +7,7 @@ import {
   hideBySeveralValues,
   removeByKeyAndValue,
 } from '../../data/settings';
+import { setSettings } from '../../src/api';
 
 describe('Check if field should be hidden', () => {
   it('No hiding settings', () => {
@@ -14,47 +15,30 @@ describe('Check if field should be hidden', () => {
   });
 
   it('Hide false', () => {
-    expect(isFieldShouldBeVisible('someKey', false, removeFalseFields)).toBe(
-      false
-    );
-    expect(isFieldShouldBeVisible('someKey', 'value', removeFalseFields)).toBe(
-      true
-    );
-    expect(isFieldShouldBeVisible('someKey', false, hideFalseAndNull)).toBe(
-      false
-    );
-    expect(isFieldShouldBeVisible('someKey', 'value', hideFalseAndNull)).toBe(
-      true
-    );
+    setSettings(removeFalseFields);
+    expect(isFieldShouldBeVisible('someKey', false)).toBe(false);
+    expect(isFieldShouldBeVisible('someKey', 'value')).toBe(true);
+
+    setSettings(hideFalseAndNull);
+    expect(isFieldShouldBeVisible('someKey', false)).toBe(false);
+    expect(isFieldShouldBeVisible('someKey', 'value')).toBe(true);
   });
 
   it('Hide "second" key', () => {
-    expect(isFieldShouldBeVisible('someKey', 'someValue', hideByValue)).toBe(
-      true
-    );
-    expect(isFieldShouldBeVisible('second', 'someValue', hideByValue)).toBe(
-      false
-    );
-    expect(
-      isFieldShouldBeVisible('someKey', 'someValue', hideBySeveralValues)
-    ).toBe(true);
-    expect(
-      isFieldShouldBeVisible('second', 'someValue', hideBySeveralValues)
-    ).toBe(false);
+    setSettings(hideByValue);
+    expect(isFieldShouldBeVisible('someKey', 'someValue')).toBe(true);
+    expect(isFieldShouldBeVisible('second', 'someValue')).toBe(false);
+
+    setSettings(hideBySeveralValues);
+    expect(isFieldShouldBeVisible('someKey', 'someValue')).toBe(true);
+    expect(isFieldShouldBeVisible('second', 'someValue')).toBe(false);
   });
 
   it('Hide by key and value', () => {
-    expect(
-      isFieldShouldBeVisible('someKey', 'someValue', removeByKeyAndValue)
-    ).toBe(true);
-    expect(
-      isFieldShouldBeVisible('second', 'someValue', removeByKeyAndValue)
-    ).toBe(false);
-    expect(isFieldShouldBeVisible('someKey', null, removeByKeyAndValue)).toBe(
-      false
-    );
-    expect(isFieldShouldBeVisible('second', null, removeByKeyAndValue)).toBe(
-      false
-    );
+    setSettings(removeByKeyAndValue);
+    expect(isFieldShouldBeVisible('someKey', 'someValue')).toBe(true);
+    expect(isFieldShouldBeVisible('second', 'someValue')).toBe(false);
+    expect(isFieldShouldBeVisible('someKey', null)).toBe(false);
+    expect(isFieldShouldBeVisible('second', null)).toBe(false);
   });
 });

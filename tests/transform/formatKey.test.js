@@ -1,5 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
+import { setSettings } from '../../src/api';
 
 const snakeCaseData = {
   first_name: 'Harry',
@@ -27,29 +28,36 @@ const data = {
 
 describe('Format keys', () => {
   it('Snake case', () => {
-    expect(transform(snakeCaseData, { isFormatKeys: true })).toEqual({
+    setSettings({ isFormatKeys: true });
+    expect(transform(snakeCaseData)).toEqual({
       'first name': 'Harry',
       'second name': 'Potter',
     });
-    expect(transform(snakeCaseData, { isFormatKeys: false })).toEqual({
+
+    setSettings({ isFormatKeys: false });
+    expect(transform(snakeCaseData)).toEqual({
       first_name: 'Harry',
       second_name: 'Potter',
     });
   });
 
   it('Camel case', () => {
-    expect(transform(camelCaseData, { isFormatKeys: true })).toEqual({
+    setSettings({ isFormatKeys: true });
+    expect(transform(camelCaseData)).toEqual({
       'first Name': 'Harry',
       'second Name': 'Potter',
     });
-    expect(transform(camelCaseData, { isFormatKeys: false })).toEqual({
+
+    setSettings({ isFormatKeys: false });
+    expect(transform(camelCaseData)).toEqual({
       firstName: 'Harry',
       secondName: 'Potter',
     });
   });
 
   it('complicated', () => {
-    expect(transform(data, { isFormatKeys: true })).toEqual({
+    setSettings({ isFormatKeys: true });
+    expect(transform(data)).toEqual({
       'dt lender id': 'CMB',
       'credit type': {
         '@type': 'joint',
@@ -67,26 +75,26 @@ describe('Format keys', () => {
 
 describe('Format keys and remove some keys', () => {
   it('Format and Remove', () => {
-    expect(
-      transform(snakeCaseData, {
-        isFormatKeys: true,
-        hidePropertiesByKey: ['first_name'],
-      })
-    ).toEqual({ 'second name': 'Potter' });
+    setSettings({
+      isFormatKeys: true,
+      hidePropertiesByKey: ['first_name'],
+    });
+    expect(transform(snakeCaseData)).toEqual({ 'second name': 'Potter' });
 
-    expect(
-      transform(snakeCaseData, {
-        isFormatKeys: true,
-        hidePropertiesByKey: ['first name'],
-      })
-    ).toEqual({ 'first name': 'Harry', 'second name': 'Potter' });
+    setSettings({
+      isFormatKeys: true,
+      hidePropertiesByKey: ['first name'],
+    });
+    expect(transform(snakeCaseData)).toEqual({
+      'first name': 'Harry',
+      'second name': 'Potter',
+    });
 
-    expect(
-      transform(data, {
-        isFormatKeys: true,
-        hidePropertiesByKey: ['app_type'],
-      })
-    ).toEqual({
+    setSettings({
+      isFormatKeys: true,
+      hidePropertiesByKey: ['app_type'],
+    });
+    expect(transform(data)).toEqual({
       'dt lender id': 'CMB',
       'credit type': {
         '@type': 'joint',
@@ -97,12 +105,11 @@ describe('Format keys and remove some keys', () => {
       },
     });
 
-    expect(
-      transform(data, {
-        isFormatKeys: true,
-        hidePropertiesByKey: ['app type'],
-      })
-    ).toEqual({
+    setSettings({
+      isFormatKeys: true,
+      hidePropertiesByKey: ['app type'],
+    });
+    expect(transform(data)).toEqual({
       'dt lender id': 'CMB',
       'credit type': {
         '@type': 'joint',

@@ -4,6 +4,7 @@ import {
   isSingle,
   splitSingleFieldsToOneLevel,
 } from '../../src/utils/splitFields';
+import { setSettings } from '../../src/api';
 
 describe('Split single keys to one level', () => {
   it('Check is there is only one field', () => {
@@ -126,29 +127,30 @@ describe('Transforming objects with splitting single fields', () => {
     isSplitSingleFields: true,
   };
 
+  setSettings(settings01);
+
   it('Transform objcets 1', () => {
-    expect(transform({ animals: [[['cat']]] }, settings01)).toStrictEqual({
+    expect(transform({ animals: [[['cat']]] })).toStrictEqual({
       animals: 'cat',
     });
 
-    expect(transform({ animals: [[['cat'], []]] }, settings01)).toStrictEqual({
+    expect(transform({ animals: [[['cat'], []]] })).toStrictEqual({
       animals: 'cat',
     });
 
-    expect(transform(data03, settings01)).toStrictEqual({
+    expect(transform(data03)).toStrictEqual({
       'people > name': 'Harry Potter',
     });
 
-    expect(transform(data02, settings01)).toStrictEqual({
+    expect(transform(data02)).toStrictEqual({
       'people > name > first': 'Polina',
       animals: 'cat',
     });
   });
 
   it('Transform objcets 2', () => {
-    expect(
-      transform(data01, { hideEmpty: false, isSplitSingleFields: true })
-    ).toStrictEqual({
+    setSettings({ hideEmpty: false, isSplitSingleFields: true });
+    expect(transform(data01)).toStrictEqual({
       people: {
         'name > first': 'Polina',
         occupation: null,
@@ -158,13 +160,12 @@ describe('Transforming objects with splitting single fields', () => {
   });
 
   it('Transform objcets 3', () => {
-    expect(
-      transform(data01, {
-        hidePropertiesByValue: [null, 0, ''],
-        hideEmpty: false,
-        isSplitSingleFields: true,
-      })
-    ).toStrictEqual({
+    setSettings({
+      hidePropertiesByValue: [null, 0, ''],
+      hideEmpty: false,
+      isSplitSingleFields: true,
+    });
+    expect(transform(data01)).toStrictEqual({
       'people > name > first': 'Polina',
       animals: ['cat', []],
     });

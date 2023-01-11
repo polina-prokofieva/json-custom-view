@@ -1,12 +1,14 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
 import { simple, twoLevelsData, deep } from '../../data/dataExamples';
+import { setSettings } from '../../src/api';
 
 describe('Single level', () => {
+  setSettings({
+    hidePropertiesByKey: ['sixth'],
+  });
   it('Remove field w/ "sixth" key', () => {
-    const transformed = transform(simple, {
-      hidePropertiesByKey: ['sixth'],
-    });
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       first: 123,
@@ -30,9 +32,10 @@ describe('Single level', () => {
   });
 
   it('Remove fields w/ keys "first", "fourth" and "ninth"', () => {
-    const transformed = transform(simple, {
+    setSettings({
       hidePropertiesByKey: ['first', 'fourth', 'ninth'],
     });
+    const transformed = transform(simple);
 
     expect(transformed).toMatchObject({
       second: false,
@@ -59,9 +62,10 @@ describe('Single level', () => {
 
 describe('Two levels', () => {
   it('Remove fields "first" and "sixth"', () => {
-    const converted = transform(twoLevelsData, {
+    setSettings({
       hidePropertiesByKey: ['first', 'sixth'],
     });
+    const converted = transform(twoLevelsData);
 
     expect(converted).toStrictEqual({
       second: false,
@@ -101,9 +105,10 @@ describe('Two levels', () => {
 
 describe('Deep', () => {
   it('Remove fields "second" and "sixth"', () => {
-    const converted = transform(deep, {
+    setSettings({
       hidePropertiesByKey: ['second', 'sixth'],
     });
+    const converted = transform(deep);
 
     expect(converted).toStrictEqual({
       first: 123,
@@ -142,10 +147,11 @@ describe('Deep', () => {
 
 describe('Remove fields by key and value', () => {
   it('Remove false and "third"', () => {
-    const converted = transform(twoLevelsData, {
+    setSettings({
       hidePropertiesByValue: [null],
       hidePropertiesByKey: ['second'],
     });
+    const converted = transform(twoLevelsData);
 
     expect(converted).toStrictEqual({
       first: true,

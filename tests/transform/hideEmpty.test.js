@@ -1,6 +1,7 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
 import { defaultSettings } from '../../src/defaultSettings';
+import { setSettings } from '../../src/api';
 
 const settingsHide = {
   ...defaultSettings,
@@ -19,10 +20,13 @@ describe('Hide {} and []: One level', () => {
       seconds: 0,
     };
 
-    expect(transform(data01, settingsHide)).toStrictEqual({
+    setSettings(settingsHide);
+    expect(transform(data01)).toStrictEqual({
       seconds: 0,
     });
-    expect(transform(data01, settingsShow)).toStrictEqual(data01);
+
+    setSettings(settingsShow);
+    expect(transform(data01)).toStrictEqual(data01);
   });
 
   it('Empty array', () => {
@@ -31,10 +35,13 @@ describe('Hide {} and []: One level', () => {
       seconds: 0,
     };
 
-    expect(transform(data01, settingsHide)).toStrictEqual({
+    setSettings(settingsHide);
+    expect(transform(data01)).toStrictEqual({
       seconds: 0,
     });
-    expect(transform(data01, settingsShow)).toStrictEqual(data01);
+
+    setSettings(settingsShow);
+    expect(transform(data01)).toStrictEqual(data01);
   });
 
   it('Empty array', () => {
@@ -45,11 +52,14 @@ describe('Hide {} and []: One level', () => {
       fourth: '234',
     };
 
-    expect(transform(data01, settingsHide)).toStrictEqual({
+    setSettings(settingsHide);
+    expect(transform(data01)).toStrictEqual({
       seconds: null,
       fourth: '234',
     });
-    expect(transform(data01, settingsShow)).toStrictEqual(data01);
+
+    setSettings(settingsShow);
+    expect(transform(data01)).toStrictEqual(data01);
   });
 });
 
@@ -80,16 +90,20 @@ describe('Hide {} and []: deep', () => {
   };
 
   it('Hide empty arrays (deep)', () => {
-    expect(transform(data01, settingsHide)).toStrictEqual({ second: 2 });
-    expect(transform(data02, settingsHide)).toStrictEqual({ second: 0 });
-    expect(transform(data03, settingsHide)).toStrictEqual({
+    setSettings(settingsHide);
+    expect(transform(data01)).toStrictEqual({ second: 2 });
+    expect(transform(data02)).toStrictEqual({ second: 0 });
+    expect(transform(data03)).toStrictEqual({
       first: [null, 0],
       second: 6,
     });
-    expect(transform(data03, settingsWithHideNulls)).toStrictEqual({
+
+    expect(transform(data04)).toStrictEqual({ second: 777 });
+
+    setSettings(settingsWithHideNulls);
+    expect(transform(data03)).toStrictEqual({
       second: 6,
     });
-    expect(transform(data04, settingsHide)).toStrictEqual({ second: 777 });
   });
 
   const data05 = {
@@ -125,6 +139,7 @@ describe('Hide {} and []: deep', () => {
   };
 
   it('Hide empty objects and array (deep)', () => {
+    setSettings(settingsHide);
     expect(transform(data05, settingsHide)).toStrictEqual({
       third: 123,
     });
@@ -132,6 +147,8 @@ describe('Hide {} and []: deep', () => {
       first: [null, 0, { key: null, key2: { key: [null] } }],
       second: 5,
     });
+
+    setSettings(settingsWithHideNulls);
     expect(transform(data06, settingsWithHideNulls)).toStrictEqual({
       second: 5,
     });

@@ -1,7 +1,8 @@
 import { isObject } from './isObject.js';
 import { isEmptyObjectOrArray } from './isEmpty.js';
+import { settings } from '../api.js';
 
-export const isFieldShouldBeVisible = (key, value, settings) => {
+export const isFieldShouldBeVisible = (key, value) => {
   const { hidePropertiesByValue, hidePropertiesByKey, hideEmpty } = settings;
 
   if (!hidePropertiesByKey && !hidePropertiesByValue && !hideEmpty) return true;
