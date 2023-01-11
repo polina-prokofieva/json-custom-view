@@ -25,29 +25,29 @@ const convertKey = key => {
   return parts ? parts.map(word => removeAbbrFromBegin(word)).join(' ') : key;
 };
 
-// const convertByMask = (value, mask) => {
-//   const partPattern = /\{(\w|\.)+?\}/g;
-//   const key = mask.replace(partPattern, function (part) {
-//     const path = part.slice(1, -1).split('.');
+const convertByMask = (value, mask) => {
+  const partPattern = /\{(\w|\.)+?\}/g;
 
-//     let convertedKey = value[path[0]];
+  if (mask.search(partPattern) === -1) return value[mask] || '-';
 
-//     for (let i = 1; i < path.length; i++) {
-//       if (convertedKey && convertedKey[path[i]]) {
-//         convertedKey = convertedKey[path[i]];
-//       } else {
-//         convertedKey = '-';
-//         break;
-//       }
-//     }
+  const key = mask.replace(partPattern, part => {
+    const path = part.slice(1, -1).split('.');
 
-//     return convertedKey || '-';
-//   });
+    let convertedKey = value[path[0]];
 
-//   return key;
-// };
+    for (let i = 1; i < path.length; i++) {
+      if (convertedKey && convertedKey[path[i]]) {
+        convertedKey = convertedKey[path[i]];
+      } else {
+        convertedKey = '-';
+        break;
+      }
+    }
 
-export {
-  convertKey,
-  // convertByMask
+    return convertedKey || '-';
+  });
+
+  return key;
 };
+
+export { convertKey, convertByMask };

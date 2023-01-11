@@ -50,6 +50,6 @@
 
 **`isSplitSingleFields`** — if there is only one field in an Object or only one element is in an Array it splits to parents field.
 
-<!-- **`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table. -->
+**`keysForArrays`** — an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays.
 
-<!-- **`keysForArrays`** — an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays. -->
+<!-- **`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table. -->

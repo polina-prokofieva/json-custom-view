@@ -1,5 +1,6 @@
 import { isObject } from './utils/isObject.js';
 import { notifications } from './notifications.js';
+import { convertByMask } from './utils/formatKeys.js';
 import styles from './assets/style.module.less';
 
 const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
@@ -35,7 +36,11 @@ const toggleVisibility = objectElement => {
   }
 };
 
-const renderObject = (data, className = styles.main) => {
+const renderObject = (
+  data,
+  className = styles.main,
+  { keysForArrays, specialKeys }
+) => {
   const mainElement = createSimpleDOMElement('div', null, className);
 
   for (const key in data) {
@@ -47,7 +52,15 @@ const renderObject = (data, className = styles.main) => {
       styles[type],
     ]);
 
-    const { keyElement, fragment } = renderField(key, value);
+    const specialKeysForInnerArray =
+      keysForArrays && keysForArrays[key] ? keysForArrays[key] : null;
+    const specialKey = specialKeys ? convertByMask(value, specialKeys) : key;
+
+    const { keyElement, fragment } = renderField(
+      specialKey,
+      value,
+      specialKeysForInnerArray
+    );
 
     objectElement.appendChild(fragment);
     keyElement.addEventListener('click', () => toggleVisibility(objectElement));
@@ -58,14 +71,18 @@ const renderObject = (data, className = styles.main) => {
   return mainElement;
 };
 
-const renderField = (key, value) => {
+const renderField = (key, value, specialKeysForInnerArray) => {
   const fragment = document.createDocumentFragment();
   const keyElement = createSimpleDOMElement('span', key, styles.key);
 
   fragment.appendChild(keyElement);
 
   if (typeof value === 'object') {
-    fragment.appendChild(renderObject(value, styles.value));
+    fragment.appendChild(
+      renderObject(value, styles.value, {
+        specialKeys: specialKeysForInnerArray,
+      })
+    );
   } else {
     fragment.appendChild(createSimpleDOMElement('span', ': ', styles.value));
     fragment.appendChild(createSimpleDOMElement('span', value, styles.value));
@@ -90,12 +107,14 @@ const renderNotifications = () => {
   return notificationsElement;
 };
 
-export const render = (convertedData, rootElement) => {
+export const render = (convertedData, rootElement, settings) => {
+  const { keysForArrays } = settings;
+
   if (notifications.length) {
     rootElement.appendChild(renderNotifications());
   }
 
-  const mainElement = renderObject(convertedData);
+  const mainElement = renderObject(convertedData, null, settings);
 
   rootElement.appendChild(mainElement);
 };

@@ -18,5 +18,6 @@ export const convert = (data, customSettings = {}) => {
 };
 
 export const generate = (data, settings, nodeElement) => {
-  render(convert(data, settings), nodeElement);
+  const { keysForArrays } = settings;
+  render(convert(data, settings), nodeElement, { keysForArrays });
 };
