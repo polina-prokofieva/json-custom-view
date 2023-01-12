@@ -1,9 +1,7 @@
 import { transform } from './transform.js';
 import { render } from './render.js';
 import { addNotification } from './notifications.js';
-import { defaultSettings } from './defaultSettings.js';
-
-export let settings = defaultSettings;
+import { settings, setSettings, checkSettings } from './settings.js';
 
 export const convert = data => {
   try {
@@ -17,12 +15,8 @@ export const convert = data => {
   }
 };
 
-export const setSettings = customSettings => {
-  settings = { ...defaultSettings, ...customSettings };
-  Object.freeze(settings);
-};
-
 export const generate = (data, customSettings, nodeElement) => {
   setSettings(customSettings);
+  checkSettings();
   render(convert(data), nodeElement);
 };

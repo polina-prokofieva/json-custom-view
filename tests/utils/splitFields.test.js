@@ -4,7 +4,7 @@ import {
   isSingle,
   splitSingleFieldsToOneLevel,
 } from '../../src/utils/splitFields';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 describe('Split single keys to one level', () => {
   it('Check is there is only one field', () => {

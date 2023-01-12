@@ -8,7 +8,7 @@ import {
   dataWithArray,
   dataWithObjectsInArray,
 } from '../../data/dataExamples';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 describe('Single level', () => {
   it('Remove field w/ false values', () => {

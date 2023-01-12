@@ -1,15 +1,12 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
-import { defaultSettings } from '../../src/defaultSettings';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 const settingsHide = {
-  ...defaultSettings,
   hideEmpty: true,
 };
 
 const settingsShow = {
-  ...defaultSettings,
   hideEmpty: false,
 };
 

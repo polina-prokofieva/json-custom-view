@@ -1,7 +1,7 @@
 import { isObject } from './utils/isObject.js';
 import { notifications } from './notifications.js';
 import { convertByMask } from './utils/formatKeys.js';
-import { settings } from './api.js';
+import { getSettings } from './settings.js';
 import styles from './assets/style.module.less';
 
 const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
@@ -38,6 +38,7 @@ const toggleVisibility = objectElement => {
 };
 
 const renderObject = (data, className = styles.main, specialKeys) => {
+  const settings = getSettings();
   const mainElement = createSimpleDOMElement('div', null, className);
 
   for (const key in data) {

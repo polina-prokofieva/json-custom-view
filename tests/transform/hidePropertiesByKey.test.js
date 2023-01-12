@@ -1,7 +1,7 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
 import { simple, twoLevelsData, deep } from '../../data/dataExamples';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 describe('Single level', () => {
   setSettings({

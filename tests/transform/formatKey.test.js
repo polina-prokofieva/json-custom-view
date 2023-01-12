@@ -1,6 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 const snakeCaseData = {
   first_name: 'Harry',

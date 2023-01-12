@@ -7,7 +7,7 @@ import {
   hideBySeveralValues,
   removeByKeyAndValue,
 } from '../../data/settings';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 describe('Check if field should be hidden', () => {
   it('No hiding settings', () => {

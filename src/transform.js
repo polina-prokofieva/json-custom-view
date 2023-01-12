@@ -3,9 +3,10 @@ import { isEmptyObjectOrArray } from './utils/isEmpty.js';
 import { valueAppearence } from './utils/appearence.js';
 import { convertKey } from './utils/formatKeys.js';
 import { splitSingleFields } from './utils/splitFields.js';
-import { settings } from './api.js';
+import { getSettings } from './settings.js';
 
 export const transform = data => {
+  const settings = getSettings();
   if (!settings || !Object.keys(settings).length) return data;
 
   const isArray = Array.isArray(data);
@@ -15,7 +16,7 @@ export const transform = data => {
   for (const key in data) {
     let newKey = isFormatKeys ? convertKey(key) : key;
 
-    if (!isFieldShouldBeVisible(key, data[key], settings)) continue;
+    if (!isFieldShouldBeVisible(key, data[key])) continue;
 
     if (data[key] && typeof data[key] === 'object') {
       let transformedBranch = transform(data[key]);

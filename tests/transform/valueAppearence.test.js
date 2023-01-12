@@ -3,7 +3,7 @@ import { valueAppearence } from '../../src/utils/appearence';
 import { nullAndBoolSettings } from '../../data/settings';
 import { transform } from '../../src/transform';
 import { dataWithObjectsInArray } from '../../data/dataExamples';
-import { setSettings } from '../../src/api';
+import { setSettings } from '../../src/settings';
 
 describe('Convert booleans and null values', () => {
   it('Convert bool to "yes" and "no" and null to "-"', () => {
