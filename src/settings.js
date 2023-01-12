@@ -6,6 +6,8 @@ const defaultSettings = {
   hideArrayElements: false,
   hideEmpty: true,
   isSplitSingleFields: false,
+  keysDict: {},
+  keysOldToNew: {},
 };
 
 let settings = defaultSettings;
@@ -15,6 +17,30 @@ export const setSettings = customSettings => {
 };
 
 export const getSettings = () => ({ ...settings });
+
+export const saveKey = (oldKey, newKey) => {
+  if (settings.keysDict[newKey] && settings.keysDict[newKey] !== oldKey) {
+    addNotification(
+      'warning',
+      `There is more that one field with transformed key ${newKey} with different original keys`
+    );
+  }
+  settings.keysDict[newKey] = oldKey;
+
+  if (
+    settings.keysOldToNew[oldKey] &&
+    settings.keysOldToNew[oldKey] !== newKey
+  ) {
+    addNotification(
+      'warning',
+      `There is more that one field with original key ${oldKey} with different transformed keys`
+    );
+  }
+  settings.keysOldToNew[oldKey] = newKey;
+};
+
+export const getNewKeyFromOld = oldKey =>
+  settings.keysOldToNew[oldKey] || oldKey;
 
 export const checkSettings = () => {
   const { keysForArrays, arraysAsTable = [] } = settings;

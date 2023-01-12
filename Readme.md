@@ -52,4 +52,4 @@
 
 **`keysForArrays`** — an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays.
 
-<!-- **`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table. -->
+**`arraysAsTable`** — array of keys of parameters which contain an array and which will be presented as a table.

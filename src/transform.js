@@ -2,8 +2,8 @@ import { isFieldShouldBeVisible } from './utils/converting.js';
 import { isEmptyObjectOrArray } from './utils/isEmpty.js';
 import { valueAppearence } from './utils/appearence.js';
 import { convertKey } from './utils/formatKeys.js';
-import { splitSingleFields } from './utils/splitFields.js';
-import { getSettings } from './settings.js';
+import { splitSingleFields, isSingle } from './utils/splitFields.js';
+import { getSettings, saveKey } from './settings.js';
 
 export const transform = data => {
   const settings = getSettings();
@@ -16,6 +16,10 @@ export const transform = data => {
   for (const key in data) {
     let newKey = isFormatKeys ? convertKey(key) : key;
 
+    if (key !== newKey) {
+      saveKey(key, newKey);
+    }
+
     if (!isFieldShouldBeVisible(key, data[key])) continue;
 
     if (data[key] && typeof data[key] === 'object') {
@@ -23,10 +27,11 @@ export const transform = data => {
 
       if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) continue;
 
-      if (isSplitSingleFields && !isArray) {
+      if (isSplitSingleFields && !isArray && isSingle(transformedBranch)) {
         const splitted = splitSingleFields(newKey, transformedBranch);
         newKey = splitted.key;
         transformedBranch = splitted.value;
+        saveKey(Object.keys(data[key])[0], newKey);
       }
 
       transformed[newKey] = transformedBranch;

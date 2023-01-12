@@ -50,14 +50,17 @@ const renderObject = (data, className = styles.main, specialKeys) => {
       styles[type],
     ]);
 
-    const { keysForArrays } = settings;
+    const { keysForArrays, keysDict, keysOldToNew } = settings;
+    const oldKey = keysDict[key];
 
     const specialKeysForInnerArray =
-      keysForArrays && keysForArrays[key] && type === 'array'
-        ? keysForArrays[key]
+      keysForArrays && keysForArrays[oldKey] && type === 'array'
+        ? keysForArrays[oldKey]
         : null;
 
-    const specialKey = specialKeys ? convertByMask(value, specialKeys) : key;
+    const specialKey = specialKeys
+      ? convertByMask(value, specialKeys, keysOldToNew)
+      : key;
 
     const { keyElement, fragment } = renderField(
       specialKey,

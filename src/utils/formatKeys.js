@@ -1,3 +1,5 @@
+import { getNewKeyFromOld } from '../settings';
+
 const removeAbbrFromBegin = word => {
   const count = (word.match(/[A-Z]/g) || []).length;
   const isAbbr = /^[A-Z]+$/.test(word);
@@ -25,19 +27,20 @@ const convertKey = key => {
   return parts ? parts.map(word => removeAbbrFromBegin(word)).join(' ') : key;
 };
 
-const convertByMask = (value, mask) => {
+const convertByMask = (value, mask, keysOldToNew) => {
   const partPattern = /\{(\w|\.)+?\}/g;
 
-  if (mask.search(partPattern) === -1) return value[mask] || '-';
+  if (mask.search(partPattern) === -1) return value[keysOldToNew[mask]] || '-';
 
   const key = mask.replace(partPattern, part => {
     const path = part.slice(1, -1).split('.');
 
-    let convertedKey = value[path[0]];
+    let convertedKey = value[getNewKeyFromOld(path[0])];
 
     for (let i = 1; i < path.length; i++) {
-      if (convertedKey && convertedKey[path[i]]) {
-        convertedKey = convertedKey[path[i]];
+      const actualKey = getNewKeyFromOld(path[i]);
+      if (convertedKey && convertedKey[actualKey]) {
+        convertedKey = convertedKey[actualKey];
       } else {
         convertedKey = '-';
         break;
