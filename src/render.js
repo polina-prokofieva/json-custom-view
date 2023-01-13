@@ -112,11 +112,13 @@ const renderNotifications = () => {
 };
 
 export const render = (convertedData, rootElement) => {
-  if (notifications.length) {
+  const settings = getSettings();
+  const { showNotifications } = settings;
+
+  if (showNotifications && notifications.length) {
     rootElement.appendChild(renderNotifications());
   }
 
   const mainElement = renderObject(convertedData);
-
   rootElement.appendChild(mainElement);
 };

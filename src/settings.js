@@ -6,6 +6,7 @@ const defaultSettings = {
   hideArrayElements: false,
   hideEmpty: true,
   isSplitSingleFields: false,
+  showNotifications: true,
   keysDict: {},
   keysOldToNew: {},
 };
