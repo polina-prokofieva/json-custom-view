@@ -30,7 +30,8 @@ const convertKey = key => {
 const convertByMask = (value, mask, keysOldToNew) => {
   const partPattern = /\{(\w|\.)+?\}/g;
 
-  if (mask.search(partPattern) === -1) return value[keysOldToNew[mask]] || '-';
+  if (mask.search(partPattern) === -1)
+    return value[keysOldToNew[mask] || mask] || '-';
 
   const key = mask.replace(partPattern, part => {
     const path = part.slice(1, -1).split('.');
