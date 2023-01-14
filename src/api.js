@@ -1,5 +1,5 @@
 import { transform } from './transform.js';
-import { render } from './render.js';
+import { render } from './render/general.js';
 import { addNotification } from './notifications.js';
 import { settings, setSettings, checkSettings } from './settings.js';
 

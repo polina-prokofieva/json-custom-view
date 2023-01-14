@@ -9,6 +9,7 @@ const defaultSettings = {
   showNotifications: true,
   keysDict: {},
   keysOldToNew: {},
+  arraysAsTable: [],
 };
 
 let settings = defaultSettings;

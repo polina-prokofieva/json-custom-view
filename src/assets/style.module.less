@@ -55,10 +55,41 @@
       transform: rotateZ(0.25turn);
     }
 
-    & > .value {
+    & > .value,
+    & > table.arrayElements {
       visibility: visible;
       height: auto;
       margin-top: 7px;
+    }
+  }
+}
+
+.array {
+  table.arrayElements {
+    visibility: hidden;
+    height: 0;
+    color: #666;
+
+    thead {
+      color: #fff;
+      th {
+        background-color: #777;
+        text-align: center;
+        padding: 5px 10px;
+      }
+    }
+    td {
+      padding: 5px;
+    }
+
+    tbody tr {
+      &:nth-child(odd) {
+        background-color: #f6f6f6;
+      }
+
+      &:nth-child(even) {
+        background-color: #fcfcfc;
+      }
     }
   }
 }
