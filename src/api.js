@@ -11,6 +11,7 @@ export const convert = data => {
     return converted;
   } catch (error) {
     addNotification('error', error.message);
+    console.error(error.message);
     return null;
   }
 };

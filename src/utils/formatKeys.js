@@ -28,7 +28,7 @@ const convertKey = key => {
 };
 
 const convertByMask = (value, mask, keysOldToNew) => {
-  const partPattern = /\{(\w|\.)+?\}/g;
+  const partPattern = /\{([\w\.\@\#\*])+?\}/g;
 
   if (mask.search(partPattern) === -1)
     return value[keysOldToNew[mask] || mask] || '-';

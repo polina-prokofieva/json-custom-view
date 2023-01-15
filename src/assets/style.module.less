@@ -65,7 +65,14 @@
 }
 
 .array {
+  &.opened {
+    & table.arrayElements {
+      display: table;
+      visibility: visible;
+    }
+  }
   table.arrayElements {
+    display: none;
     visibility: hidden;
     height: 0;
     color: #666;
@@ -79,7 +86,7 @@
       }
     }
     td {
-      padding: 5px;
+      padding: 7px 10px;
     }
 
     tbody tr {

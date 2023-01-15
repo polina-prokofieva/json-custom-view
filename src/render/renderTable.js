@@ -1,20 +1,15 @@
 import { createSimpleDOMElement } from './general';
+import { renderObject } from './object';
+import { generateKeysForInnerArray } from './object';
+import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
-let tableHeaders = [];
-
-const generateTableHeaders = data => {
-  data.forEach(item => {
-    tableHeaders = [...new Set([...tableHeaders, ...Object.keys(item)])];
-  });
-};
-
-const renderTableHeader = () => {
+const renderTableHeader = headers => {
   const headerFragment = document.createDocumentFragment();
   const headerElement = createSimpleDOMElement('thead');
   const rowElement = createSimpleDOMElement('tr');
 
-  tableHeaders.forEach(header => {
+  headers.forEach(header => {
     headerCellElement = createSimpleDOMElement('th', header);
     rowElement.appendChild(headerCellElement);
   });
@@ -25,15 +20,15 @@ const renderTableHeader = () => {
   return headerFragment;
 };
 
-const renderTableBody = data => {
+const renderTableBody = (data, headers) => {
   const bodyFragment = document.createDocumentFragment();
   const bodyElement = createSimpleDOMElement('tbody');
 
   data.forEach(row => {
     const rowElement = createSimpleDOMElement('tr');
 
-    tableHeaders.forEach(cell => {
-      const bodyCellElement = createSimpleDOMElement('td', row[cell] || '-');
+    headers.forEach(cell => {
+      const bodyCellElement = renderTableCell(cell, row[cell]);
       rowElement.appendChild(bodyCellElement);
     });
 
@@ -45,6 +40,36 @@ const renderTableBody = data => {
   return bodyFragment;
 };
 
+const renderTableCell = (key, cellValue) => {
+  const settings = getSettings();
+  const type = Array.isArray(cellValue) ? 'array' : typeof cellValue;
+
+  if (typeof cellValue !== 'object') {
+    return createSimpleDOMElement('td', cellValue || '-');
+  }
+
+  const { arraysAsTable } = settings;
+  const oldKey = getOldKey(key);
+  let cellContentElement;
+
+  if (type === 'array' && arraysAsTable && arraysAsTable.includes(oldKey)) {
+    cellContentElement = renderTable(cellValue);
+  } else {
+    const specialKeysForInnerArray = generateKeysForInnerArray(key, type);
+
+    cellContentElement = renderObject(
+      cellValue,
+      styles.cell,
+      specialKeysForInnerArray
+    );
+  }
+
+  const cellElement = createSimpleDOMElement('td');
+  cellElement.appendChild(cellContentElement);
+
+  return cellElement;
+};
+
 export const renderTable = data => {
   const tableElement = createSimpleDOMElement(
     'table',
@@ -52,10 +77,14 @@ export const renderTable = data => {
     styles.arrayElements
   );
 
-  generateTableHeaders(data);
+  let headers = [];
 
-  const tableHeader = renderTableHeader();
-  const tableBody = renderTableBody(data);
+  data.forEach(item => {
+    headers = [...new Set([...headers, ...Object.keys(item)])];
+  });
+
+  const tableHeader = renderTableHeader(headers);
+  const tableBody = renderTableBody(data, headers);
   tableElement.appendChild(tableHeader);
   tableElement.appendChild(tableBody);
 

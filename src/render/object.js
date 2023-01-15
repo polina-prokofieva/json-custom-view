@@ -1,7 +1,7 @@
 import { createSimpleDOMElement } from './general';
 import { convertByMask } from '../utils/formatKeys.js';
 import { renderTable } from './renderTable.js';
-import { getSettings } from '../settings.js';
+import { getSettings, getOldKey } from '../settings.js';
 import styles from '../assets/style.module.less';
 
 export const toggleVisibility = objectElement => {
@@ -18,6 +18,16 @@ export const toggleVisibility = objectElement => {
   }
 };
 
+export const generateKeysForInnerArray = (key, type) => {
+  const settings = getSettings();
+  const oldKey = getOldKey(key);
+  const { keysForArrays } = settings;
+
+  return keysForArrays && keysForArrays[oldKey] && type === 'array'
+    ? keysForArrays[oldKey]
+    : null;
+};
+
 export const renderObject = (data, className = styles.main, specialKeys) => {
   const settings = getSettings();
   const mainElement = createSimpleDOMElement('div', null, className);
@@ -31,13 +41,10 @@ export const renderObject = (data, className = styles.main, specialKeys) => {
       styles[type],
     ]);
 
-    const { arraysAsTable, keysForArrays, keysDict, keysOldToNew } = settings;
-    const oldKey = keysDict[key] || key;
+    const { arraysAsTable, keysOldToNew } = settings;
+    const oldKey = getOldKey(key);
 
-    const specialKeysForInnerArray =
-      keysForArrays && keysForArrays[oldKey] && type === 'array'
-        ? keysForArrays[oldKey]
-        : null;
+    const specialKeysForInnerArray = generateKeysForInnerArray(key, type);
 
     const specialKey = specialKeys
       ? convertByMask(value, specialKeys, keysOldToNew)

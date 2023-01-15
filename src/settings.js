@@ -44,6 +44,8 @@ export const saveKey = (oldKey, newKey) => {
 export const getNewKeyFromOld = oldKey =>
   settings.keysOldToNew[oldKey] || oldKey;
 
+export const getOldKey = key => settings.keysDict[key] || key;
+
 export const checkSettings = () => {
   const { keysForArrays, arraysAsTable = [] } = settings;
 
