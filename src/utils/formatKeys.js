@@ -27,7 +27,7 @@ const convertKey = key => {
   return parts ? parts.map(word => removeAbbrFromBegin(word)).join(' ') : key;
 };
 
-const convertByMask = (value, mask, keysOldToNew) => {
+const convertByMask = (value, mask, keysOldToNew = {}) => {
   const partPattern = /\{([\w\.\@\#\*])+?\}/g;
 
   if (mask.search(partPattern) === -1)

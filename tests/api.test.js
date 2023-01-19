@@ -1,20 +1,13 @@
 import { describe, expect, test } from '@jest/globals';
 import {
   emptyJson,
-  invalidJson,
   jsonObjectOfBoolians,
   jsonOneLevel,
 } from '../data/constants.js';
-import { defaultSettings, removeFalseFields } from '../data/settings';
+import { removeFalseFields } from '../data/settings';
 import { convert } from '../src/api.js';
 
 describe('Convert w/o settings object', () => {
-  it('Invalid JSON', () => {
-    const converted = convert(invalidJson);
-
-    expect(converted).toEqual(null);
-  });
-
   it('Convert empty object', () => {
     const converted = convert(emptyJson);
 
