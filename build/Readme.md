@@ -2,18 +2,22 @@
 
 ---
 
-`generate(data, settings, root)` - convert `data` according with converting `settings` and render it to `root`.
+`generate(data, root, settings)` - convert `data` according with converting `settings` and render it to `root`.
 
-**`data`** - a string which is json
-**`settings`** - an object of settings
-**`root`** - a DOM-node where the data will be rendered.
+| **Name**     | **Type**    | **Default** | **Description**                            |
+| ------------ | ----------- | ----------- | ------------------------------------------ |
+| **data**     | String      | `''`        | a string which is json                     |
+| **root**     | DOM Element | `undefined` | a DOM-node where the data will be rendered |
+| **settings** | Object      | `{}`        | an object of settings                      |
 
 ---
 
-`transform(data, settings)` - convert `data` according with converting `settings`.
+`transform(data, settings)` - convert `data` according with converting `settings`. Returns converted Object.
 
-**`data`** - an object
-**`settings`** - an object of settings
+| **Name**     | **Type** | **Default** | **Description**        |
+| ------------ | -------- | ----------- | ---------------------- |
+| **data**     | String   | `''`        | a string which is json |
+| **settings** | Object   | `{}`        | an object of settings  |
 
 ## Fields of settings object
 
