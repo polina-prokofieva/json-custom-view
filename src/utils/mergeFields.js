@@ -1,7 +1,7 @@
 export const isSingle = data =>
   (Array.isArray(data) && data.length === 1) || Object.keys(data).length === 1;
 
-export const splitSingleFieldsToOneLevel = (key, value) => {
+export const mergeSingleFieldsToOneLevel = (key, value) => {
   let singleKey;
   let singleValue;
 
@@ -13,7 +13,7 @@ export const splitSingleFieldsToOneLevel = (key, value) => {
     singleValue = value[singleKey];
   }
 
-  const { key: processedKey, value: processedValue } = splitSingleFields(
+  const { key: processedKey, value: processedValue } = mergeSingleFields(
     singleKey,
     singleValue
   );
@@ -24,7 +24,7 @@ export const splitSingleFieldsToOneLevel = (key, value) => {
   };
 };
 
-export const splitSingleFields = (key, value) =>
+export const mergeSingleFields = (key, value) =>
   value && typeof value === 'object' && isSingle(value)
-    ? splitSingleFieldsToOneLevel(key, value)
+    ? mergeSingleFieldsToOneLevel(key, value)
     : { key, value };

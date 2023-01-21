@@ -5,7 +5,7 @@ const defaultSettings = {
   isFormatKeys: false,
   hideArrayElements: false,
   hideEmpty: true,
-  isSplitSingleFields: false,
+  isMergeSingleFields: false,
   showNotifications: true,
   keysDict: {},
   keysOldToNew: {},

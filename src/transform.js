@@ -2,7 +2,7 @@ import { isFieldShouldBeVisible } from './utils/converting.js';
 import { isEmptyObjectOrArray } from './utils/isEmpty.js';
 import { valueAppearence } from './utils/appearence.js';
 import { convertKey } from './utils/formatKeys.js';
-import { splitSingleFields, isSingle } from './utils/splitFields.js';
+import { mergeSingleFields, isSingle } from './utils/mergeFields.js';
 import { getSettings, saveKey } from './settings.js';
 
 export const transform = data => {
@@ -10,7 +10,7 @@ export const transform = data => {
   if (!settings || !Object.keys(settings).length) return data;
 
   const isArray = Array.isArray(data);
-  const { isFormatKeys, hideEmpty, isSplitSingleFields } = settings;
+  const { isFormatKeys, hideEmpty, isMergeSingleFields } = settings;
   const transformed = isArray ? [] : {};
 
   for (const key in data) {
@@ -27,10 +27,10 @@ export const transform = data => {
 
       if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) continue;
 
-      if (isSplitSingleFields && !isArray && isSingle(transformedBranch)) {
-        const splitted = splitSingleFields(newKey, transformedBranch);
-        newKey = splitted.key;
-        transformedBranch = splitted.value;
+      if (isMergeSingleFields && !isArray && isSingle(transformedBranch)) {
+        const merged = mergeSingleFields(newKey, transformedBranch);
+        newKey = merged.key;
+        transformedBranch = merged.value;
         saveKey(Object.keys(data[key])[0], newKey);
       }
 
@@ -44,7 +44,7 @@ export const transform = data => {
     }
   }
 
-  return isArray && transformed.length === 1 && isSplitSingleFields
+  return isArray && transformed.length === 1 && isMergeSingleFields
     ? transformed[0]
     : transformed;
 };

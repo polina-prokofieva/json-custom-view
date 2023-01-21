@@ -2,8 +2,8 @@ import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
 import {
   isSingle,
-  splitSingleFieldsToOneLevel,
-} from '../../src/utils/splitFields';
+  mergeSingleFieldsToOneLevel,
+} from '../../src/utils/mergeFields';
 import { setSettings } from '../../src/settings';
 
 describe('Split single keys to one level', () => {
@@ -21,7 +21,7 @@ describe('Split single keys to one level', () => {
 
   it('Split single keys to one level', () => {
     expect(
-      splitSingleFieldsToOneLevel('person', {
+      mergeSingleFieldsToOneLevel('person', {
         name: 'Polina',
       })
     ).toStrictEqual({
@@ -30,7 +30,7 @@ describe('Split single keys to one level', () => {
     });
 
     expect(
-      splitSingleFieldsToOneLevel('person', {
+      mergeSingleFieldsToOneLevel('person', {
         name: {
           first: 'Polina',
         },
@@ -41,7 +41,7 @@ describe('Split single keys to one level', () => {
     });
 
     expect(
-      splitSingleFieldsToOneLevel('one', {
+      mergeSingleFieldsToOneLevel('one', {
         two: {
           three: {
             four: {
@@ -55,37 +55,37 @@ describe('Split single keys to one level', () => {
       value: 'value',
     });
 
-    expect(splitSingleFieldsToOneLevel('animal', ['cat'])).toStrictEqual({
+    expect(mergeSingleFieldsToOneLevel('animal', ['cat'])).toStrictEqual({
       key: 'animal',
       value: 'cat',
     });
 
-    expect(splitSingleFieldsToOneLevel('animal', [[[['cat']]]])).toStrictEqual({
+    expect(mergeSingleFieldsToOneLevel('animal', [[[['cat']]]])).toStrictEqual({
       key: 'animal',
       value: 'cat',
     });
 
-    expect(splitSingleFieldsToOneLevel('animal', [{ age: 3 }])).toStrictEqual({
+    expect(mergeSingleFieldsToOneLevel('animal', [{ age: 3 }])).toStrictEqual({
       key: 'animal > age',
       value: 3,
     });
 
     expect(
-      splitSingleFieldsToOneLevel('animal', [{ age: [[[3]]] }])
+      mergeSingleFieldsToOneLevel('animal', [{ age: [[[3]]] }])
     ).toStrictEqual({
       key: 'animal > age',
       value: 3,
     });
 
     expect(
-      splitSingleFieldsToOneLevel('people', [{ name: { first: [['Polina']] } }])
+      mergeSingleFieldsToOneLevel('people', [{ name: { first: [['Polina']] } }])
     ).toStrictEqual({
       key: 'people > name > first',
       value: 'Polina',
     });
 
     expect(
-      splitSingleFieldsToOneLevel('people', { name: [{ first: [['Polina']] }] })
+      mergeSingleFieldsToOneLevel('people', { name: [{ first: [['Polina']] }] })
     ).toStrictEqual({
       key: 'people > name > first',
       value: 'Polina',
@@ -124,7 +124,7 @@ describe('Transforming objects with splitting single fields', () => {
   const settings01 = {
     hidePropertiesByValue: [null, 0, ''],
     hideEmpty: true,
-    isSplitSingleFields: true,
+    isMergeSingleFields: true,
   };
 
   setSettings(settings01);
@@ -149,7 +149,7 @@ describe('Transforming objects with splitting single fields', () => {
   });
 
   it('Transform objcets 2', () => {
-    setSettings({ hideEmpty: false, isSplitSingleFields: true });
+    setSettings({ hideEmpty: false, isMergeSingleFields: true });
     expect(transform(data01)).toStrictEqual({
       people: {
         'name > first': 'Polina',
@@ -163,7 +163,7 @@ describe('Transforming objects with splitting single fields', () => {
     setSettings({
       hidePropertiesByValue: [null, 0, ''],
       hideEmpty: false,
-      isSplitSingleFields: true,
+      isMergeSingleFields: true,
     });
     expect(transform(data01)).toStrictEqual({
       'people > name > first': 'Polina',

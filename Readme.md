@@ -48,7 +48,7 @@
 
 **`hideEmpty`** — hide fields with an empty object and empty arrays as a value. Fields could also become empty after hiding inner fields.
 
-**`isSplitSingleFields`** — if there is only one field in an Object or only one element is in an Array it splits to parents field.
+**`isMergeSingleFields`** — if there is only one field in an Object or only one element is in an Array it merges to parents field.
 
 **`keysForArrays`** — an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays.
 
