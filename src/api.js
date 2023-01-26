@@ -5,7 +5,7 @@ import { setSettings, checkSettings } from './settings.js';
 
 export const convert = data => {
   try {
-    const parsed = JSON.parse(data);
+    const parsed = typeof data === 'string' ? JSON.parse(data) : data;
     const converted = transform(parsed);
 
     return converted;

@@ -4,20 +4,20 @@
 
 `generate(data, root, settings)` - convert `data` according with converting `settings` and render it to `root`.
 
-| **Name**     | **Type**    | **Default** | **Description**                            |
-| ------------ | ----------- | ----------- | ------------------------------------------ |
-| **data**     | String      | `''`        | a string which is json                     |
-| **root**     | DOM Element | `undefined` | a DOM-node where the data will be rendered |
-| **settings** | Object      | `{}`        | an object of settings                      |
+| **Name**     | **Type**         | **Default** | **Description**                            |
+| ------------ | ---------------- | ----------- | ------------------------------------------ |
+| **data**     | String or Object | `''`        | a string which is json or an object        |
+| **root**     | DOM Element      | `undefined` | a DOM-node where the data will be rendered |
+| **settings** | Object           | `{}`        | an object of settings                      |
 
 ---
 
 `transform(data, settings)` - convert `data` according with converting `settings`. Returns converted Object.
 
-| **Name**     | **Type** | **Default** | **Description**        |
-| ------------ | -------- | ----------- | ---------------------- |
-| **data**     | String   | `''`        | a string which is json |
-| **settings** | Object   | `{}`        | an object of settings  |
+| **Name**     | **Type**         | **Default** | **Description**                     |
+| ------------ | ---------------- | ----------- | ----------------------------------- |
+| **data**     | String or Object | `''`        | a string which is json or an object |
+| **settings** | Object           | `{}`        | an object of settings               |
 
 ## Fields of settings object
 
