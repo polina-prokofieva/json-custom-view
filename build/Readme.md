@@ -46,5 +46,5 @@ import { generate } from 'json-custom-view';
 
 const root = document.querySelector('#main');
 
-generate(JSONdata, settings, root);
+generate(JSONdata, root, settings);
 ```
