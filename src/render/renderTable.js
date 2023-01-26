@@ -10,7 +10,7 @@ const renderTableHeader = headers => {
   const rowElement = createSimpleDOMElement('tr');
 
   headers.forEach(header => {
-    headerCellElement = createSimpleDOMElement('th', header);
+    const headerCellElement = createSimpleDOMElement('th', header);
     rowElement.appendChild(headerCellElement);
   });
 
