@@ -21,6 +21,8 @@ export const setSettings = customSettings => {
 export const getSettings = () => ({ ...settings });
 
 export const saveKey = (oldKey, newKey) => {
+  if (oldKey === newKey) return;
+
   if (settings.keysDict[newKey] && settings.keysDict[newKey] !== oldKey) {
     addNotification(
       'warning',
