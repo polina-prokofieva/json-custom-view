@@ -1,6 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import { isObject } from '../../src/utils/isObject';
-import { dataWithObjectsInArray } from '../../data/dataExamples';
+import { dataWithObjectsInArray } from '../data/dataExamples';
 
 describe('Test is Object function', () => {
   it('objects', () => {

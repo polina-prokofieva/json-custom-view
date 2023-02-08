@@ -1,13 +1,13 @@
 import { describe, expect } from '@jest/globals';
 import { transform } from '../../src/transform';
-import { removeFalseFields, removeNullFields } from '../../data/settings';
+import { removeFalseFields, removeNullFields } from '../data/settings';
 import {
   simple,
   twoLevelsData,
   deep,
   dataWithArray,
   dataWithObjectsInArray,
-} from '../../data/dataExamples';
+} from '../data/dataExamples';
 import { setSettings } from '../../src/settings';
 
 describe('Single level', () => {

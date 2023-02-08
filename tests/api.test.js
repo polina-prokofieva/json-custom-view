@@ -3,8 +3,8 @@ import {
   emptyJson,
   jsonObjectOfBoolians,
   jsonOneLevel,
-} from '../data/constants.js';
-import { removeFalseFields } from '../data/settings';
+} from './data/constants.js';
+import { removeFalseFields } from './data/settings';
 import { convert } from '../src/api.js';
 
 describe('Convert w/o settings object', () => {

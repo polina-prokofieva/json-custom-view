@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
 import { valueAppearence } from '../../src/utils/appearence';
-import { nullAndBoolSettings } from '../../data/settings';
+import { nullAndBoolSettings } from '../data/settings';
 import { transform } from '../../src/transform';
-import { dataWithObjectsInArray } from '../../data/dataExamples';
+import { dataWithObjectsInArray } from '../data/dataExamples';
 import { setSettings } from '../../src/settings';
 
 describe('Convert booleans and null values', () => {

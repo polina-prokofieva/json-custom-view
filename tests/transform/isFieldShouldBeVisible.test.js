@@ -6,7 +6,7 @@ import {
   hideByValue,
   hideBySeveralValues,
   removeByKeyAndValue,
-} from '../../data/settings';
+} from '../data/settings';
 import { setSettings } from '../../src/settings';
 
 describe('Check if field should be hidden', () => {
