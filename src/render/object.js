@@ -38,7 +38,7 @@ export const renderObject = (data, className = styles.main, specialKeys) => {
 
     const objectElement = createSimpleDOMElement('div', null, [
       styles.field,
-      styles[type],
+      styles[value === null ? 'null' : type],
     ]);
 
     const { arraysAsTable, keysOldToNew } = settings;
@@ -75,14 +75,17 @@ const renderField = (
 
   fragment.appendChild(keyElement);
 
-  if (typeof value === 'object') {
+  if (typeof value === 'object' && value !== null) {
     const renderedValue = renderAsTable
       ? renderTable(value)
       : renderObject(value, styles.value, specialKeysForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
+    const valueForRender = value === null ? 'null' : value;
     fragment.appendChild(createSimpleDOMElement('span', ': ', styles.value));
-    fragment.appendChild(createSimpleDOMElement('span', value, styles.value));
+    fragment.appendChild(
+      createSimpleDOMElement('span', valueForRender, styles.value)
+    );
   }
 
   return { keyElement, fragment };
