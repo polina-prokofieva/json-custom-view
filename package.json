@@ -2,7 +2,7 @@
   "name": "json-custom-view",
   "version": "1.0.6",
   "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
-  "main": "dist/main.js",
+  "main": "build/api.js",
   "jest": {
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/node_modules/jest-css-modules"
