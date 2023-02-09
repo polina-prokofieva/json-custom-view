@@ -1,7 +1,6 @@
 name: Test
 
-on:
-  pull_request:
+on: pull_request
 
 jobs:
   test:
@@ -19,7 +18,7 @@ jobs:
 
   build:
     name: Build
-    needs: lint
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
