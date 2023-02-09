@@ -2,12 +2,10 @@ name: Test
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   test:
+    name: Jest and Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +18,8 @@ jobs:
       - run: npm run test
 
   build:
+    name: Build
+    needs: lint
     runs-on: ubuntu-latest
 
     steps:

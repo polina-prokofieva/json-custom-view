@@ -1,0 +1,11 @@
+.github
+.vscode
+node_modules
+src
+tests
+.editorconfig
+babel.config.js
+index.html
+main.js
+package-lock.json
+webpack.config.js
