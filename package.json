@@ -1,11 +1,8 @@
 {
-  "name": "view-json",
-  "version": "1.0.0",
-  "description": "The module for beautiful view of json",
-  "main": "main.js",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "json-custom-view",
+  "version": "1.0.5",
+  "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
+  "main": "dist/main.js",
   "jest": {
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/node_modules/jest-css-modules"
@@ -19,12 +16,22 @@
     "editorconfig": "editorconfig-checker",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polina-prokofieva/view-json.git#main"
+  },
   "keywords": [
+    "javascript",
+    "frontend",
     "json",
-    "js"
+    "data"
   ],
   "author": "Polina Prokofieva",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/polina-prokofieva/view-json/issues"
+  },
+  "homepage": "https://github.com/polina-prokofieva/view-json/tree/main#readme",
   "browserslist": [
     "last 2 chrome versions",
     "last 2 firefox versions",
