@@ -16,6 +16,7 @@
     "build-dev": "cross-env NODE_ENV=development webpack",
     "build": "cross-env NODE_ENV=production webpack",
     "clear": "rd /s /q dist",
+    "editorconfig": "editorconfig-checker",
     "test": "jest"
   },
   "keywords": [
@@ -74,6 +75,7 @@
     "deepmerge": "^4.2.2",
     "detect-newline": "^3.1.0",
     "diff-sequences": "^29.3.1",
+    "editorconfig-checker": "^5.0.1",
     "electron-to-chromium": "^1.4.284",
     "emittery": "^0.13.1",
     "emoji-regex": "^8.0.0",
