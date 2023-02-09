@@ -35,3 +35,5 @@ export const generate = (data, nodeElement, customSettings) => {
 
   nodeElement && render(convertedData, nodeElement);
 };
+
+export { transform };
