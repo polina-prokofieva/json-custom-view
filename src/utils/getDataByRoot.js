@@ -1,5 +1,5 @@
-export const getDataByRoot = (data, root) => {
-  if (root === '') return data;
+export const getDataByRoot = (data, root = '') => {
+  if (!root || root === '') return data;
 
   if (Array.isArray(root)) {
     return root.reduce((acc, curr) => acc[curr], data);

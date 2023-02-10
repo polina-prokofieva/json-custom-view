@@ -3,15 +3,38 @@ import { isEmptyObjectOrArray } from './utils/isEmpty.js';
 import { valueAppearence } from './utils/appearence.js';
 import { convertKey } from './utils/formatKeys.js';
 import { mergeSingleFields, isSingle } from './utils/mergeFields.js';
-import { getSettings, saveKey } from './settings.js';
+import { getDataByRoot } from './utils/getDataByRoot.js';
+import {
+  setSettings,
+  checkSettings,
+  getSettings,
+  saveKey,
+} from './settings.js';
 
-export const transform = data => {
-  const settings = getSettings();
+export const transform = (data, customSettings) => {
+  let settings;
+
+  if (customSettings) {
+    settings = customSettings;
+    setSettings(customSettings);
+    checkSettings();
+  } else {
+    settings = getSettings();
+  }
+
   if (!settings || !Object.keys(settings).length) return data;
 
+  const { root } = settings;
+  const dataFromRoot = getDataByRoot(data, root);
+
+  return transformValue(dataFromRoot);
+};
+
+const transformValue = data => {
+  const settings = getSettings();
   const isArray = Array.isArray(data);
-  const { isFormatKeys, hideEmpty, isMergeSingleFields } = settings;
   const transformed = isArray ? [] : {};
+  const { isMergeSingleFields, isFormatKeys } = settings;
 
   for (const key in data) {
     if (!isFieldShouldBeVisible(key, data[key])) continue;
@@ -41,7 +64,7 @@ const transformBranch = (key, value, isArrayElement) => {
   const { hideEmpty, isMergeSingleFields } = settings;
 
   let newKey = key;
-  let transformedBranch = transform(value);
+  let transformedBranch = transformValue(value);
 
   if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) return;
 

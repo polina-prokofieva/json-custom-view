@@ -22,6 +22,7 @@ const data = {
 };
 
 const settings = {
+  root: 'Bespoke',
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
