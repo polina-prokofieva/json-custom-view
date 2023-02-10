@@ -1,22 +1,50 @@
 import { describe, expect } from '@jest/globals';
 import { getDataByRoot } from '../../src/utils/getDataByRoot';
 
-describe('getDataByRoot first level', () => {
-  const twoLevelsData = {
-    first: true,
-    second: false,
-    third: {
-      p1: 123,
-      p2: null,
-      p3: false,
-      p4: 0,
-      p5: 'zero',
-      p6: 'something else',
-    },
-    fourth: 123456,
-    fifth: 'test string',
-  };
+const twoLevelsData = {
+  first: true,
+  second: false,
+  third: {
+    p1: 123,
+    p2: null,
+    p3: false,
+    p4: 0,
+    p5: 'zero',
+    p6: 'something else',
+  },
+  fourth: 123456,
+  fifth: 'test string',
+};
 
+const dataWithArray = {
+  first: true,
+  second: false,
+  third: {
+    p1: 123,
+    lbo_options: [
+      {
+        '@name': 'Running Boards',
+        '@code': '137',
+        '#text': '1000',
+      },
+      {
+        '@name': 'w/o Leather Seats',
+        '@code': '076',
+        '#text': '-25',
+      },
+      {
+        '@name': 'Luggage Rack',
+        '@code': '043',
+        '#text': '0',
+      },
+    ],
+    p6: 'something else',
+  },
+  fourth: 123456,
+  fifth: 'test string',
+};
+
+describe('getDataByRoot first level', () => {
   it('Test invalid cases', () => {
     expect(getDataByRoot({}, '')).toStrictEqual({});
     expect(getDataByRoot(twoLevelsData, '')).toStrictEqual(twoLevelsData);
@@ -52,27 +80,17 @@ describe('getDataByRoot first level', () => {
 
   it('Get array from first level root', () => {
     expect(getDataByRoot(twoLevelsDataWithArray, 'third')).toStrictEqual([
-      12, 23, 34, 45, 56, 67,
+      12,
+      23,
+      34,
+      45,
+      56,
+      67,
     ]);
   });
 });
 
 describe('getDataByRoot second level', () => {
-  const twoLevelsData = {
-    first: true,
-    second: false,
-    third: {
-      p1: 123,
-      p2: null,
-      p3: false,
-      p4: 0,
-      p5: 'zero',
-      p6: 'something else',
-    },
-    fourth: 123456,
-    fifth: 'test string',
-  };
-
   it('get simple value from second level object', () => {
     expect(getDataByRoot(twoLevelsData, ['third', 'p1'])).toBe(123);
     expect(getDataByRoot(twoLevelsData, ['third', 'p2'])).toBe(null);
@@ -83,34 +101,6 @@ describe('getDataByRoot second level', () => {
   const simpleDataWithArray = {
     p1: true,
     p2: [23, 34, 45, 56, 67, 78],
-  };
-
-  const dataWithArray = {
-    first: true,
-    second: false,
-    third: {
-      p1: 123,
-      lbo_options: [
-        {
-          '@name': 'Running Boards',
-          '@code': '137',
-          '#text': '1000',
-        },
-        {
-          '@name': 'w/o Leather Seats',
-          '@code': '076',
-          '#text': '-25',
-        },
-        {
-          '@name': 'Luggage Rack',
-          '@code': '043',
-          '#text': '0',
-        },
-      ],
-      p6: 'something else',
-    },
-    fourth: 123456,
-    fifth: 'test string',
   };
 
   it('Data with arrays', () => {
@@ -126,8 +116,37 @@ describe('getDataByRoot second level', () => {
       '@code': '076',
       '#text': '-25',
     });
+    expect(
+      getDataByRoot(dataWithArray, ['third', 'lbo_options', 1, '@name'])
+    ).toStrictEqual('w/o Leather Seats');
   });
-  expect(
-    getDataByRoot(dataWithArray, ['third', 'lbo_options', 1, '@name'])
-  ).toStrictEqual('w/o Leather Seats');
+});
+
+describe('getDataByRoot from string as path', () => {
+  it('object elements', () => {
+    expect(getDataByRoot(dataWithArray, 'third.lbo_options')).toStrictEqual([
+      {
+        '@name': 'Running Boards',
+        '@code': '137',
+        '#text': '1000',
+      },
+      {
+        '@name': 'w/o Leather Seats',
+        '@code': '076',
+        '#text': '-25',
+      },
+      {
+        '@name': 'Luggage Rack',
+        '@code': '043',
+        '#text': '0',
+      },
+    ]);
+  });
+  it('object elements', () => {
+    expect(getDataByRoot(dataWithArray, 'third.lbo_options[1]')).toStrictEqual({
+      '@name': 'w/o Leather Seats',
+      '@code': '076',
+      '#text': '-25',
+    });
+  });
 });

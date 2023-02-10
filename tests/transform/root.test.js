@@ -87,4 +87,13 @@ describe('Root', () => {
       surname: 'Grainger',
     });
   });
+
+  it('root as string with path', () => {
+    expect(transform(data02, { root: 'Bespoke.ToBeDefined[1]' })).toStrictEqual(
+      {
+        name: 'Hermiona',
+        surname: 'Grainger',
+      }
+    );
+  });
 });
