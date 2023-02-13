@@ -73,7 +73,12 @@ export const getNewKeyFromOld = oldKey =>
 export const getOldKey = key => settings.keysDict[key] || key;
 
 export const checkSettings = () => {
-  const { keysForArrays, arraysAsTable = [] } = settings;
+  const {
+    root,
+    keysForArrays,
+    arraysAsTable = [],
+    hidePropertyByKey,
+  } = settings;
 
   if (!Array.isArray(arraysAsTable)) {
     addNotification('warning', '"arraysAsTable" should be an array');
@@ -82,9 +87,22 @@ export const checkSettings = () => {
       if (keysForArrays[arrayKey]) {
         addNotification(
           'warning',
-          'There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn\'t be setted both.'
+          `There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn't be setted both.`
         );
       }
     });
+  }
+
+  const sameKeys = [];
+
+  root.forEach(key => {
+    hidePropertyByKey.includes(key) && sameKeys.push(key);
+  });
+
+  if (sameKeys.length !== 0) {
+    addNotification(
+      'warning',
+      `Keys: ${sameKeys} are the same in "root" and in "hidePropertyByKey"`
+    );
   }
 };

@@ -22,15 +22,16 @@ const data = {
 };
 
 const settings = {
-  // root: 'Bespoke.ToBeDefined',
+  root: 'Bespoke.ToBeDefined',
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
   hideEmpty: true,
   isMergeSingleFields: true,
   showNotifications: true,
+  hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
   arraysAsTable: ['ToBeDefined', 'trades', 'inquiries'],
 };
 
-generate(JSONdata, root, settings);
+generate(data, root, settings);
 console.log(transform(data, settings));
