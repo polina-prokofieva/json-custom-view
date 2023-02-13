@@ -24,8 +24,7 @@ export const transform = (data, customSettings) => {
 
   if (!settings || !Object.keys(settings).length) return data;
 
-  const { root } = settings;
-  const dataFromRoot = getDataByRoot(data, root);
+  const dataFromRoot = getDataByRoot(data);
 
   return transformValue(dataFromRoot);
 };

@@ -1,4 +1,5 @@
 import { describe, expect } from '@jest/globals';
+import { setSettings } from '../../src/settings';
 import { getDataByRoot } from '../../src/utils/getDataByRoot';
 
 const twoLevelsData = {
@@ -46,21 +47,29 @@ const dataWithArray = {
 
 describe('getDataByRoot first level', () => {
   it('Test invalid cases', () => {
-    expect(getDataByRoot({}, '')).toStrictEqual({});
-    expect(getDataByRoot(twoLevelsData, '')).toStrictEqual(twoLevelsData);
-    expect(getDataByRoot({}, 'first')).toBe(undefined);
-    expect(getDataByRoot(twoLevelsData, 'ex')).toBe(undefined);
+    setSettings({ root: '' });
+    expect(getDataByRoot({})).toStrictEqual({});
+    expect(getDataByRoot(twoLevelsData)).toStrictEqual(twoLevelsData);
+    setSettings({ root: 'first' });
+    expect(getDataByRoot({})).toBe(undefined);
+    setSettings({ root: 'ex' });
+    expect(getDataByRoot(twoLevelsData)).toBe(undefined);
   });
 
   it('Get simple values from first level root', () => {
-    expect(getDataByRoot(twoLevelsData, 'first')).toBe(true);
-    expect(getDataByRoot(twoLevelsData, 'second')).toBe(false);
-    expect(getDataByRoot(twoLevelsData, 'fourth')).toBe(123456);
-    expect(getDataByRoot(twoLevelsData, 'fifth')).toBe('test string');
+    setSettings({ root: 'first' });
+    expect(getDataByRoot(twoLevelsData)).toBe(true);
+    setSettings({ root: 'second' });
+    expect(getDataByRoot(twoLevelsData)).toBe(false);
+    setSettings({ root: 'fourth' });
+    expect(getDataByRoot(twoLevelsData)).toBe(123456);
+    setSettings({ root: 'fifth' });
+    expect(getDataByRoot(twoLevelsData)).toBe('test string');
   });
 
   it('Get object from first level root', () => {
-    expect(getDataByRoot(twoLevelsData, 'third')).toStrictEqual({
+    setSettings({ root: 'third' });
+    expect(getDataByRoot(twoLevelsData)).toStrictEqual({
       p1: 123,
       p2: null,
       p3: false,
@@ -79,6 +88,7 @@ describe('getDataByRoot first level', () => {
   };
 
   it('Get array from first level root', () => {
+    setSettings({ root: 'third' });
     expect(getDataByRoot(twoLevelsDataWithArray, 'third')).toStrictEqual([
       12,
       23,
@@ -92,10 +102,14 @@ describe('getDataByRoot first level', () => {
 
 describe('getDataByRoot second level', () => {
   it('get simple value from second level object', () => {
-    expect(getDataByRoot(twoLevelsData, ['third', 'p1'])).toBe(123);
-    expect(getDataByRoot(twoLevelsData, ['third', 'p2'])).toBe(null);
-    expect(getDataByRoot(twoLevelsData, ['third', 'p3'])).toBe(false);
-    expect(getDataByRoot(twoLevelsData, ['third', 'p44'])).toBe(undefined);
+    setSettings({ root: ['third', 'p1'] });
+    expect(getDataByRoot(twoLevelsData)).toBe(123);
+    setSettings({ root: ['third', 'p2'] });
+    expect(getDataByRoot(twoLevelsData)).toBe(null);
+    setSettings({ root: ['third', 'p3'] });
+    expect(getDataByRoot(twoLevelsData)).toBe(false);
+    setSettings({ root: ['third', 'p44'] });
+    expect(getDataByRoot(twoLevelsData)).toBe(undefined);
   });
 
   const simpleDataWithArray = {
@@ -104,27 +118,27 @@ describe('getDataByRoot second level', () => {
   };
 
   it('Data with arrays', () => {
-    expect(getDataByRoot(simpleDataWithArray, ['p2', 3])).toStrictEqual(56);
-    expect(getDataByRoot(simpleDataWithArray, ['p2', '3'])).toStrictEqual(56);
-    expect(getDataByRoot(dataWithArray, 'third')).toStrictEqual(
-      dataWithArray.third
-    );
-    expect(
-      getDataByRoot(dataWithArray, ['third', 'lbo_options', 1])
-    ).toStrictEqual({
+    setSettings({ root: ['p2', 3] });
+    expect(getDataByRoot(simpleDataWithArray)).toStrictEqual(56);
+    setSettings({ root: ['p2', '3'] });
+    expect(getDataByRoot(simpleDataWithArray)).toStrictEqual(56);
+    setSettings({ root: 'third' });
+    expect(getDataByRoot(dataWithArray)).toStrictEqual(dataWithArray.third);
+    setSettings({ root: ['third', 'lbo_options', 1] });
+    expect(getDataByRoot(dataWithArray)).toStrictEqual({
       '@name': 'w/o Leather Seats',
       '@code': '076',
       '#text': '-25',
     });
-    expect(
-      getDataByRoot(dataWithArray, ['third', 'lbo_options', 1, '@name'])
-    ).toStrictEqual('w/o Leather Seats');
+    setSettings({ root: ['third', 'lbo_options', 1, '@name'] });
+    expect(getDataByRoot(dataWithArray)).toStrictEqual('w/o Leather Seats');
   });
 });
 
 describe('getDataByRoot from string as path', () => {
   it('object elements', () => {
-    expect(getDataByRoot(dataWithArray, 'third.lbo_options')).toStrictEqual([
+    setSettings({ root: 'third.lbo_options' });
+    expect(getDataByRoot(dataWithArray)).toStrictEqual([
       {
         '@name': 'Running Boards',
         '@code': '137',
@@ -143,7 +157,8 @@ describe('getDataByRoot from string as path', () => {
     ]);
   });
   it('object elements', () => {
-    expect(getDataByRoot(dataWithArray, 'third.lbo_options[1]')).toStrictEqual({
+    setSettings({ root: 'third.lbo_options[1]' });
+    expect(getDataByRoot(dataWithArray)).toStrictEqual({
       '@name': 'w/o Leather Seats',
       '@code': '076',
       '#text': '-25',

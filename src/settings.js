@@ -1,7 +1,7 @@
 import { addNotification } from './notifications';
 
 const defaultSettings = {
-  root: '',
+  root: [],
   isFormatKeys: false,
   hideArrayElements: false,
   hideEmpty: true,
@@ -14,8 +14,25 @@ const defaultSettings = {
 
 let settings = defaultSettings;
 
+export const splitPathRoot = root =>
+  root.replaceAll('[', '.').replaceAll(']', '').split('.');
+
+export const createRootArray = root => {
+  if (!root) return [];
+  if (typeof root === 'string') return splitPathRoot(root);
+  return root;
+};
+
 export const setSettings = customSettings => {
-  settings = { ...defaultSettings, ...customSettings };
+  settings = {
+    ...defaultSettings,
+    ...customSettings,
+    root: createRootArray(customSettings.root),
+  };
+};
+
+export const clearSettings = () => {
+  settings = defaultSettings;
 };
 
 export const getSettings = () => ({ ...settings });

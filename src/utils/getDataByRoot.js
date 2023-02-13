@@ -1,13 +1,8 @@
-const getDataFromRootArray = (data, root) =>
-  root.reduce((acc, curr) => acc[curr], data);
+import { getSettings } from '../settings';
 
-export const getDataByRoot = (data, root = '') => {
-  if (!root || root === '') return data;
+export const getDataByRoot = data => {
+  const settings = getSettings();
+  const { root } = settings;
 
-  if (Array.isArray(root)) {
-    return getDataFromRootArray(data, root);
-  } else {
-    const splitted = root.replaceAll('[', '.').replaceAll(']', '').split('.');
-    return getDataFromRootArray(data, splitted);
-  }
+  return root.reduce((acc, curr) => acc[curr], data);
 };
