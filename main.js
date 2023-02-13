@@ -1,4 +1,4 @@
-// import { dataExample as JSONdata } from './data/big';
+import { dataExample as JSONdata } from './tests/data/big';
 import { responseJson } from './tests/data/response';
 // import { defaultSettings as settings } from './tests/data/settings';
 import { generate, transform } from './src/api.js';
@@ -22,7 +22,7 @@ const data = {
 };
 
 const settings = {
-  root: 'Bespoke.ToBeDefined',
+  // root: 'Bespoke.ToBeDefined',
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
@@ -32,5 +32,5 @@ const settings = {
   arraysAsTable: ['ToBeDefined', 'trades', 'inquiries'],
 };
 
-generate(data, root, settings);
+generate(JSONdata, root, settings);
 console.log(transform(data, settings));

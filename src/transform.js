@@ -72,9 +72,9 @@ const transformBranch = (key, value, isArrayElement) => {
     const merged = mergeSingleFields(key, transformedBranch);
     newKey = merged.key;
     transformedBranch = merged.value;
-    saveKey(Object.keys(value)[0], newKey);
+    saveKey(Object.keys(value)[0], newKey, transformedBranch);
   } else {
-    saveKey(key, newKey);
+    saveKey(key, newKey, transformedBranch);
   }
 
   return { key: newKey, value: transformedBranch };

@@ -20,8 +20,15 @@ export const setSettings = customSettings => {
 
 export const getSettings = () => ({ ...settings });
 
-export const saveKey = (oldKey, newKey) => {
-  if (oldKey === newKey) return;
+const isNeedToSaveKey = (key, value) => {
+  const { arraysAsTable, keysForArrays } = settings;
+  const isKeyShouldBeSaved =
+    arraysAsTable?.includes(key) || keysForArrays?.includes(key);
+  return Array.isArray(value) && isKeyShouldBeSaved;
+};
+
+export const saveKey = (oldKey, newKey, value) => {
+  if (!isNeedToSaveKey(oldKey, value) || oldKey === newKey) return;
 
   if (settings.keysDict[newKey] && settings.keysDict[newKey] !== oldKey) {
     addNotification(
