@@ -1,4 +1,4 @@
-import { addNotification } from './notifications';
+import { addWarning } from './notifications';
 
 const defaultSettings = {
   root: [],
@@ -48,8 +48,7 @@ export const saveKey = (oldKey, newKey, value) => {
   if (!isNeedToSaveKey(oldKey, value) || oldKey === newKey) return;
 
   if (settings.keysDict[newKey] && settings.keysDict[newKey] !== oldKey) {
-    addNotification(
-      'warning',
+    addWarning(
       `There is more that one field with transformed key ${newKey} with different original keys`
     );
   }
@@ -59,8 +58,7 @@ export const saveKey = (oldKey, newKey, value) => {
     settings.keysOldToNew[oldKey] &&
     settings.keysOldToNew[oldKey] !== newKey
   ) {
-    addNotification(
-      'warning',
+    addWarning(
       `There is more that one field with original key ${oldKey} with different transformed keys`
     );
   }
@@ -81,12 +79,11 @@ export const checkSettings = () => {
   } = settings;
 
   if (!Array.isArray(arraysAsTable)) {
-    addNotification('warning', '"arraysAsTable" should be an array');
+    addWarning('"arraysAsTable" should be an array');
   } else if (keysForArrays) {
     arraysAsTable.forEach(arrayKey => {
       if (keysForArrays[arrayKey]) {
-        addNotification(
-          'warning',
+        addWarning(
           `There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn't be setted both.`
         );
       }
@@ -100,8 +97,7 @@ export const checkSettings = () => {
   });
 
   if (sameKeys.length !== 0) {
-    addNotification(
-      'warning',
+    addWarning(
       `Keys: ${sameKeys} are the same in "root" and in "hidePropertyByKey"`
     );
   }

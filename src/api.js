@@ -1,6 +1,6 @@
 import { transform } from './transform.js';
 import { render } from './render/general.js';
-import { addNotification } from './notifications.js';
+import { clearNotifications, addError } from './notifications.js';
 import { setSettings, checkSettings } from './settings.js';
 
 export const convert = data => {
@@ -17,6 +17,8 @@ export const convert = data => {
 export const generate = (data, nodeElement, customSettings) => {
   let convertedData;
 
+  clearNotifications();
+
   try {
     if (!nodeElement) {
       throw new Error(
@@ -29,7 +31,7 @@ export const generate = (data, nodeElement, customSettings) => {
 
     convertedData = convert(data);
   } catch (error) {
-    addNotification('error', error.message);
+    addError(error.message);
     console.error(error.message);
   }
 
