@@ -1,4 +1,4 @@
-// import { dataExample as JSONdata } from './data/big';
+import { dataExample as JSONdata } from './tests/data/big';
 import { responseJson } from './tests/data/response';
 // import { defaultSettings as settings } from './tests/data/settings';
 import { generate, transform } from './src/api.js';
@@ -22,14 +22,17 @@ const data = {
 };
 
 const settings = {
+  root: '',
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
   hideEmpty: true,
   isMergeSingleFields: true,
   showNotifications: true,
-  arraysAsTable: ['ToBeDefined', 'trades', 'inquiries'],
+  hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
+  arraysAsTable: ['applicant_data', 'address'],
 };
 
-generate(data, root, settings);
-console.log(transform(data, settings));
+generate(JSONdata, root, settings);
+// console.log('JSONdata', JSONdata);
+// console.log(transform(JSON.parse(JSONdata), settings));

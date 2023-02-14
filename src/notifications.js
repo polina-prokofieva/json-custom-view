@@ -9,3 +9,15 @@ export const addNotification = (type, text) => {
     notifications.unshift({ type, text });
   }
 };
+
+export const addWarning = text => {
+  addNotification('warning', text);
+};
+
+export const addError = text => {
+  addNotification('error', text);
+};
+
+export const clearNotifications = () => {
+  notifications.splice(0, notifications.length);
+};
