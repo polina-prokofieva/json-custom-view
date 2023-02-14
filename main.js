@@ -22,7 +22,7 @@ const data = {
 };
 
 const settings = {
-  root: 'Bespoke.ToBeDefined',
+  root: '',
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
@@ -30,8 +30,9 @@ const settings = {
   isMergeSingleFields: true,
   showNotifications: true,
   hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
-  arraysAsTable: ['ToBeDefined', 'trades', 'inquiries'],
+  arraysAsTable: ['applicant_data'],
 };
 
-generate(data, root, settings);
-console.log(transform(data, settings));
+generate(JSONdata, root, settings);
+console.log('JSONdata', JSONdata);
+console.log(transform(JSON.parse(JSONdata), settings));

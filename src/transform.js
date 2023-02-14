@@ -15,15 +15,10 @@ export const transform = (data, customSettings) => {
   let settings;
 
   if (customSettings) {
-    settings = customSettings;
     setSettings(customSettings);
     checkSettings();
-  } else {
-    settings = getSettings();
   }
-
-  if (!settings || !Object.keys(settings).length) return data;
-
+  settings = getSettings();
   const dataFromRoot = getDataByRoot(data);
 
   return transformValue(dataFromRoot);

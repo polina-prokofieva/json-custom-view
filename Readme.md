@@ -14,10 +14,10 @@
 
 `transform(data, settings)` - convert `data` according with converting `settings`. Returns converted Object.
 
-| **Name**     | **Type**         | **Default** | **Description**                     |
-| ------------ | ---------------- | ----------- | ----------------------------------- |
-| **data**     | String or Object | `''`        | a string which is json or an object |
-| **settings** | Object           | `{}`        | an object of settings               |
+| **Name**     | **Type** | **Default** | **Description**       |
+| ------------ | -------- | ----------- | --------------------- |
+| **data**     | Object   | `''`        | an object             |
+| **settings** | Object   | `{}`        | an object of settings |
 
 ## Fields of settings object
 
