@@ -30,9 +30,9 @@ const settings = {
   isMergeSingleFields: true,
   showNotifications: true,
   hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
-  arraysAsTable: ['applicant_data'],
+  arraysAsTable: ['applicant_data', 'address'],
 };
 
 generate(JSONdata, root, settings);
-console.log('JSONdata', JSONdata);
-console.log(transform(JSON.parse(JSONdata), settings));
+// console.log('JSONdata', JSONdata);
+// console.log(transform(JSON.parse(JSONdata), settings));

@@ -36,7 +36,12 @@ const transformValue = data => {
     let newKey = isFormatKeys ? convertKey(key) : key;
 
     if (data[key] && typeof data[key] === 'object') {
-      const transformedBranch = transformBranch(newKey, data[key], isArray);
+      const transformedBranch = transformBranch(
+        newKey,
+        key,
+        data[key],
+        isArray
+      );
       if (transformedBranch)
         transformed[transformedBranch.key] = transformedBranch.value;
     } else {
@@ -53,7 +58,7 @@ const transformValue = data => {
     : transformed;
 };
 
-const transformBranch = (key, value, isArrayElement) => {
+const transformBranch = (key, oldKey, value, isArrayElement) => {
   const settings = getSettings();
   const { hideEmpty, isMergeSingleFields } = settings;
 
@@ -68,7 +73,7 @@ const transformBranch = (key, value, isArrayElement) => {
     transformedBranch = merged.value;
     saveKey(Object.keys(value)[0], newKey, transformedBranch);
   } else {
-    saveKey(key, newKey, transformedBranch);
+    saveKey(oldKey, newKey, transformedBranch);
   }
 
   return { key: newKey, value: transformedBranch };

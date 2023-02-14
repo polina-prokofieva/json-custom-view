@@ -4,7 +4,7 @@ import {
   getSettings,
   clearSettings,
   createRootArray,
-  splitPathRoot,
+  isNeedToSaveKey,
 } from '../src/settings';
 
 const defaultSettings = {
@@ -17,6 +17,7 @@ const defaultSettings = {
   keysDict: {},
   keysOldToNew: {},
   arraysAsTable: [],
+  keysForArrays: {},
 };
 
 describe('Set and get settings correctly', () => {
@@ -44,5 +45,25 @@ describe('createRootArray', () => {
     expect(createRootArray(null)).toStrictEqual([]);
     expect(createRootArray([])).toStrictEqual([]);
     expect(createRootArray()).toStrictEqual([]);
+  });
+});
+
+describe('isNeedToSaveKey', () => {
+  setSettings({
+    arraysAsTable: ['accounts'],
+    keysForArrays: {
+      lbo_bookout: 'lbo_base_value',
+    },
+  });
+
+  it('simple tests', () => {
+    expect(isNeedToSaveKey('account', [])).toBeTruthy;
+    expect(isNeedToSaveKey('lbo_bookout', [])).toBeTruthy;
+    expect(isNeedToSaveKey('account', {})).toBeFalsy;
+    expect(isNeedToSaveKey('lbo_bookout', {})).toBeFalsy;
+    expect(isNeedToSaveKey('account', 123)).toBeFalsy;
+    expect(isNeedToSaveKey('lbo_bookout', 123)).toBeFalsy;
+    expect(isNeedToSaveKey('bookout', 123)).toBeFalsy;
+    expect(isNeedToSaveKey('bookout', [])).toBeFalsy;
   });
 });

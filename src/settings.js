@@ -10,6 +10,7 @@ const defaultSettings = {
   keysDict: {},
   keysOldToNew: {},
   arraysAsTable: [],
+  keysForArrays: {},
 };
 
 let settings = defaultSettings;
@@ -37,10 +38,11 @@ export const clearSettings = () => {
 
 export const getSettings = () => ({ ...settings });
 
-const isNeedToSaveKey = (key, value) => {
+export const isNeedToSaveKey = (key, value) => {
   const { arraysAsTable, keysForArrays } = settings;
   const isKeyShouldBeSaved =
-    arraysAsTable?.includes(key) || keysForArrays?.includes(key);
+    arraysAsTable?.includes(key) ||
+    (keysForArrays && Object.keys(keysForArrays).includes(key));
   return Array.isArray(value) && isKeyShouldBeSaved;
 };
 
@@ -93,7 +95,7 @@ export const checkSettings = () => {
   const sameKeys = [];
 
   root.forEach(key => {
-    hidePropertyByKey.includes(key) && sameKeys.push(key);
+    hidePropertyByKey && hidePropertyByKey.includes(key) && sameKeys.push(key);
   });
 
   if (sameKeys.length !== 0) {
