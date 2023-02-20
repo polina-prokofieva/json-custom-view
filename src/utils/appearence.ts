@@ -1,4 +1,10 @@
-export const valueAppearence = (value, { nullAppearence, boolAppearence }) => {
+export const valueAppearence = (
+  value: any,
+  {
+    nullAppearence,
+    boolAppearence,
+  }: { nullAppearence?: string; boolAppearence?: [string, string] }
+): any => {
   if (boolAppearence && typeof value === 'boolean') {
     return boolAppearence[+value];
   }

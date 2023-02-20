@@ -1,4 +1,4 @@
-export const isEmptyObjectOrArray = value => {
+export const isEmptyObjectOrArray = (value: any): boolean => {
   if (value && typeof value === 'object') {
     if (
       (Array.isArray(value) && value.length === 0) ||

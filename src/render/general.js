@@ -1,7 +1,7 @@
-import { isObject } from '../utils/isObject.js';
-import { notifications } from '../notifications.js';
-import { getSettings } from '../settings.js';
-import { renderObject } from './object.js';
+import { isObject } from '../utils/isObject';
+import { notifications } from '../notifications';
+import { getSettings } from '../settings';
+import { renderObject } from './object';
 import styles from '../assets/style.module.less';
 
 export const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {

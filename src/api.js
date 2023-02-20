@@ -1,9 +1,9 @@
-import { transform } from './transform.js';
-import { render } from './render/general.js';
-import { clearNotifications, addError } from './notifications.js';
-import { setSettings, checkSettings } from './settings.js';
+import { transform } from './transform';
+import { render } from './render/general';
+import { clearNotifications, addError } from './notifications';
+import { setSettings, checkSettings } from './settings';
 
-export const convert = data => {
+export const convert = (data) => {
   try {
     const parsed = typeof data === 'string' ? JSON.parse(data) : data;
     const converted = transform(parsed);

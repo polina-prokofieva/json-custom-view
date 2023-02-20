@@ -1,7 +1,7 @@
 import { createSimpleDOMElement } from './general';
-import { convertByMask } from '../utils/formatKeys.js';
-import { renderTable } from './renderTable.js';
-import { getSettings, getOldKey } from '../settings.js';
+import { convertByMask } from '../utils/formatKeys';
+import { renderTable } from './renderTable';
+import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
 export const toggleVisibility = objectElement => {

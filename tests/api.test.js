@@ -5,7 +5,7 @@ import {
   jsonOneLevel,
 } from './data/constants.js';
 import { removeFalseFields } from './data/settings';
-import { convert } from '../src/api.js';
+import { convert } from '../src/api';
 
 describe('Convert w/o settings object', () => {
   it('Convert empty object', () => {

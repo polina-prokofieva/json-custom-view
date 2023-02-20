@@ -1,15 +1,10 @@
-import { isFieldShouldBeVisible } from './utils/converting.js';
-import { isEmptyObjectOrArray } from './utils/isEmpty.js';
-import { valueAppearence } from './utils/appearence.js';
-import { convertKey } from './utils/formatKeys.js';
-import { mergeSingleFields, isSingle } from './utils/mergeFields.js';
-import { getDataByRoot } from './utils/getDataByRoot.js';
-import {
-  setSettings,
-  checkSettings,
-  getSettings,
-  saveKey,
-} from './settings.js';
+import { isFieldShouldBeVisible } from './utils/converting';
+import { isEmptyObjectOrArray } from './utils/isEmpty';
+import { valueAppearence } from './utils/appearence';
+import { convertKey } from './utils/formatKeys';
+import { mergeSingleFields, isSingle } from './utils/mergeFields';
+import { getDataByRoot } from './utils/getDataByRoot';
+import { setSettings, checkSettings, getSettings, saveKey } from './settings';
 
 export const transform = (data, customSettings) => {
   let settings;
@@ -24,7 +19,7 @@ export const transform = (data, customSettings) => {
   return transformValue(dataFromRoot);
 };
 
-const transformValue = data => {
+const transformValue = (data) => {
   const settings = getSettings();
   const isArray = Array.isArray(data);
   const transformed = isArray ? [] : {};
