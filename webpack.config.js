@@ -35,9 +35,9 @@ const loaders = [
     exclude: /node_modules/,
   },
   {
-    test: /\.js/,
+    test: /\.ts?$/,
+    use: 'ts-loader',
     exclude: /node_modules/,
-    loader: 'babel-loader',
   },
 ];
 
@@ -57,6 +57,10 @@ module.exports = {
   target,
   entry: {
     app: entry,
+  },
+
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 
   output: {
