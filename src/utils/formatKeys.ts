@@ -1,6 +1,7 @@
 import { getNewKeyFromOld } from '../settings';
+import { KeysMap } from '../types';
 
-const removeAbbrFromBegin = word => {
+const removeAbbrFromBegin = (word: string): string => {
   const count = (word.match(/[A-Z]/g) || []).length;
   const isAbbr = /^[A-Z]+$/.test(word);
 
@@ -11,29 +12,34 @@ const removeAbbrFromBegin = word => {
   return word;
 };
 
-const convertKey = key => {
+export const convertKey = (key: string): string => {
   if (typeof key !== 'string') return null;
 
   const words = key.split(/[\s_\-]/);
-  const nonEmptyWords = words.filter(word => word);
+  const nonEmptyWords = words.filter((word) => word);
   const wordPattern = /([A-Z]+$)|(\d+[a-z]+)|(\d+)|(((^[a-z])|[A-Z]+)[a-z]*)/g;
-  let parts = [];
+  let parts: string[] = [];
 
   for (let word of nonEmptyWords) {
     const newParts = word.match(wordPattern) || [word];
     parts = parts.concat(newParts);
   }
 
-  return parts ? parts.map(word => removeAbbrFromBegin(word)).join(' ') : key;
+  return parts ? parts.map((word) => removeAbbrFromBegin(word)).join(' ') : key;
 };
 
-const convertByMask = (value, mask, keysOldToNew = {}) => {
+export const convertByMask = (
+  value: { [key: string]: any },
+  mask: string,
+  keysOldToNew: KeysMap
+): string => {
   const partPattern = /\{([\w\.\@\#\*])+?\}/g;
 
-  if (mask.search(partPattern) === -1)
+  if (mask.search(partPattern) === -1) {
     return value[keysOldToNew[mask] || mask] || '-';
+  }
 
-  const key = mask.replace(partPattern, part => {
+  const key = mask.replace(partPattern, (part) => {
     const path = part.slice(1, -1).split('.');
 
     let convertedKey = value[getNewKeyFromOld(path[0])];
@@ -53,5 +59,3 @@ const convertByMask = (value, mask, keysOldToNew = {}) => {
 
   return key;
 };
-
-export { convertKey, convertByMask };
