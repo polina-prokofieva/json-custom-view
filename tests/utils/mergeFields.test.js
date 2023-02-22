@@ -10,6 +10,7 @@ describe('Split single keys to one level', () => {
   it('Check is there is only one field', () => {
     expect(isSingle([123])).toBe(true);
     expect(isSingle([{}])).toBe(true);
+    expect(isSingle([{ name: 'Harry Potter' }])).toBe(true);
     expect(isSingle([{}, {}])).toBe(false);
     expect(isSingle([123, 234])).toBe(false);
     expect(isSingle([])).toBe(false);
@@ -133,15 +134,12 @@ describe('Transforming objects with splitting single fields', () => {
     expect(transform({ animals: [[['cat']]] })).toStrictEqual({
       animals: 'cat',
     });
-
     expect(transform({ animals: [[['cat'], []]] })).toStrictEqual({
       animals: 'cat',
     });
-
     expect(transform(data03)).toStrictEqual({
       'people > name': 'Harry Potter',
     });
-
     expect(transform(data02)).toStrictEqual({
       'people > name > first': 'Polina',
       animals: 'cat',

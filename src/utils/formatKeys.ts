@@ -13,8 +13,6 @@ const removeAbbrFromBegin = (word: string): string => {
 };
 
 export const convertKey = (key: string): string => {
-  if (typeof key !== 'string') return null;
-
   const words = key.split(/[\s_\-]/);
   const nonEmptyWords = words.filter((word) => word);
   const wordPattern = /([A-Z]+$)|(\d+[a-z]+)|(\d+)|(((^[a-z])|[A-Z]+)[a-z]*)/g;
@@ -31,7 +29,7 @@ export const convertKey = (key: string): string => {
 export const convertByMask = (
   value: { [key: string]: any },
   mask: string,
-  keysOldToNew: KeysMap
+  keysOldToNew: KeysMap = {}
 ): string => {
   const partPattern = /\{([\w\.\@\#\*])+?\}/g;
 

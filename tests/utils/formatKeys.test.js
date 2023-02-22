@@ -2,13 +2,6 @@ import { describe, expect } from '@jest/globals';
 import { convertKey } from '../../src/utils/formatKeys';
 
 describe('Convert Camel Case to separated words', () => {
-  it('Invalid values', () => {
-    expect(convertKey(null)).toEqual(null);
-    expect(convertKey('')).toEqual('');
-    expect(convertKey(undefined)).toEqual(null);
-    expect(convertKey(0)).toEqual(null);
-  });
-
   it('Single word', () => {
     expect(convertKey('Single')).toEqual('Single');
     expect(convertKey(' Single')).toEqual('Single');

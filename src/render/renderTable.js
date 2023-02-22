@@ -1,15 +1,15 @@
 import { createSimpleDOMElement } from './general';
 import { renderObject } from './object';
-import { generateKeysForInnerArray } from './object';
+import { generateKeyForInnerArray } from './object';
 import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
-const renderTableHeader = headers => {
+const renderTableHeader = (headers) => {
   const headerFragment = document.createDocumentFragment();
   const headerElement = createSimpleDOMElement('thead');
   const rowElement = createSimpleDOMElement('tr');
 
-  headers.forEach(header => {
+  headers.forEach((header) => {
     const headerCellElement = createSimpleDOMElement('th', header);
     rowElement.appendChild(headerCellElement);
   });
@@ -24,10 +24,10 @@ const renderTableBody = (data, headers) => {
   const bodyFragment = document.createDocumentFragment();
   const bodyElement = createSimpleDOMElement('tbody');
 
-  data.forEach(row => {
+  data.forEach((row) => {
     const rowElement = createSimpleDOMElement('tr');
 
-    headers.forEach(cell => {
+    headers.forEach((cell) => {
       const bodyCellElement = renderTableCell(cell, row[cell]);
       rowElement.appendChild(bodyCellElement);
     });
@@ -55,7 +55,7 @@ const renderTableCell = (key, cellValue) => {
   if (type === 'array' && arraysAsTable && arraysAsTable.includes(oldKey)) {
     cellContentElement = renderTable(cellValue);
   } else {
-    const specialKeysForInnerArray = generateKeysForInnerArray(key, type);
+    const specialKeysForInnerArray = generateKeyForInnerArray(key, type);
 
     cellContentElement = renderObject(
       cellValue,
@@ -70,7 +70,7 @@ const renderTableCell = (key, cellValue) => {
   return cellElement;
 };
 
-export const renderTable = data => {
+export const renderTable = (data) => {
   const tableElement = createSimpleDOMElement(
     'table',
     null,
@@ -79,7 +79,7 @@ export const renderTable = data => {
 
   let headers = [];
 
-  data.forEach(item => {
+  data.forEach((item) => {
     headers = [...new Set([...headers, ...Object.keys(item)])];
   });
 

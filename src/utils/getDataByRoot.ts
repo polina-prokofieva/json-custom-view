@@ -1,6 +1,7 @@
 import { getSettings } from '../settings';
+import { ArrayOrObjectValueType, ValueType } from '../types';
 
-export const getDataByRoot = (data: object): any => {
+export const getDataByRoot = (data: ArrayOrObjectValueType): ValueType => {
   const settings = getSettings();
   const { root } = settings;
 

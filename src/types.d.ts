@@ -32,3 +32,15 @@ export interface NotificationObjectType {
   type: NotificationType;
   text: string;
 }
+
+export type ValueType =
+  | string
+  | number
+  | boolean
+  | null
+  | ValueType[]
+  | ObjectValueType;
+
+export type ObjectValueType = { [key: string]: ValueType };
+
+export type ArrayOrObjectValueType = ValueType[] | ObjectValueType;

@@ -4,23 +4,21 @@ import { getSettings } from '../settings';
 import { renderObject } from './object';
 import styles from '../assets/style.module.less';
 
-export const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
+export const createSimpleDOMElement = (
+  tag: string,
+  value = '',
+  classNameOrOptions?: string | string[]
+): HTMLElement => {
   const element = document.createElement(tag);
   element.innerHTML = value;
 
   if (!classNameOrOptions) return element;
 
-  if (isObject(classNameOrOptions)) {
-    for (let param in classNameOrOptions) {
-      element[param] = classNameOrOptions[param];
-    }
-  } else {
-    const classNames = Array.isArray(classNameOrOptions)
-      ? classNameOrOptions.join(' ')
-      : classNameOrOptions;
+  const classNames = Array.isArray(classNameOrOptions)
+    ? classNameOrOptions.join(' ')
+    : classNameOrOptions;
 
-    element.className = classNames;
-  }
+  element.className = classNames;
 
   return element;
 };
@@ -41,7 +39,7 @@ const renderNotifications = () => {
   return notificationsElement;
 };
 
-export const render = (convertedData, rootElement) => {
+export const render = (convertedData: any, rootElement: HTMLElement) => {
   const settings = getSettings();
   const { showNotifications } = settings;
 

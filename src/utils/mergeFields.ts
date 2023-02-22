@@ -1,9 +1,14 @@
-export const isSingle = data =>
+import { ArrayOrObjectValueType, ObjectValueType, ValueType } from '../types';
+
+export const isSingle = (data: ArrayOrObjectValueType): boolean =>
   (Array.isArray(data) && data.length === 1) || Object.keys(data).length === 1;
 
-export const mergeSingleFieldsToOneLevel = (key, value) => {
-  let singleKey;
-  let singleValue;
+export const mergeSingleFieldsToOneLevel = (
+  key: string | number,
+  value: ObjectValueType
+): { key: string | number; value: ValueType } => {
+  let singleKey: string | number;
+  let singleValue: ValueType;
 
   if (Array.isArray(value)) {
     singleKey = key;
@@ -24,7 +29,10 @@ export const mergeSingleFieldsToOneLevel = (key, value) => {
   };
 };
 
-export const mergeSingleFields = (key, value) =>
+export const mergeSingleFields = (
+  key: string | number,
+  value: any
+): { key: string | number; value: any } =>
   value && typeof value === 'object' && isSingle(value)
     ? mergeSingleFieldsToOneLevel(key, value)
     : { key, value };

@@ -38,6 +38,8 @@ export const setSettings = (customSettings: SettingsType): void => {
 
 export const clearSettings = (): void => {
   settings = defaultSettings;
+  innerSettings.keysDict = {};
+  innerSettings.keysOldToNew = {};
 };
 
 export const getSettings = (): SettingsType => ({ ...settings });
@@ -53,28 +55,32 @@ export const isNeedToSaveKey = (key: string, value: any): boolean => {
 export const saveKey = (oldKey: string, newKey: string, value: any): void => {
   if (!isNeedToSaveKey(oldKey, value) || oldKey === newKey) return;
 
-  if (settings.keysDict[newKey] && settings.keysDict[newKey] !== oldKey) {
+  if (
+    innerSettings.keysDict[newKey] &&
+    innerSettings.keysDict[newKey] !== oldKey
+  ) {
     addWarning(
       `There is more that one field with transformed key ${newKey} with different original keys`
     );
   }
-  settings.keysDict[newKey] = oldKey;
+  innerSettings.keysDict[newKey] = oldKey;
 
   if (
-    settings.keysOldToNew[oldKey] &&
-    settings.keysOldToNew[oldKey] !== newKey
+    innerSettings.keysOldToNew[oldKey] &&
+    innerSettings.keysOldToNew[oldKey] !== newKey
   ) {
     addWarning(
       `There is more that one field with original key ${oldKey} with different transformed keys`
     );
   }
-  settings.keysOldToNew[oldKey] = newKey;
+  innerSettings.keysOldToNew[oldKey] = newKey;
 };
 
 export const getNewKeyFromOld = (oldKey: string): string =>
-  settings.keysOldToNew[oldKey] || oldKey;
+  innerSettings.keysOldToNew[oldKey] || oldKey;
 
-export const getOldKey = (key: string): string => settings.keysDict[key] || key;
+export const getOldKey = (key: string): string =>
+  innerSettings.keysDict[key] || key;
 
 export const checkSettings = () => {
   const {

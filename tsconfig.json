@@ -7,5 +7,6 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node"
-  }
+  },
+  "includes": ["./path/to/the/new/file/externals.d.ts"]
 }
