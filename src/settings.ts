@@ -82,7 +82,7 @@ export const getNewKeyFromOld = (oldKey: string): string =>
 export const getOldKey = (key: string): string =>
   innerSettings.keysDict[key] || key;
 
-export const checkSettings = () => {
+export const checkSettings = (): void => {
   const {
     root,
     keysForArrays,

@@ -1,10 +1,12 @@
+import { ValueType } from '../types';
+
 export const valueAppearence = (
-  value: any,
+  value: ValueType,
   {
     nullAppearence,
     boolAppearence,
   }: { nullAppearence?: string; boolAppearence?: [string, string] }
-): any => {
+): ValueType => {
   if (boolAppearence && typeof value === 'boolean') {
     return boolAppearence[+value];
   }

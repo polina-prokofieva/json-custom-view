@@ -4,7 +4,7 @@ import { renderTable } from './renderTable';
 import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
-export const toggleVisibility = (objectElement: HTMLElement) => {
+export const toggleVisibility = (objectElement: HTMLElement): void => {
   objectElement.classList.toggle(styles.opened);
 
   if (!objectElement.classList.contains(styles.opened)) {
@@ -44,7 +44,7 @@ export const renderObject = (
   data: any,
   className: string = styles.main,
   specialKeys?: string
-) => {
+): HTMLElement => {
   const settings = getSettings();
   const mainElement = createSimpleDOMElement('div', null, className);
 
@@ -91,7 +91,7 @@ const renderField = (
     specialKeyForInnerArray,
     renderAsTable,
   }: { specialKeyForInnerArray: string | null; renderAsTable: boolean }
-) => {
+): { keyElement: HTMLElement; fragment: DocumentFragment } => {
   const fragment = document.createDocumentFragment();
   const keyElement = createSimpleDOMElement('span', key, styles.key);
 

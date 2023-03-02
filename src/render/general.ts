@@ -7,23 +7,23 @@ import styles from '../assets/style.module.less';
 export const createSimpleDOMElement = (
   tag: string,
   value = '',
-  classNameOrOptions?: string | string[]
+  classNames?: string | string[]
 ): HTMLElement => {
   const element = document.createElement(tag);
   element.innerHTML = value;
 
-  if (!classNameOrOptions) return element;
+  if (!classNames) return element;
 
-  const classNames = Array.isArray(classNameOrOptions)
-    ? classNameOrOptions.join(' ')
-    : classNameOrOptions;
+  const classNamesValue = Array.isArray(classNames)
+    ? classNames.join(' ')
+    : classNames;
 
-  element.className = classNames;
+  element.className = classNamesValue;
 
   return element;
 };
 
-const renderNotifications = () => {
+const renderNotifications = (): HTMLElement => {
   const notificationsElement = createSimpleDOMElement(
     'div',
     null,
@@ -39,7 +39,7 @@ const renderNotifications = () => {
   return notificationsElement;
 };
 
-export const render = (convertedData: any, rootElement: HTMLElement) => {
+export const render = (convertedData: any, rootElement: HTMLElement): void => {
   const settings = getSettings();
   const { showNotifications } = settings;
 
