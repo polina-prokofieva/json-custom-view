@@ -1,10 +1,10 @@
 import { createSimpleDOMElement } from './general';
-import { convertByMask } from '../utils/formatKeys.js';
-import { renderTable } from './renderTable.js';
-import { getSettings, getOldKey } from '../settings.js';
+import { convertByMask } from '../utils/formatKeys';
+import { renderTable } from './renderTable';
+import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
-export const toggleVisibility = objectElement => {
+export const toggleVisibility = (objectElement: HTMLElement): void => {
   objectElement.classList.toggle(styles.opened);
 
   if (!objectElement.classList.contains(styles.opened)) {
@@ -12,13 +12,25 @@ export const toggleVisibility = objectElement => {
       `.${styles.opened}`
     );
 
-    allOpenedChildren.forEach(element => {
+    allOpenedChildren.forEach((element) => {
       element.classList.remove(styles.opened);
     });
   }
 };
 
-export const generateKeysForInnerArray = (key, type) => {
+export const generateKeyForInnerArray = (
+  key: string,
+  type:
+    | 'array'
+    | 'string'
+    | 'object'
+    | 'number'
+    | 'boolean'
+    | 'undefined'
+    | 'bigint'
+    | 'symbol'
+    | 'function'
+): string | null => {
   const settings = getSettings();
   const oldKey = getOldKey(key);
   const { keysForArrays } = settings;
@@ -28,7 +40,11 @@ export const generateKeysForInnerArray = (key, type) => {
     : null;
 };
 
-export const renderObject = (data, className = styles.main, specialKeys) => {
+export const renderObject = (
+  data: any,
+  className: string = styles.main,
+  specialKeys?: string
+): HTMLElement => {
   const settings = getSettings();
   const mainElement = createSimpleDOMElement('div', null, className);
 
@@ -44,14 +60,17 @@ export const renderObject = (data, className = styles.main, specialKeys) => {
     const { arraysAsTable, keysOldToNew } = settings;
     const oldKey = getOldKey(key);
 
-    const specialKeysForInnerArray = generateKeysForInnerArray(key, type);
+    const specialKeyForInnerArray: string | null = generateKeyForInnerArray(
+      key,
+      type
+    );
 
     const specialKey = specialKeys
       ? convertByMask(value, specialKeys, keysOldToNew)
       : key;
 
     const { keyElement, fragment } = renderField(specialKey, value, {
-      specialKeysForInnerArray,
+      specialKeyForInnerArray,
       renderAsTable:
         type === 'array' && arraysAsTable && arraysAsTable.includes(oldKey),
     });
@@ -66,10 +85,13 @@ export const renderObject = (data, className = styles.main, specialKeys) => {
 };
 
 const renderField = (
-  key,
-  value,
-  { specialKeysForInnerArray, renderAsTable }
-) => {
+  key: string,
+  value: any,
+  {
+    specialKeyForInnerArray,
+    renderAsTable,
+  }: { specialKeyForInnerArray: string | null; renderAsTable: boolean }
+): { keyElement: HTMLElement; fragment: DocumentFragment } => {
   const fragment = document.createDocumentFragment();
   const keyElement = createSimpleDOMElement('span', key, styles.key);
 
@@ -78,7 +100,7 @@ const renderField = (
   if (typeof value === 'object' && value !== null) {
     const renderedValue = renderAsTable
       ? renderTable(value)
-      : renderObject(value, styles.value, specialKeysForInnerArray);
+      : renderObject(value, styles.value, specialKeyForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
     const valueForRender = value === null ? 'null' : value;

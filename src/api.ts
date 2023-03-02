@@ -1,9 +1,10 @@
-import { transform } from './transform.js';
-import { render } from './render/general.js';
-import { clearNotifications, addError } from './notifications.js';
-import { setSettings, checkSettings } from './settings.js';
+import { transform } from './transform';
+import { render } from './render/general';
+import { clearNotifications, addError } from './notifications';
+import { setSettings, checkSettings } from './settings';
+import { SettingsType, ValueType } from './types';
 
-export const convert = data => {
+export const convert = (data: ValueType): ValueType => {
   try {
     const parsed = typeof data === 'string' ? JSON.parse(data) : data;
     const converted = transform(parsed);
@@ -14,8 +15,12 @@ export const convert = data => {
   }
 };
 
-export const generate = (data, nodeElement, customSettings) => {
-  let convertedData;
+export const generate = (
+  data: ValueType,
+  nodeElement: HTMLElement,
+  customSettings?: SettingsType
+): void => {
+  let convertedData: ValueType;
 
   clearNotifications();
 

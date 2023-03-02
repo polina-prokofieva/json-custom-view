@@ -1,15 +1,21 @@
 import { createSimpleDOMElement } from './general';
 import { renderObject } from './object';
-import { generateKeysForInnerArray } from './object';
+import { generateKeyForInnerArray } from './object';
 import { getSettings, getOldKey } from '../settings';
+import { ObjectValueType, ValueType } from '../types';
+import { isObject } from '../utils/isObject';
 import styles from '../assets/style.module.less';
 
-const renderTableHeader = headers => {
+export const isArrayOfObjects = (data: ValueType[]): boolean => {
+  return data.every((item) => isObject(item));
+};
+
+const renderTableHeader = (headers: string[]): DocumentFragment => {
   const headerFragment = document.createDocumentFragment();
   const headerElement = createSimpleDOMElement('thead');
   const rowElement = createSimpleDOMElement('tr');
 
-  headers.forEach(header => {
+  headers.forEach((header) => {
     const headerCellElement = createSimpleDOMElement('th', header);
     rowElement.appendChild(headerCellElement);
   });
@@ -20,14 +26,17 @@ const renderTableHeader = headers => {
   return headerFragment;
 };
 
-const renderTableBody = (data, headers) => {
+const renderTableBody = (
+  data: ObjectValueType[],
+  headers: string[]
+): DocumentFragment => {
   const bodyFragment = document.createDocumentFragment();
   const bodyElement = createSimpleDOMElement('tbody');
 
-  data.forEach(row => {
+  data.forEach((row: ObjectValueType) => {
     const rowElement = createSimpleDOMElement('tr');
 
-    headers.forEach(cell => {
+    headers.forEach((cell: string) => {
       const bodyCellElement = renderTableCell(cell, row[cell]);
       rowElement.appendChild(bodyCellElement);
     });
@@ -40,22 +49,29 @@ const renderTableBody = (data, headers) => {
   return bodyFragment;
 };
 
-const renderTableCell = (key, cellValue) => {
+const renderTableCell = (key: string, cellValue: ValueType): HTMLElement => {
   const settings = getSettings();
-  const type = Array.isArray(cellValue) ? 'array' : typeof cellValue;
 
   if (typeof cellValue !== 'object') {
-    return createSimpleDOMElement('td', cellValue || '-');
+    return createSimpleDOMElement('td', cellValue ? cellValue.toString() : '-');
   }
 
   const { arraysAsTable } = settings;
   const oldKey = getOldKey(key);
   let cellContentElement;
 
-  if (type === 'array' && arraysAsTable && arraysAsTable.includes(oldKey)) {
-    cellContentElement = renderTable(cellValue);
+  if (
+    Array.isArray(cellValue) &&
+    isArrayOfObjects(cellValue) &&
+    arraysAsTable &&
+    arraysAsTable.includes(oldKey)
+  ) {
+    cellContentElement = renderTable(cellValue as ObjectValueType[]);
   } else {
-    const specialKeysForInnerArray = generateKeysForInnerArray(key, type);
+    const specialKeysForInnerArray = generateKeyForInnerArray(
+      key,
+      typeof cellValue
+    );
 
     cellContentElement = renderObject(
       cellValue,
@@ -70,16 +86,16 @@ const renderTableCell = (key, cellValue) => {
   return cellElement;
 };
 
-export const renderTable = data => {
+export const renderTable = (data: ObjectValueType[]): HTMLElement => {
   const tableElement = createSimpleDOMElement(
     'table',
     null,
     styles.arrayElements
   );
 
-  let headers = [];
+  let headers: string[] = [];
 
-  data.forEach(item => {
+  data.forEach((item: ObjectValueType) => {
     headers = [...new Set([...headers, ...Object.keys(item)])];
   });
 

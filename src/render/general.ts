@@ -1,31 +1,29 @@
-import { isObject } from '../utils/isObject.js';
-import { notifications } from '../notifications.js';
-import { getSettings } from '../settings.js';
-import { renderObject } from './object.js';
+import { isObject } from '../utils/isObject';
+import { notifications } from '../notifications';
+import { getSettings } from '../settings';
+import { renderObject } from './object';
 import styles from '../assets/style.module.less';
 
-export const createSimpleDOMElement = (tag, value = '', classNameOrOptions) => {
+export const createSimpleDOMElement = (
+  tag: string,
+  value: string = '',
+  classNames?: string | string[]
+): HTMLElement => {
   const element = document.createElement(tag);
   element.innerHTML = value;
 
-  if (!classNameOrOptions) return element;
+  if (!classNames) return element;
 
-  if (isObject(classNameOrOptions)) {
-    for (let param in classNameOrOptions) {
-      element[param] = classNameOrOptions[param];
-    }
-  } else {
-    const classNames = Array.isArray(classNameOrOptions)
-      ? classNameOrOptions.join(' ')
-      : classNameOrOptions;
+  const classNamesValue = Array.isArray(classNames)
+    ? classNames.join(' ')
+    : classNames;
 
-    element.className = classNames;
-  }
+  element.className = classNamesValue;
 
   return element;
 };
 
-const renderNotifications = () => {
+const renderNotifications = (): HTMLElement => {
   const notificationsElement = createSimpleDOMElement(
     'div',
     null,
@@ -41,7 +39,7 @@ const renderNotifications = () => {
   return notificationsElement;
 };
 
-export const render = (convertedData, rootElement) => {
+export const render = (convertedData: any, rootElement: HTMLElement): void => {
   const settings = getSettings();
   const { showNotifications } = settings;
 

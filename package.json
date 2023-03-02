@@ -1,6 +1,6 @@
 {
   "name": "json-custom-view",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
   "main": "build/api.js",
   "jest": {
@@ -22,6 +22,7 @@
   },
   "keywords": [
     "javascript",
+    "typescript",
     "frontend",
     "json",
     "data"
@@ -41,7 +42,9 @@
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
-    "@jest/globals": "^29.3.1",
+    "@babel/preset-typescript": "^7.21.0",
+    "@jest/globals": "^29.4.3",
+    "@types/jest": "^29.4.0",
     "@types/node": "^18.11.17",
     "ansi-escapes": "^4.3.2",
     "ansi-regex": "^5.0.1",
@@ -172,7 +175,6 @@
     "merge-stream": "^2.0.0",
     "micromatch": "^4.0.5",
     "mimic-fn": "^2.1.0",
-    "mini-css-extract-plugin": "^2.7.2",
     "minimatch": "^3.1.2",
     "ms": "^2.1.2",
     "natural-compare": "^1.4.0",
@@ -225,8 +227,11 @@
     "tmpl": "^1.0.5",
     "to-fast-properties": "^2.0.0",
     "to-regex-range": "^5.0.1",
+    "ts-jest": "^29.0.5",
+    "ts-loader": "^9.4.2",
     "type-detect": "^4.0.8",
     "type-fest": "^0.21.3",
+    "typescript": "^4.9.5",
     "update-browserslist-db": "^1.0.10",
     "v8-to-istanbul": "^9.0.1",
     "walker": "^1.0.8",

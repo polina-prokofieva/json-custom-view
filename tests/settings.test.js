@@ -14,8 +14,6 @@ const defaultSettings = {
   hideEmpty: true,
   isMergeSingleFields: false,
   showNotifications: true,
-  keysDict: {},
-  keysOldToNew: {},
   arraysAsTable: [],
   keysForArrays: {},
 };
