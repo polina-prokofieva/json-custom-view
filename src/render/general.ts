@@ -6,7 +6,7 @@ import styles from '../assets/style.module.less';
 
 export const createSimpleDOMElement = (
   tag: string,
-  value = '',
+  value: string = '',
   classNames?: string | string[]
 ): HTMLElement => {
   const element = document.createElement(tag);
