@@ -1,6 +1,6 @@
 {
   "name": "json-custom-view",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
   "main": "build/api.js",
   "types": "build/api.d.ts",
