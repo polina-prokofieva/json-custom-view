@@ -103,7 +103,6 @@ const transformBranch = (
 
   if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) return null;
 
-  debugger;
   if (
     transformedBranch &&
     typeof transformedBranch === 'object' &&

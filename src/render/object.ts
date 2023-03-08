@@ -84,6 +84,19 @@ export const renderObject = (
   return mainElement;
 };
 
+export const renderSimpleValue = (
+  value: number | string | null | boolean
+): DocumentFragment => {
+  const fragment = document.createDocumentFragment();
+
+  const valueForRender = value === null ? 'null' : value;
+  fragment.appendChild(
+    createSimpleDOMElement('span', valueForRender.toString(), styles.value)
+  );
+
+  return fragment;
+};
+
 const renderField = (
   key: string,
   value: any,
@@ -103,11 +116,8 @@ const renderField = (
       : renderObject(value, styles.value, specialKeyForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
-    const valueForRender = value === null ? 'null' : value;
     fragment.appendChild(createSimpleDOMElement('span', ': ', styles.value));
-    fragment.appendChild(
-      createSimpleDOMElement('span', valueForRender, styles.value)
-    );
+    fragment.appendChild(renderSimpleValue(value));
   }
 
   return { keyElement, fragment };

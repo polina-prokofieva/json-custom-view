@@ -1,7 +1,7 @@
-import { isObject } from '../utils/isObject';
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
-import { renderObject } from './object';
+import { renderObject, renderSimpleValue } from './object';
+import { ValueType } from '../types';
 import styles from '../assets/style.module.less';
 
 export const createSimpleDOMElement = (
@@ -39,7 +39,22 @@ const renderNotifications = (): HTMLElement => {
   return notificationsElement;
 };
 
-export const render = (convertedData: any, rootElement: HTMLElement): void => {
+const renderSingleValue = (
+  value: number | string | boolean | null
+): HTMLElement => {
+  const valueElement = createSimpleDOMElement('div', '', styles[typeof value]);
+  valueElement.appendChild(renderSimpleValue(value));
+
+  const mainElement = createSimpleDOMElement('div', '', styles.main);
+  mainElement.appendChild(valueElement);
+
+  return mainElement;
+};
+
+export const render = (
+  convertedData: ValueType,
+  rootElement: HTMLElement
+): void => {
   const settings = getSettings();
   const { showNotifications } = settings;
 
@@ -47,6 +62,14 @@ export const render = (convertedData: any, rootElement: HTMLElement): void => {
     rootElement.appendChild(renderNotifications());
   }
 
-  const mainElement = renderObject(convertedData);
+  let mainElement;
+
+  if (convertedData && typeof convertedData === 'object') {
+    mainElement = renderObject(convertedData);
+  } else {
+    mainElement = renderSingleValue(
+      convertedData as string | boolean | number | null
+    );
+  }
   rootElement.appendChild(mainElement);
 };
