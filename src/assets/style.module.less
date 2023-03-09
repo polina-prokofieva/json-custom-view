@@ -4,10 +4,16 @@
 
   display: grid;
   gap: 7px;
+  grid-template-columns: 100%;
 
   font-family: 'Courier New';
   font-size: 11pt;
   text-align: left;
+
+  &,
+  & * {
+    box-sizing: border-box;
+  }
 }
 
 .key {
@@ -42,6 +48,7 @@
 
   & > .value {
     display: grid;
+    grid-template-columns: 100%;
     gap: 7px;
     visibility: hidden;
     height: 0;
@@ -100,6 +107,13 @@
 
 .field {
   margin-left: 20px;
+  max-width: 100%;
+}
+
+.tableValue {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
 }
 
 .notifications {

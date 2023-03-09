@@ -1,6 +1,6 @@
 import { createSimpleDOMElement } from './general';
 import { convertByMask } from '../utils/formatKeys';
-import { renderTable } from './renderTable';
+import { renderTableValue } from './renderTable';
 import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
@@ -112,7 +112,7 @@ const renderField = (
 
   if (typeof value === 'object' && value !== null) {
     const renderedValue = renderAsTable
-      ? renderTable(value)
+      ? renderTableValue(value)
       : renderObject(value, styles.value, specialKeyForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
