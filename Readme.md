@@ -36,6 +36,7 @@
 | **keysForArrays**         | Object               | `undefined` | an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays                                                                                                                                                                              |
 | **arraysAsTable**         | Array of Strings     | `[]`        | array of keys of parameters which contain an array and which will be presented as a table                                                                                                                                                                                                            |
 | **showNotifications**     | Boolean              | `true`      | if it's `true` all **errors** and **warnings** will be visible                                                                                                                                                                                                                                       |
+| **capitalizeKeys**        | Boolean              | `undefined` | if it's `true` all **keys** will start from capital letter                                                                                                                                                                                                                                           |
 
 ## Usage
 
