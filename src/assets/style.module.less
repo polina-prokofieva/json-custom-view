@@ -53,7 +53,7 @@
   }
 
   & > .value {
-    display: grid;
+    display: none;
     grid-template-columns: 100%;
     gap: 7px;
     visibility: hidden;
@@ -70,6 +70,10 @@
       visibility: visible;
       height: auto;
       margin-top: 7px;
+    }
+
+    & > .value {
+      display: grid;
     }
   }
 }

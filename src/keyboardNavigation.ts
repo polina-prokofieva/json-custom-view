@@ -49,6 +49,8 @@ export const onKeyPress = (
 ): void => {
   if (!evt.key.includes('Arrow')) return;
 
+  evt.preventDefault();
+
   const activeElement = document.activeElement as HTMLElement;
   const direction = evt.key
     .replace('Arrow', '')
