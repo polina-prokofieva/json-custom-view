@@ -28,6 +28,7 @@ declare module 'json-custom-view' {
     keysForArrays?: keysForArraysType;
     arraysAsTable?: string[];
     showNotifications?: boolean;
+    capitalizeKeys?: boolean;
   }
 
   export const generate: (

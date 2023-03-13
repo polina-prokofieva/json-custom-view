@@ -64,13 +64,14 @@ const transformArray = (data: ValueType[]): ValueType => {
 
 const transformObject = (data: ObjectValueType): ValueType => {
   const settings = getSettings();
-  const { isFormatKeys } = settings;
+  const { isFormatKeys, capitalizeKeys } = settings;
   const transformed: ObjectValueType = {};
 
   for (const key in data) {
     if (!isFieldShouldBeVisible(key, data[key])) continue;
 
     let newKey = isFormatKeys ? convertKey(key) : key;
+    if (capitalizeKeys) newKey = `${newKey[0].toUpperCase()}${newKey.slice(1)}`;
 
     if (data[key] && typeof data[key] === 'object') {
       const transformedBranch = transformBranch(newKey, data[key], false, key);
@@ -103,7 +104,6 @@ const transformBranch = (
 
   if (hideEmpty && isEmptyObjectOrArray(transformedBranch)) return null;
 
-  debugger;
   if (
     transformedBranch &&
     typeof transformedBranch === 'object' &&

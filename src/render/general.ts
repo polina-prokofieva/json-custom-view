@@ -1,24 +1,31 @@
-import { isObject } from '../utils/isObject';
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
-import { renderObject } from './object';
+import { renderObject, renderSimpleValue } from './object';
+import { ValueType } from '../types';
+import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
 
 export const createSimpleDOMElement = (
   tag: string,
   value: string = '',
-  classNames?: string | string[]
+  classNames?: string | string[],
+  attributes?: { [key: string]: string }
 ): HTMLElement => {
   const element = document.createElement(tag);
   element.innerHTML = value;
 
-  if (!classNames) return element;
+  if (!classNames && !attributes) return element;
 
   const classNamesValue = Array.isArray(classNames)
     ? classNames.join(' ')
     : classNames;
 
   element.className = classNamesValue;
+
+  attributes &&
+    Object.keys(attributes).forEach((key: string) =>
+      element.setAttribute(key, attributes[key])
+    );
 
   return element;
 };
@@ -39,7 +46,22 @@ const renderNotifications = (): HTMLElement => {
   return notificationsElement;
 };
 
-export const render = (convertedData: any, rootElement: HTMLElement): void => {
+const renderSingleValue = (
+  value: number | string | boolean | null
+): HTMLElement => {
+  const valueElement = createSimpleDOMElement('div', '', styles[typeof value]);
+  valueElement.appendChild(renderSimpleValue(value));
+
+  const mainElement = createSimpleDOMElement('div', '', styles.main);
+  mainElement.appendChild(valueElement);
+
+  return mainElement;
+};
+
+export const render = (
+  convertedData: ValueType,
+  rootElement: HTMLElement
+): void => {
   const settings = getSettings();
   const { showNotifications } = settings;
 
@@ -47,6 +69,16 @@ export const render = (convertedData: any, rootElement: HTMLElement): void => {
     rootElement.appendChild(renderNotifications());
   }
 
-  const mainElement = renderObject(convertedData);
+  let mainElement: HTMLElement;
+
+  if (convertedData && typeof convertedData === 'object') {
+    mainElement = renderObject(convertedData);
+  } else {
+    mainElement = renderSingleValue(
+      convertedData as string | boolean | number | null
+    );
+  }
   rootElement.appendChild(mainElement);
+
+  document.addEventListener('keydown', (evt) => onKeyPress(evt, mainElement));
 };

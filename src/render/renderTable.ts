@@ -87,11 +87,10 @@ const renderTableCell = (key: string, cellValue: ValueType): HTMLElement => {
 };
 
 export const renderTable = (data: ObjectValueType[]): HTMLElement => {
-  const tableElement = createSimpleDOMElement(
-    'table',
-    null,
-    styles.arrayElements
-  );
+  const tableElement = createSimpleDOMElement('table', null, [
+    styles.arrayElements,
+    styles.tableValue,
+  ]);
 
   let headers: string[] = [];
 
@@ -105,4 +104,16 @@ export const renderTable = (data: ObjectValueType[]): HTMLElement => {
   tableElement.appendChild(tableBody);
 
   return tableElement;
+};
+
+export const renderTableValue = (data: ObjectValueType[]): HTMLElement => {
+  const tableValueElement = createSimpleDOMElement(
+    'div',
+    null,
+    styles.tableValue
+  );
+
+  tableValueElement.appendChild(renderTable(data));
+
+  return tableValueElement;
 };

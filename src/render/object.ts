@@ -1,14 +1,25 @@
 import { createSimpleDOMElement } from './general';
 import { convertByMask } from '../utils/formatKeys';
-import { renderTable } from './renderTable';
+import { renderTableValue } from './renderTable';
 import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
 
-export const toggleVisibility = (objectElement: HTMLElement): void => {
-  objectElement.classList.toggle(styles.opened);
+export const openField = (fieldElement: HTMLElement): void => {
+  fieldElement.classList.add(styles.opened);
+};
 
-  if (!objectElement.classList.contains(styles.opened)) {
-    const allOpenedChildren = objectElement.querySelectorAll(
+export const closeField = (fieldElement: HTMLElement): void => {
+  fieldElement.classList.remove(styles.opened);
+};
+
+export const isOpen = (fieldElement: HTMLElement): boolean =>
+  fieldElement.classList.contains(styles.opened);
+
+export const toggleVisibility = (fieldElement: HTMLElement): void => {
+  fieldElement.classList.toggle(styles.opened);
+
+  if (!fieldElement.classList.contains(styles.opened)) {
+    const allOpenedChildren = fieldElement.querySelectorAll(
       `.${styles.opened}`
     );
 
@@ -84,6 +95,19 @@ export const renderObject = (
   return mainElement;
 };
 
+export const renderSimpleValue = (
+  value: number | string | null | boolean
+): DocumentFragment => {
+  const fragment = document.createDocumentFragment();
+
+  const valueForRender = value === null ? 'null' : value;
+  fragment.appendChild(
+    createSimpleDOMElement('span', valueForRender.toString(), styles.value)
+  );
+
+  return fragment;
+};
+
 const renderField = (
   key: string,
   value: any,
@@ -93,21 +117,20 @@ const renderField = (
   }: { specialKeyForInnerArray: string | null; renderAsTable: boolean }
 ): { keyElement: HTMLElement; fragment: DocumentFragment } => {
   const fragment = document.createDocumentFragment();
-  const keyElement = createSimpleDOMElement('span', key, styles.key);
-
-  fragment.appendChild(keyElement);
+  const keyElement = createSimpleDOMElement('span', key, styles.key, {
+    tabindex: '0',
+  });
 
   if (typeof value === 'object' && value !== null) {
+    fragment.appendChild(keyElement);
     const renderedValue = renderAsTable
-      ? renderTable(value)
+      ? renderTableValue(value)
       : renderObject(value, styles.value, specialKeyForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
-    const valueForRender = value === null ? 'null' : value;
-    fragment.appendChild(createSimpleDOMElement('span', ': ', styles.value));
-    fragment.appendChild(
-      createSimpleDOMElement('span', valueForRender, styles.value)
-    );
+    keyElement.appendChild(createSimpleDOMElement('span', ':', styles.value));
+    fragment.appendChild(keyElement);
+    fragment.appendChild(renderSimpleValue(value));
   }
 
   return { keyElement, fragment };
