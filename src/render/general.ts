@@ -2,23 +2,30 @@ import { notifications } from '../notifications';
 import { getSettings } from '../settings';
 import { renderObject, renderSimpleValue } from './object';
 import { ValueType } from '../types';
+import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
 
 export const createSimpleDOMElement = (
   tag: string,
   value: string = '',
-  classNames?: string | string[]
+  classNames?: string | string[],
+  attributes?: { [key: string]: string }
 ): HTMLElement => {
   const element = document.createElement(tag);
   element.innerHTML = value;
 
-  if (!classNames) return element;
+  if (!classNames && !attributes) return element;
 
   const classNamesValue = Array.isArray(classNames)
     ? classNames.join(' ')
     : classNames;
 
   element.className = classNamesValue;
+
+  attributes &&
+    Object.keys(attributes).forEach((key: string) =>
+      element.setAttribute(key, attributes[key])
+    );
 
   return element;
 };
@@ -62,7 +69,7 @@ export const render = (
     rootElement.appendChild(renderNotifications());
   }
 
-  let mainElement;
+  let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
     mainElement = renderObject(convertedData);
@@ -72,4 +79,6 @@ export const render = (
     );
   }
   rootElement.appendChild(mainElement);
+
+  document.addEventListener('keydown', (evt) => onKeyPress(evt, mainElement));
 };
