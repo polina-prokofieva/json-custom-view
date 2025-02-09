@@ -1,6 +1,7 @@
-import { describe, expect } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import { setSettings } from '../../src/settings';
-import { getDataByRoot } from '../../src/utils/getDataByRoot';
+import { getDataByRoot, getLastRootKey } from '../../src/utils/root';
+import { isRootTable } from '../../src/utils/root';
 
 const twoLevelsData = {
   first: true,
@@ -163,5 +164,71 @@ describe('getDataByRoot from string as path', () => {
       '@code': '076',
       '#text': '-25',
     });
+  });
+});
+
+describe('getLastRootKey', () => {
+  it('should return empty string if the root is ""', () => {
+    setSettings({ root: '' });
+    expect(getLastRootKey()).toStrictEqual('');
+  });
+  it('should return the last key of the root', () => {
+    setSettings({ root: ['one', 'two', 3, 'four'] });
+    expect(getLastRootKey()).toStrictEqual('four');
+  });
+  it('should return the last key of the root', () => {
+    setSettings({ root: ['one', 'two', 3] });
+    expect(getLastRootKey()).toStrictEqual(3);
+  });
+});
+
+
+describe('isRootTable', () => {
+  it('should return false if `arraysAsTable` is not present', () => {
+    setSettings({ root: '' });
+    expect(isRootTable()).toStrictEqual(false);
+    setSettings({ root: 'first' });
+    expect(isRootTable()).toStrictEqual(false);
+    setSettings({ root: ['first'] });
+    expect(isRootTable()).toStrictEqual(false);
+    setSettings({ root: ['first', 'second'] });
+    expect(isRootTable()).toStrictEqual(false);
+  });
+
+  it('should return true if root is "" and `arraysAsTable` is [""]', () => {
+    setSettings({ root: '', arraysAsTable: [''] });
+    expect(isRootTable()).toStrictEqual(true);
+    setSettings({ root: [''], arraysAsTable: [''] });
+    expect(isRootTable()).toStrictEqual(true);
+    setSettings({ root: undefined, arraysAsTable: [''] });
+    expect(isRootTable()).toStrictEqual(true);
+  });
+
+  it('should return true if root is "first" and `arraysAsTable` is ["first"]', () => {
+    setSettings({ root: 'first', arraysAsTable: ['first'] });
+    expect(isRootTable()).toStrictEqual(true);
+    setSettings({ root: ['first'], arraysAsTable: ['first'] });
+    expect(isRootTable()).toStrictEqual(true);
+  });
+
+  it('should return false if root is "first" and `arraysAsTable` is ["second"]', () => {
+    setSettings({ root: 'first', arraysAsTable: ['second'] });
+    expect(isRootTable()).toStrictEqual(false);
+    setSettings({ root: ['first'], arraysAsTable: ['second'] });
+    expect(isRootTable()).toStrictEqual(false);
+  });
+
+  it('should return true if root is "first" and `arraysAsTable` is ["first", "second"]', () => {
+    setSettings({ root: 'first', arraysAsTable: ['first', 'second'] });
+    expect(isRootTable()).toStrictEqual(true);
+    setSettings({ root: ['first'], arraysAsTable: ['first', 'second'] });
+    expect(isRootTable()).toStrictEqual(true);
+  });
+
+  it('should return true if root is array with more that one value and `arraysAsTable` contain the last key', () => {
+    setSettings({ root: ['first', 'second'], arraysAsTable: ['second'] });
+    expect(isRootTable()).toStrictEqual(true);
+    setSettings({ root: ['first', 'second', 'third'], arraysAsTable: ['third'] });
+    expect(isRootTable()).toStrictEqual(true);
   });
 });

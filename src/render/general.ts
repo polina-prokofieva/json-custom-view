@@ -1,9 +1,11 @@
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
 import { renderObject, renderSimpleValue } from './object';
-import { ValueType } from '../types';
+import { ObjectValueType, ValueType } from '../types';
 import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
+import { isRootTable } from '../utils/root';
+import { renderTableValue } from './renderTable';
 
 export const createSimpleDOMElement = (
   tag: string,
@@ -72,7 +74,12 @@ export const render = (
   let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
-    mainElement = renderObject(convertedData);
+    if(Array.isArray(convertedData) && isRootTable()) {
+      mainElement = renderTableValue(convertedData as ObjectValueType[]);
+      mainElement.classList.add(styles.array, styles.opened);
+    } else {
+      mainElement = renderObject(convertedData);
+    }
   } else {
     mainElement = renderSingleValue(
       convertedData as string | boolean | number | null

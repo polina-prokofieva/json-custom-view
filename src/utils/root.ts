@@ -9,3 +9,18 @@ export const getDataByRoot = (data: ArrayOrObjectValueType): ValueType => {
     ? root.reduce((acc: any, curr: string) => acc[curr], data)
     : data;
 };
+
+export const getLastRootKey = (): string => {
+  const settings = getSettings();
+  const { root } = settings;
+
+  console.log('root', root);
+
+  return root[root.length - 1] || '';
+};
+
+export const isRootTable = (): boolean => {
+  const { arraysAsTable } = getSettings();
+
+  return arraysAsTable.includes(getLastRootKey());
+};

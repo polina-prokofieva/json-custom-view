@@ -3,7 +3,7 @@ import { isEmptyObjectOrArray } from './utils/isEmpty';
 import { valueAppearence } from './utils/appearence';
 import { convertKey } from './utils/formatKeys';
 import { mergeSingleFields, isSingle } from './utils/mergeFields';
-import { getDataByRoot } from './utils/getDataByRoot';
+import { getDataByRoot } from './utils/root';
 import { setSettings, checkSettings, getSettings, saveKey } from './settings';
 import { ObjectValueType, SettingsType, ValueType } from './types';
 
