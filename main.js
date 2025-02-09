@@ -1,5 +1,5 @@
-import { dataExample as JSONdata } from './tests/data/big';
-import { responseJson } from './tests/data/response';
+// import { dataExample as JSONdata } from './tests/data/big';
+import jsonData from './tests/data/big.json';
 // import { defaultSettings as settings } from './tests/data/settings';
 import { generate, transform } from './src/api';
 // import { data } from './data/realDataRestricted';
@@ -22,17 +22,17 @@ const data = {
 };
 
 const settings = {
-  root: '',
+  root: ['application_data', 'applicant_data'],
   isFormatKeys: true,
   boolAppearence: ['Yes', 'No'],
   // nullAppearence: '---',
   hideEmpty: true,
   isMergeSingleFields: true,
   showNotifications: true,
-  hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
+  // hidePropertyByKey: ['ToBeDefined', 'Bespoke'],
   arraysAsTable: ['applicant_data', 'address'],
 };
 
-generate(JSONdata, root, settings);
+generate(jsonData, root, settings);
 // console.log('JSONdata', JSONdata);
 // console.log(transform(JSON.parse(JSONdata), settings));

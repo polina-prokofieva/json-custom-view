@@ -6,7 +6,9 @@
     "target": "ESNext",
     "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "includes": ["./path/to/the/new/file/externals.d.ts"]
 }
