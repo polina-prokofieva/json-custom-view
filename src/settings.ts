@@ -96,7 +96,7 @@ export const checkSettings = (): void => {
     arraysAsTable.forEach((arrayKey) => {
       if (keysForArrays[arrayKey]) {
         addWarning(
-          `There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn't be setted both.`
+          'There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn\'t be setted both.'
         );
       }
     });

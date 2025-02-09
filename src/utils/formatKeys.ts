@@ -18,7 +18,7 @@ export const convertKey = (key: string): string => {
   const wordPattern = /([A-Z]+$)|(\d+[a-z]+)|(\d+)|(((^[a-z])|[A-Z]+)[a-z]*)/g;
   let parts: string[] = [];
 
-  for (let word of nonEmptyWords) {
+  for (const word of nonEmptyWords) {
     const newParts = word.match(wordPattern) || [word];
     parts = parts.concat(newParts);
   }

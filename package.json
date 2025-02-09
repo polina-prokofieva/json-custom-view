@@ -16,7 +16,8 @@
     "copy-types": "cp src/api.d.ts build",
     "full-build": "npm run build && npm run copy-types",
     "editorconfig": "editorconfig-checker",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -44,10 +45,15 @@
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.20.0",
     "@jest/globals": "^29.4.3",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "editorconfig-checker": "^5.0.1",
+    "eslint": "^9.20.0",
     "expect": "^29.3.1",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",

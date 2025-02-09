@@ -11,10 +11,10 @@ const entry = devMode
 
 const plugins = devMode
   ? [
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, './', 'index.html'),
-      }),
-    ]
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './', 'index.html'),
+    }),
+  ]
   : [];
 
 const loaders = [
