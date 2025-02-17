@@ -84,7 +84,7 @@ export const render = (
           '',
           'array',
         );
-    
+
         mainElement = renderObject(
           convertedData,
           styles.cell,
