@@ -1,6 +1,6 @@
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
-import { renderObject, renderSimpleValue } from './object';
+import { generateKeyForInnerArray, renderObject, renderSimpleValue } from './object';
 import { ObjectValueType, ValueType } from '../types';
 import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
@@ -74,9 +74,23 @@ export const render = (
   let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
-    if(Array.isArray(convertedData) && isRootTable()) {
-      mainElement = renderTableValue(convertedData as ObjectValueType[]);
-      mainElement.classList.add(styles.array, styles.opened);
+    if (Array.isArray(convertedData)) {
+
+      if (isRootTable()) {
+        mainElement = renderTableValue(convertedData as ObjectValueType[]);
+        mainElement.classList.add(styles.array, styles.opened);
+      } else {
+        const specialKeysForInnerArray = generateKeyForInnerArray(
+          '',
+          'array',
+        );
+    
+        mainElement = renderObject(
+          convertedData,
+          styles.cell,
+          specialKeysForInnerArray
+        );
+      }
     } else {
       mainElement = renderObject(convertedData);
     }
