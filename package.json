@@ -16,6 +16,7 @@
     "copy-types": "cp src/api.d.ts build",
     "full-build": "npm run build && npm run copy-types",
     "editorconfig": "editorconfig-checker",
+    "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watch"
   },
