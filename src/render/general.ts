@@ -1,10 +1,14 @@
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
-import { generateKeyForInnerArray, renderObject, renderSimpleValue } from './object';
+import {
+  generateKeyForInnerArray,
+  renderObject,
+  renderSimpleValue,
+} from './object';
 import { ObjectValueType, ValueType } from '../types';
 import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
-import { isRootTable } from '../utils/root';
+import { getLastRootKey, isRootTable } from '../utils/root';
 import { renderTableValue } from './renderTable';
 
 export const createSimpleDOMElement = (
@@ -24,10 +28,11 @@ export const createSimpleDOMElement = (
 
   element.className = classNamesValue;
 
-  attributes &&
+  if (attributes) {
     Object.keys(attributes).forEach((key: string) =>
       element.setAttribute(key, attributes[key])
     );
+  }
 
   return element;
 };
@@ -74,23 +79,15 @@ export const render = (
   let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
-    if (Array.isArray(convertedData)) {
-
-      if (isRootTable()) {
-        mainElement = renderTableValue(convertedData as ObjectValueType[]);
-        mainElement.classList.add(styles.array, styles.opened);
-      } else {
-        const specialKeysForInnerArray = generateKeyForInnerArray(
-          '',
-          'array',
-        );
-
-        mainElement = renderObject(
-          convertedData,
-          styles.cell,
-          specialKeysForInnerArray
-        );
-      }
+    if (isRootTable(convertedData)) {
+      mainElement = renderTableValue(convertedData as ObjectValueType[]);
+      mainElement.classList.add(styles.main, styles.array, styles.opened);
+    } else if (Array.isArray(convertedData)) {
+      mainElement = renderObject(
+        convertedData,
+        styles.main,
+        generateKeyForInnerArray(getLastRootKey(), 'array')
+      );
     } else {
       mainElement = renderObject(convertedData);
     }

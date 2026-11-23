@@ -3,6 +3,7 @@ import { convertByMask } from '../utils/formatKeys';
 import { renderTableValue } from './renderTable';
 import { getSettings, getOldKey } from '../settings';
 import styles from '../assets/style.module.less';
+import { ArrayOrObjectValueType, ObjectValueType, ValueType } from '../types';
 
 export const openField = (fieldElement: HTMLElement): void => {
   fieldElement.classList.add(styles.opened);
@@ -52,7 +53,7 @@ export const generateKeyForInnerArray = (
 };
 
 export const renderObject = (
-  data: any,
+  data: ArrayOrObjectValueType,
   className: string = styles.main,
   specialKeys?: string
 ): HTMLElement => {
@@ -60,7 +61,7 @@ export const renderObject = (
   const mainElement = createSimpleDOMElement('div', null, className);
 
   for (const key in data) {
-    const value = data[key];
+    const value = (data as ObjectValueType)[key];
     const type = Array.isArray(value) ? 'array' : typeof value;
 
     const objectElement = createSimpleDOMElement('div', null, [
@@ -68,7 +69,7 @@ export const renderObject = (
       styles[value === null ? 'null' : type],
     ]);
 
-    const { arraysAsTable, keysOldToNew } = settings;
+    const { arraysAsTable } = settings;
     const oldKey = getOldKey(key);
 
     const specialKeyForInnerArray: string | null = generateKeyForInnerArray(
@@ -77,7 +78,7 @@ export const renderObject = (
     );
 
     const specialKey = specialKeys
-      ? convertByMask(value, specialKeys, keysOldToNew)
+      ? convertByMask(value as ObjectValueType, specialKeys)
       : key;
 
     const { keyElement, fragment } = renderField(specialKey, value, {
@@ -110,7 +111,7 @@ export const renderSimpleValue = (
 
 const renderField = (
   key: string,
-  value: any,
+  value: ValueType,
   {
     specialKeyForInnerArray,
     renderAsTable,
@@ -124,13 +125,15 @@ const renderField = (
   if (typeof value === 'object' && value !== null) {
     fragment.appendChild(keyElement);
     const renderedValue = renderAsTable
-      ? renderTableValue(value)
+      ? renderTableValue(value as ObjectValueType[])
       : renderObject(value, styles.value, specialKeyForInnerArray);
     fragment.appendChild(renderedValue);
   } else {
     keyElement.appendChild(createSimpleDOMElement('span', ':', styles.value));
     fragment.appendChild(keyElement);
-    fragment.appendChild(renderSimpleValue(value));
+    fragment.appendChild(
+      renderSimpleValue(value as string | number | boolean | null)
+    );
   }
 
   return { keyElement, fragment };

@@ -1,26 +1,36 @@
 import { getSettings } from '../settings';
-import { ArrayOrObjectValueType, ValueType } from '../types';
+import { isObject } from './isObject';
+import { ArrayOrObjectValueType, ObjectValueType, ValueType } from '../types';
 
 export const getDataByRoot = (data: ArrayOrObjectValueType): ValueType => {
   const settings = getSettings();
   const { root } = settings;
 
   return Array.isArray(root)
-    ? root.reduce((acc: any, curr: string) => acc[curr], data)
+    ? root.reduce(
+      (acc: ValueType, curr: string) => (acc as ObjectValueType)[curr],
+      data
+    )
     : data;
 };
 
+/**
+ * The key under which the root data lives: the last part of `root`,
+ * or '' when the whole JSON is rendered.
+ */
 export const getLastRootKey = (): string => {
-  const settings = getSettings();
-  const { root } = settings;
+  const { root } = getSettings();
 
-  console.log('root', root);
-
-  return root[root.length - 1] || '';
+  return (Array.isArray(root) && root[root.length - 1]) || '';
 };
 
-export const isRootTable = (): boolean => {
-  const { arraysAsTable } = getSettings();
+export const isRootTable = (data: ValueType): boolean => {
+  const { arraysAsTable = [] } = getSettings();
 
-  return arraysAsTable.includes(getLastRootKey());
+  return (
+    Array.isArray(data) &&
+    data.length > 0 &&
+    data.every((item) => isObject(item)) &&
+    arraysAsTable.includes(getLastRootKey())
+  );
 };

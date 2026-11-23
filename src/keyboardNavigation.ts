@@ -20,7 +20,11 @@ const openAndClose = (
   fieldElement: HTMLElement,
   direction: 'right' | 'left'
 ): void => {
-  direction === 'right' ? openField(fieldElement) : closeField(fieldElement);
+  if (direction === 'right') {
+    openField(fieldElement);
+  } else {
+    closeField(fieldElement);
+  }
 };
 
 const getAllVisibleKeys = (mainElement: HTMLElement): HTMLElement[] => {

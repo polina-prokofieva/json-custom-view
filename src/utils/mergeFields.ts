@@ -5,7 +5,7 @@ export const isSingle = (data: ArrayOrObjectValueType): boolean =>
 
 export const mergeSingleFieldsToOneLevel = (
   key: string | number,
-  value: ObjectValueType
+  value: ArrayOrObjectValueType
 ): { key: string | number; value: ValueType } => {
   let singleKey: string | number;
   let singleValue: ValueType;
@@ -15,7 +15,7 @@ export const mergeSingleFieldsToOneLevel = (
     singleValue = value[0];
   } else {
     singleKey = Object.keys(value)[0];
-    singleValue = value[singleKey];
+    singleValue = (value as ObjectValueType)[singleKey];
   }
 
   const { key: processedKey, value: processedValue } = mergeSingleFields(
@@ -31,8 +31,8 @@ export const mergeSingleFieldsToOneLevel = (
 
 export const mergeSingleFields = (
   key: string | number,
-  value: any
-): { key: string | number; value: any } =>
+  value: ValueType
+): { key: string | number; value: ValueType } =>
   value && typeof value === 'object' && isSingle(value)
     ? mergeSingleFieldsToOneLevel(key, value)
     : { key, value };

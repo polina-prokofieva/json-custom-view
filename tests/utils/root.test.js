@@ -2,6 +2,9 @@ import { describe, expect, it } from '@jest/globals';
 import { setSettings } from '../../src/settings';
 import { getDataByRoot, getLastRootKey } from '../../src/utils/root';
 import { isRootTable } from '../../src/utils/root';
+import { generateKeyForInnerArray } from '../../src/render/object';
+
+const tableData = [{ a: 1, b: 2 }, { a: 3, b: 4 }];
 
 const twoLevelsData = {
   first: true,
@@ -176,7 +179,7 @@ describe('getLastRootKey', () => {
     setSettings({ root: ['one', 'two', 3, 'four'] });
     expect(getLastRootKey()).toStrictEqual('four');
   });
-  it('should return the last key of the root', () => {
+  it('should return the last key of the root when it is a number', () => {
     setSettings({ root: ['one', 'two', 3] });
     expect(getLastRootKey()).toStrictEqual(3);
   });
@@ -186,49 +189,74 @@ describe('getLastRootKey', () => {
 describe('isRootTable', () => {
   it('should return false if `arraysAsTable` is not present', () => {
     setSettings({ root: '' });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
     setSettings({ root: 'first' });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
     setSettings({ root: ['first'] });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
     setSettings({ root: ['first', 'second'] });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
   });
 
   it('should return true if root is "" and `arraysAsTable` is [""]', () => {
     setSettings({ root: '', arraysAsTable: [''] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
     setSettings({ root: [''], arraysAsTable: [''] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
     setSettings({ root: undefined, arraysAsTable: [''] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
   });
 
   it('should return true if root is "first" and `arraysAsTable` is ["first"]', () => {
     setSettings({ root: 'first', arraysAsTable: ['first'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
     setSettings({ root: ['first'], arraysAsTable: ['first'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
   });
 
   it('should return false if root is "first" and `arraysAsTable` is ["second"]', () => {
     setSettings({ root: 'first', arraysAsTable: ['second'] });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
     setSettings({ root: ['first'], arraysAsTable: ['second'] });
-    expect(isRootTable()).toStrictEqual(false);
+    expect(isRootTable(tableData)).toStrictEqual(false);
   });
 
   it('should return true if root is "first" and `arraysAsTable` is ["first", "second"]', () => {
     setSettings({ root: 'first', arraysAsTable: ['first', 'second'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
     setSettings({ root: ['first'], arraysAsTable: ['first', 'second'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
   });
 
   it('should return true if root is array with more that one value and `arraysAsTable` contain the last key', () => {
     setSettings({ root: ['first', 'second'], arraysAsTable: ['second'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
     setSettings({ root: ['first', 'second', 'third'], arraysAsTable: ['third'] });
-    expect(isRootTable()).toStrictEqual(true);
+    expect(isRootTable(tableData)).toStrictEqual(true);
+  });
+
+  it('should return false if the data is not an array of objects', () => {
+    setSettings({ root: ['first'], arraysAsTable: ['first'] });
+    expect(isRootTable(['a', 'b'])).toStrictEqual(false);
+    expect(isRootTable([{ a: 1 }, 'b'])).toStrictEqual(false);
+    expect(isRootTable([])).toStrictEqual(false);
+    expect(isRootTable({ a: 1 })).toStrictEqual(false);
+    expect(isRootTable('string')).toStrictEqual(false);
+    expect(isRootTable(null)).toStrictEqual(false);
+  });
+});
+
+describe('special key for the root array', () => {
+  it('uses keysForArrays of the last root key', () => {
+    setSettings({ root: ['data', 'addresses'], keysForArrays: { addresses: 'city' } });
+    expect(generateKeyForInnerArray(getLastRootKey(), 'array')).toStrictEqual('city');
+  });
+  it('uses keysForArrays[""] when there is no root', () => {
+    setSettings({ keysForArrays: { '': 'city' } });
+    expect(generateKeyForInnerArray(getLastRootKey(), 'array')).toStrictEqual('city');
+  });
+  it('returns null when the root key has no special key', () => {
+    setSettings({ root: ['addresses'], keysForArrays: { other: 'city' } });
+    expect(generateKeyForInnerArray(getLastRootKey(), 'array')).toStrictEqual(null);
   });
 });
