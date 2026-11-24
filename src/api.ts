@@ -1,7 +1,7 @@
 import { transform } from './transform';
 import { renderData, renderNotificationsInto } from './render/general';
 import { clearNotifications, addError } from './notifications';
-import { setSettings, checkSettings } from './settings';
+import { setSettings, checkSettings, getSettings } from './settings';
 import { SettingsType, ValueType } from './types';
 
 export const convert = (data: ValueType): ValueType => {
@@ -13,7 +13,15 @@ export const convert = (data: ValueType): ValueType => {
 const isNodeElement = (node: unknown): node is HTMLElement =>
   !!node && typeof (node as HTMLElement).appendChild === 'function';
 
-const reportError = (error: unknown): void => {
+const getNoDataMessage = (): string => {
+  const { root } = getSettings();
+
+  return Array.isArray(root) && root.length
+    ? `There is no data at root "${root.join('.')}".`
+    : 'There is no data to render.';
+};
+
+const reportError =(error: unknown): void => {
   const message = error instanceof Error ? error.message : String(error);
 
   addError(message);
@@ -25,7 +33,8 @@ const reportError = (error: unknown): void => {
  * Converts `data` with `customSettings` and renders it into `nodeElement`.
  *
  * Never throws for invalid input. If `data` is not valid JSON, the settings
- * are broken or the data cannot be rendered, the error goes to
+ * are broken, there is no data at `root` or the data cannot be rendered,
+ * the error goes to
  * `console.error` and, if `showNotifications` is on, an error notification
  * is rendered into `nodeElement`. No data is rendered in that case.
  * If `nodeElement` is missing, the error is only logged.
@@ -50,7 +59,13 @@ export const generate = (
     setSettings(customSettings);
     checkSettings();
 
-    mainElement = renderData(convert(data));
+    const converted = convert(data);
+
+    if (converted === undefined) {
+      throw new Error(getNoDataMessage());
+    }
+
+    mainElement = renderData(converted);
   } catch (error) {
     reportError(error);
   }

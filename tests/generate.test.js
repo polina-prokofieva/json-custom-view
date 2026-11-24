@@ -70,11 +70,33 @@ describe('generate with invalid input', () => {
     expect(consoleError).toHaveBeenCalledTimes(1);
   });
 
-  it('does not throw when the root points to a missing key', () => {
+  it('reports an error when the root points to a missing key', () => {
     expect(() =>
       generate({ a: 1 }, container, { root: 'missing' })
     ).not.toThrow();
-    expect(container.querySelector('.main').textContent).toBe('undefined');
+
+    expect(container.querySelector('.notifications .error').textContent).toBe(
+      'There is no data at root "missing".'
+    );
+    expect(container.querySelector('.main')).toBeNull();
+  });
+
+  it('reports an error when a nested root is missing', () => {
+    expect(() =>
+      generate({ a: 1 }, container, { root: 'missing.deeper' })
+    ).not.toThrow();
+
+    expect(container.querySelector('.notifications .error')).not.toBeNull();
+    expect(container.querySelector('.main')).toBeNull();
+  });
+
+  it('reports an error when there is no data', () => {
+    expect(() => generate(undefined, container)).not.toThrow();
+
+    expect(container.querySelector('.notifications .error').textContent).toBe(
+      'There is no data to render.'
+    );
+    expect(container.querySelector('.main')).toBeNull();
   });
 
   it('recovers on the next call with valid data', () => {
