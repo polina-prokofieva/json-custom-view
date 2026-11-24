@@ -18,7 +18,6 @@ export interface SettingsType {
   arraysAsTable?: string[];
   showNotifications?: boolean;
   capitalizeKeys?: boolean;
-  hideArrayElements?: boolean;
 }
 
 export type KeysMap = { [key: string]: string };

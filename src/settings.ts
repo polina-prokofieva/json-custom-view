@@ -4,7 +4,6 @@ import { RootType, SettingsType, InnerSettingsType } from './types';
 const defaultSettings: SettingsType = {
   root: [],
   isFormatKeys: false,
-  hideArrayElements: false,
   hideEmpty: true,
   isMergeSingleFields: false,
   showNotifications: true,
