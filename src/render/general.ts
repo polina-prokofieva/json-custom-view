@@ -65,17 +65,23 @@ const renderSingleValue = (
   return mainElement;
 };
 
-export const render = (
-  convertedData: ValueType,
-  rootElement: HTMLElement
-): void => {
-  const settings = getSettings();
-  const { showNotifications } = settings;
+/**
+ * Appends the notifications block to `rootElement` when there are
+ * notifications and `showNotifications` is on.
+ */
+export const renderNotificationsInto = (rootElement: HTMLElement): void => {
+  const { showNotifications } = getSettings();
 
   if (showNotifications && notifications.length) {
     rootElement.appendChild(renderNotifications());
   }
+};
 
+/**
+ * Builds the element for already converted data without attaching it to
+ * the document. It may throw for data it cannot render.
+ */
+export const renderData = (convertedData: ValueType): HTMLElement => {
   let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
@@ -96,7 +102,8 @@ export const render = (
       convertedData as string | boolean | number | null
     );
   }
-  rootElement.appendChild(mainElement);
 
   document.addEventListener('keydown', (evt) => onKeyPress(evt, mainElement));
+
+  return mainElement;
 };

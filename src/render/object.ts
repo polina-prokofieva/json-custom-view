@@ -97,13 +97,12 @@ export const renderObject = (
 };
 
 export const renderSimpleValue = (
-  value: number | string | null | boolean
+  value: number | string | null | boolean | undefined
 ): DocumentFragment => {
   const fragment = document.createDocumentFragment();
 
-  const valueForRender = value === null ? 'null' : value;
   fragment.appendChild(
-    createSimpleDOMElement('span', valueForRender.toString(), styles.value)
+    createSimpleDOMElement('span', String(value), styles.value)
   );
 
   return fragment;

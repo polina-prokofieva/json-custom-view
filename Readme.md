@@ -10,6 +10,8 @@
 | **root**     | DOM Element      | `undefined` | a DOM-node where the data will be rendered |
 | **settings** | Object           | `{}`        | an object of settings                      |
 
+`generate` doesn't throw for invalid input. If `data` is not valid JSON, or it can't be converted or rendered, the error is logged with `console.error` and shown as an error notification in `root` (unless `showNotifications` is `false`). In that case no data is rendered. If `root` is missing, the error is only logged.
+
 ---
 
 `transform(data, settings)` - convert `data` according with converting `settings`. Returns converted Object.

@@ -27,7 +27,7 @@ export const createRootArray = (root?: RootType): string[] => {
   return root;
 };
 
-export const setSettings = (customSettings: SettingsType): void => {
+export const setSettings = (customSettings: SettingsType = {}): void => {
   settings = {
     ...defaultSettings,
     ...customSettings,
