@@ -1,10 +1,11 @@
 import { isObject } from './isObject';
 import { isEmptyObjectOrArray } from './isEmpty';
 import { getSettings } from '../settings';
+import { ValueType } from '../types';
 
 export const isFieldShouldBeVisible = (
   key: string | number,
-  value: any
+  value: ValueType
 ): boolean => {
   const settings = getSettings();
   const { hidePropertiesByValue, hidePropertiesByKey, hideEmpty } = settings;
@@ -14,7 +15,7 @@ export const isFieldShouldBeVisible = (
   if (
     !isObject(value) &&
     hidePropertiesByValue &&
-    hidePropertiesByValue.includes(value)
+    hidePropertiesByValue.includes(value as string)
   ) {
     return false;
   }

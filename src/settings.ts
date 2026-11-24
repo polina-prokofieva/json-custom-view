@@ -4,7 +4,6 @@ import { RootType, SettingsType, InnerSettingsType } from './types';
 const defaultSettings: SettingsType = {
   root: [],
   isFormatKeys: false,
-  hideArrayElements: false,
   hideEmpty: true,
   isMergeSingleFields: false,
   showNotifications: true,
@@ -44,7 +43,7 @@ export const clearSettings = (): void => {
 
 export const getSettings = (): SettingsType => ({ ...settings });
 
-export const isNeedToSaveKey = (key: string, value: any): boolean => {
+export const isNeedToSaveKey = (key: string, value: unknown): boolean => {
   const { arraysAsTable, keysForArrays } = settings;
   const isKeyShouldBeSaved =
     arraysAsTable?.includes(key) ||
@@ -52,7 +51,7 @@ export const isNeedToSaveKey = (key: string, value: any): boolean => {
   return Array.isArray(value) && !!isKeyShouldBeSaved;
 };
 
-export const saveKey = (oldKey: string, newKey: string, value: any): void => {
+export const saveKey = (oldKey: string, newKey: string, value: unknown): void => {
   if (!isNeedToSaveKey(oldKey, value) || oldKey === newKey) return;
 
   if (
@@ -87,7 +86,7 @@ export const checkSettings = (): void => {
     root,
     keysForArrays,
     arraysAsTable = [],
-    hidePropertyByKey,
+    hidePropertiesByKey,
   } = settings;
 
   if (!Array.isArray(arraysAsTable)) {
@@ -96,7 +95,7 @@ export const checkSettings = (): void => {
     arraysAsTable.forEach((arrayKey) => {
       if (keysForArrays[arrayKey]) {
         addWarning(
-          `There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn't be setted both.`
+          'There is the same array in "keysForArrays" and "arraysAsTable" settings. These settings couldn\'t be setted both.'
         );
       }
     });
@@ -104,16 +103,15 @@ export const checkSettings = (): void => {
 
   const sameKeys: string[] = [];
 
-  Array.isArray(root) &&
+  if (Array.isArray(root) && hidePropertiesByKey) {
     root.forEach((key) => {
-      hidePropertyByKey &&
-        hidePropertyByKey.includes(key) &&
-        sameKeys.push(key);
+      if (hidePropertiesByKey.includes(key)) sameKeys.push(key);
     });
+  }
 
   if (sameKeys.length !== 0) {
     addWarning(
-      `Keys: ${sameKeys} are the same in "root" and in "hidePropertyByKey"`
+      `Keys: ${sameKeys} are the same in "root" and in "hidePropertiesByKey"`
     );
   }
 };

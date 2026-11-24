@@ -16,7 +16,7 @@ declare module 'json-custom-view' {
   export type RootType = string | string[];
 
   export interface SettingsType {
-    [key: string]: any;
+    [key: string]: unknown;
     root?: RootType;
     isFormatKeys?: boolean;
     nullAppearence?: string;

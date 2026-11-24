@@ -10,7 +10,6 @@ import {
 const defaultSettings = {
   root: [],
   isFormatKeys: false,
-  hideArrayElements: false,
   hideEmpty: true,
   isMergeSingleFields: false,
   showNotifications: true,

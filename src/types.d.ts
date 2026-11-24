@@ -5,7 +5,7 @@ export interface keysForArraysType {
 export type RootType = string | string[];
 
 export interface SettingsType {
-  [key: string]: any;
+  [key: string]: unknown;
   root?: RootType;
   isFormatKeys?: boolean;
   nullAppearence?: string;
@@ -17,6 +17,7 @@ export interface SettingsType {
   keysForArrays?: keysForArraysType;
   arraysAsTable?: string[];
   showNotifications?: boolean;
+  capitalizeKeys?: boolean;
 }
 
 export type KeysMap = { [key: string]: string };

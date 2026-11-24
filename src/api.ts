@@ -5,14 +5,9 @@ import { setSettings, checkSettings } from './settings';
 import { SettingsType, ValueType } from './types';
 
 export const convert = (data: ValueType): ValueType => {
-  try {
-    const parsed = typeof data === 'string' ? JSON.parse(data) : data;
-    const converted = transform(parsed);
+  const parsed = typeof data === 'string' ? JSON.parse(data) : data;
 
-    return converted;
-  } catch (error) {
-    throw error;
-  }
+  return transform(parsed);
 };
 
 export const generate = (
@@ -37,10 +32,13 @@ export const generate = (
     convertedData = convert(data);
   } catch (error) {
     addError(error.message);
+    // eslint-disable-next-line no-console
     console.error(error.message);
   }
 
-  nodeElement && render(convertedData, nodeElement);
+  if (nodeElement) {
+    render(convertedData, nodeElement);
+  }
 };
 
 export { transform };

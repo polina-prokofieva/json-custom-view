@@ -1,0 +1,29 @@
+[
+  {
+    "@type": "current",
+    "street_no": "234",
+    "street_name": "STEWART",
+    "street_type": "RD",
+    "street_type_desc": "ROAD",
+    "apt_no": "669",
+    "po_box_no": "1033",
+    "roural_route": "RR9",
+    "city": "GARDEN CITY",
+    "state": "NY",
+    "zip_code": "11552",
+    "address_line_1": "1111 Marcus Ave"
+  },
+  {
+    "@type": "previous",
+    "street_no": "105",
+    "street_name": "MAXESS",
+    "street_type": "RD",
+    "apt_no": "109",
+    "po_box_no": [],
+    "roural_route": [],
+    "city": "MELVILLE",
+    "state": "NY",
+    "zip_code": "11747",
+    "address_line_1": "64 Abbey Road London"
+  }
+]

@@ -1,9 +1,15 @@
 import { notifications } from '../notifications';
 import { getSettings } from '../settings';
-import { renderObject, renderSimpleValue } from './object';
-import { ValueType } from '../types';
+import {
+  generateKeyForInnerArray,
+  renderObject,
+  renderSimpleValue,
+} from './object';
+import { ObjectValueType, ValueType } from '../types';
 import { onKeyPress } from '../keyboardNavigation';
 import styles from '../assets/style.module.less';
+import { getLastRootKey, isRootTable } from '../utils/root';
+import { renderTableValue } from './renderTable';
 
 export const createSimpleDOMElement = (
   tag: string,
@@ -22,10 +28,11 @@ export const createSimpleDOMElement = (
 
   element.className = classNamesValue;
 
-  attributes &&
+  if (attributes) {
     Object.keys(attributes).forEach((key: string) =>
       element.setAttribute(key, attributes[key])
     );
+  }
 
   return element;
 };
@@ -72,7 +79,18 @@ export const render = (
   let mainElement: HTMLElement;
 
   if (convertedData && typeof convertedData === 'object') {
-    mainElement = renderObject(convertedData);
+    if (isRootTable(convertedData)) {
+      mainElement = renderTableValue(convertedData as ObjectValueType[]);
+      mainElement.classList.add(styles.main, styles.array, styles.opened);
+    } else if (Array.isArray(convertedData)) {
+      mainElement = renderObject(
+        convertedData,
+        styles.main,
+        generateKeyForInnerArray(getLastRootKey(), 'array')
+      );
+    } else {
+      mainElement = renderObject(convertedData);
+    }
   } else {
     mainElement = renderSingleValue(
       convertedData as string | boolean | number | null

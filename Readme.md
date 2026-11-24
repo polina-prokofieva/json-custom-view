@@ -33,8 +33,8 @@
 | **hidePropertiesByKey**   | Array of Strings     | `undefined` | array of keys by which will be hided parameters of your json                                                                                                                                                                                                                                         |
 | **hideEmpty**             | Boolean              | `true`      | hide fields with an empty object and empty arrays as a value. Fields could also become empty after hiding inner fields                                                                                                                                                                               |
 | **isMergeSingleFields**   | Boolean              | `false`     | if there is only one field in an Object or only one element is in an Array it merges to parents field                                                                                                                                                                                                |
-| **keysForArrays**         | Object               | `undefined` | an abject where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays                                                                                                                                                                              |
-| **arraysAsTable**         | Array of Strings     | `[]`        | array of keys of parameters which contain an array and which will be presented as a table                                                                                                                                                                                                            |
+| **keysForArrays**         | Object               | `undefined` | an object where keys are names of arrays and values are properties which will be shown as keys for corresponding arrays. For the root array use the last key of `root`, or `''` if `root` is not set (see [Root arrays](#root-arrays))                                                                                                                                                                              |
+| **arraysAsTable**         | Array of Strings     | `[]`        | array of keys of parameters which contain an array of objects and which will be presented as a table. For the root array use the last key of `root`, or `''` if `root` is not set (see [Root arrays](#root-arrays))                                                                                                                                                                                                            |
 | **showNotifications**     | Boolean              | `true`      | if it's `true` all **errors** and **warnings** will be visible                                                                                                                                                                                                                                       |
 | **capitalizeKeys**        | Boolean              | `undefined` | if it's `true` all **keys** will start from capital letter                                                                                                                                                                                                                                           |
 
@@ -48,4 +48,23 @@ import { generate } from 'json-custom-view';
 const root = document.querySelector('#main');
 
 generate(JSONdata, root, settings);
+```
+
+## Root arrays
+
+---
+
+When the rendered data is an array, `arraysAsTable` and `keysForArrays` refer to it by the last key of `root`. If `root` is not set, the key is `''`.
+
+```
+// data: { addresses: [{ city: 'Kyiv', street: '...' }, ...] }
+
+// show the addresses as a table
+generate(data, root, { root: 'addresses', arraysAsTable: ['addresses'] });
+
+// show the addresses as a list, using `city` as each element's key
+generate(data, root, { root: 'addresses', keysForArrays: { addresses: 'city' } });
+
+// data is the array itself
+generate(addresses, root, { arraysAsTable: [''] });
 ```
