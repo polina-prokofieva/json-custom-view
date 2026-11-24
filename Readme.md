@@ -10,6 +10,8 @@
 | **root**     | DOM Element      | `undefined` | a DOM-node where the data will be rendered |
 | **settings** | Object           | `{}`        | an object of settings                      |
 
+`generate` doesn't throw for invalid input. If `data` is not valid JSON, there is no data at `root`, or it can't be converted or rendered, the error is logged with `console.error` and shown as an error notification in `root` (unless `showNotifications` is `false`). In that case no data is rendered. If `root` is missing, the error is only logged.
+
 ---
 
 `transform(data, settings)` - convert `data` according with converting `settings`. Returns converted Object.
@@ -49,6 +51,14 @@ const root = document.querySelector('#main');
 
 generate(JSONdata, root, settings);
 ```
+
+## Keyboard navigation
+
+---
+
+Keys of the rendered data can be focused with <kbd>Tab</kbd>. While focus is inside the rendered view, <kbd>↑</kbd> and <kbd>↓</kbd> move between visible keys, and <kbd>→</kbd> and <kbd>←</kbd> open and close objects and arrays.
+
+Arrow keys pressed outside the view are not handled, so they keep working as usual on the rest of the page (scrolling, inputs). Before version 1.2.1 the view listened for arrow keys on the whole page.
 
 ## Root arrays
 
