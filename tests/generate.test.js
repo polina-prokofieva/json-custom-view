@@ -54,7 +54,20 @@ describe('generate with invalid input', () => {
     expect(() => generate({ a: 1 })).not.toThrow();
     expect(() => generate({ a: 1 }, null, {})).not.toThrow();
     expect(() => generate(invalidJson, undefined)).not.toThrow();
-    expect(consoleError).toHaveBeenCalled();
+    expect(() => generate({ a: 1 }, '#main')).not.toThrow();
+    expect(consoleError).toHaveBeenCalledTimes(4);
+  });
+
+  it('reports errors thrown after parsing and renders no data', () => {
+    // capitalizeKeys fails on an empty key inside transform
+    expect(() =>
+      generate({ '': 1 }, container, { capitalizeKeys: true })
+    ).not.toThrow();
+
+    expect(container.children).toHaveLength(1);
+    expect(container.querySelector('.notifications .error')).not.toBeNull();
+    expect(container.querySelector('.main')).toBeNull();
+    expect(consoleError).toHaveBeenCalledTimes(1);
   });
 
   it('does not throw when the root points to a missing key', () => {
@@ -81,6 +94,19 @@ describe('generate with valid input (regression)', () => {
     expect(container.children).toHaveLength(1);
     const values = [...container.querySelectorAll('.main > .field > .value')];
     expect(values.map((value) => value.textContent)).toEqual(['1', 'text']);
+  });
+
+  it('renders warnings before the data', () => {
+    generate({ a: 1 }, container, { arraysAsTable: 'a' });
+
+    const [notifications, main] = container.children;
+    expect(container.children).toHaveLength(2);
+    expect(notifications.className).toBe('notifications');
+    expect(notifications.querySelector('.warning').textContent).toBe(
+      '"arraysAsTable" should be an array'
+    );
+    expect(main.className).toBe('main');
+    expect(main.querySelector('.field > .key').textContent).toBe('a:');
   });
 
   it('works without a settings object', () => {
@@ -155,6 +181,25 @@ describe('keyboard navigation listeners', () => {
     );
 
     expect(document.activeElement).toBe(second);
+    container.remove();
+  });
+
+  it('ignores arrow keys pressed outside the view', () => {
+    const outside = document.createElement('input');
+    document.body.append(outside, container);
+    generate({ a: 1, b: 2 }, container);
+
+    outside.focus();
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      cancelable: true,
+    });
+    outside.dispatchEvent(event);
+
+    expect(document.activeElement).toBe(outside);
+    expect(event.defaultPrevented).toBe(false);
+    outside.remove();
     container.remove();
   });
 });
