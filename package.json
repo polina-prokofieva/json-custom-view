@@ -4,6 +4,9 @@
   "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
   "main": "build/api.js",
   "types": "build/api.d.ts",
+  "files": [
+    "build"
+  ],
   "jest": {
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/node_modules/jest-css-modules"
@@ -22,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/polina-prokofieva/view-json.git#main"
+    "url": "git+https://github.com/polina-prokofieva/json-custom-view.git"
   },
   "keywords": [
     "javascript",
@@ -34,9 +37,9 @@
   "author": "Polina Prokofieva",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/polina-prokofieva/view-json/issues"
+    "url": "https://github.com/polina-prokofieva/json-custom-view/issues"
   },
-  "homepage": "https://github.com/polina-prokofieva/view-json/tree/main#readme",
+  "homepage": "https://github.com/polina-prokofieva/json-custom-view#readme",
   "browserslist": [
     "last 2 chrome versions",
     "last 2 firefox versions",
