@@ -113,3 +113,48 @@ describe('generate with valid input (regression)', () => {
     expect(field.querySelector(':scope > .value').textContent).toBe('null');
   });
 });
+
+describe('keyboard navigation listeners', () => {
+  const countKeydownCalls = (spy) =>
+    spy.mock.calls.filter(([type]) => type === 'keydown').length;
+
+  it('does not add keydown listeners to document on repeated calls', () => {
+    const documentAdd = jest.spyOn(document, 'addEventListener');
+    const elementAdd = jest.spyOn(HTMLElement.prototype, 'addEventListener');
+
+    for (let i = 0; i < 3; i++) {
+      container.innerHTML = '';
+      generate({ a: 1, b: { c: 2 } }, container);
+    }
+
+    expect(countKeydownCalls(documentAdd)).toBe(0);
+    // One listener per generated main element, which is dropped with it.
+    expect(countKeydownCalls(elementAdd)).toBe(3);
+
+    documentAdd.mockRestore();
+    elementAdd.mockRestore();
+  });
+
+  it('does not add a keydown listener when nothing is rendered', () => {
+    const elementAdd = jest.spyOn(HTMLElement.prototype, 'addEventListener');
+
+    generate(invalidJson, container);
+
+    expect(countKeydownCalls(elementAdd)).toBe(0);
+    elementAdd.mockRestore();
+  });
+
+  it('still moves focus with the arrow keys', () => {
+    document.body.appendChild(container);
+    generate({ a: 1, b: { c: 2 } }, container);
+
+    const [first, second] = container.querySelectorAll('.main > .field > .key');
+    first.focus();
+    first.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })
+    );
+
+    expect(document.activeElement).toBe(second);
+    container.remove();
+  });
+});

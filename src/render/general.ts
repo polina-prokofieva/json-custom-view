@@ -103,7 +103,9 @@ export const renderData = (convertedData: ValueType): HTMLElement => {
     );
   }
 
-  document.addEventListener('keydown', (evt) => onKeyPress(evt, mainElement));
+  // Listen on the generated element, not on document: the listener goes
+  // away with the element, so repeated generate() calls don't leak handlers.
+  mainElement.addEventListener('keydown', (evt) => onKeyPress(evt, mainElement));
 
   return mainElement;
 };
