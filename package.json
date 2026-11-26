@@ -21,7 +21,9 @@
     "editorconfig": "editorconfig-checker",
     "lint": "eslint .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "sync-version": "node scripts/sync-version.js",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "repository": {
     "type": "git",
