@@ -1,0 +1,40 @@
+name: Bug report
+description: Something doesn't render or transform the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please don't report security vulnerabilities here, see SECURITY.md instead.
+  - type: input
+    id: version
+    attributes:
+      label: json-custom-view version
+      placeholder: e.g. 1.2.2
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce
+      description: The JSON data and the settings object you passed, and the function you called (`generate` or `transform`).
+      render: js
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and OS
+      placeholder: e.g. Chrome 131 on macOS 15
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, console errors or links that help explain the problem.

@@ -1,3 +1,12 @@
+# json-custom-view
+
+[![npm version](https://img.shields.io/npm/v/json-custom-view.svg)](https://www.npmjs.com/package/json-custom-view)
+[![npm downloads](https://img.shields.io/npm/dm/json-custom-view.svg)](https://www.npmjs.com/package/json-custom-view)
+[![license](https://img.shields.io/npm/l/json-custom-view.svg)](https://github.com/polina-prokofieva/json-custom-view/blob/main/package.json)
+[![CI](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml)
+
+The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.
+
 ## Demo
 
 ---
@@ -84,3 +93,9 @@ generate(data, root, { root: 'addresses', keysForArrays: { addresses: 'city' } }
 // data is the array itself
 generate(addresses, root, { arraysAsTable: [''] });
 ```
+
+## Contributing
+
+---
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started, and please follow the [Code of Conduct](CODE_OF_CONDUCT.md). To report a security issue, see [SECURITY.md](SECURITY.md).
