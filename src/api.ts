@@ -2,7 +2,7 @@ import { transform } from './transform';
 import { renderData, renderNotificationsInto } from './render/general';
 import { clearNotifications, addError } from './notifications';
 import { setSettings, checkSettings, getSettings } from './settings';
-import { SettingsType, ValueType } from './types';
+import { GenerateResult, SettingsType, ValueType } from './types';
 
 export const convert = (data: ValueType): ValueType => {
   const parsed = typeof data === 'string' ? JSON.parse(data) : data;
@@ -21,7 +21,7 @@ const getNoDataMessage = (): string => {
     : 'There is no data to render.';
 };
 
-const reportError =(error: unknown): void => {
+const reportError = (error: unknown): void => {
   const message = error instanceof Error ? error.message : String(error);
 
   addError(message);
@@ -43,14 +43,22 @@ export const generate = (
   data: ValueType,
   nodeElement: HTMLElement,
   customSettings?: SettingsType
-): void => {
+): GenerateResult => {
   clearNotifications();
 
+  const result: GenerateResult = {
+    isRendered: false,
+    errors: []
+  };
+
   if (!isNodeElement(nodeElement)) {
-    reportError(
-      'The second parameter of the "generate" function should be a node element.'
-    );
-    return;
+    const isNotNodeElementErrorMessage = 'The second parameter of the "generate" function should be a node element.';
+
+    reportError(isNotNodeElementErrorMessage);
+    return {
+      isRendered: false,
+      errors: [isNotNodeElementErrorMessage]
+    };
   }
 
   let mainElement: HTMLElement | null = null;
@@ -66,7 +74,11 @@ export const generate = (
     }
 
     mainElement = renderData(converted);
+
+    result.isRendered = true;
+
   } catch (error) {
+    result.errors.push(error);
     reportError(error);
   }
 
@@ -75,6 +87,8 @@ export const generate = (
   if (mainElement) {
     nodeElement.appendChild(mainElement);
   }
+
+  return result;
 };
 
 export { transform };

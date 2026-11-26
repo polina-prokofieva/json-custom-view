@@ -45,3 +45,8 @@ export type ValueType =
 export type ObjectValueType = { [key: string]: ValueType };
 
 export type ArrayOrObjectValueType = ValueType[] | ObjectValueType;
+
+export type GenerateResult = {
+  isRendered: boolean;
+  errors: string[];
+};
