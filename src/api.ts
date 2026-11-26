@@ -78,7 +78,7 @@ export const generate = (
     result.isRendered = true;
 
   } catch (error) {
-    result.errors.push(error);
+    result.errors.push(error instanceof Error ? error.message : String(error));
     reportError(error);
   }
 
