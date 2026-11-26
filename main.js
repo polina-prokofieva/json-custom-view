@@ -1,6 +1,6 @@
 import jsonData from './tests/data/big.json';
 // import { defaultSettings as settings } from './tests/data/settings';
-import { generate, transform } from './src/api';
+import { generate, transform } from './src/api/api';
 
 const root = document.querySelector('#main');
 const data = {

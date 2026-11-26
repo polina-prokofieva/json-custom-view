@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { generate } from '../src/api';
+import { generate } from '../src/api/api';
 
 const addresses = [
   { city: 'Kyiv', street: 'Khreshchatyk' },

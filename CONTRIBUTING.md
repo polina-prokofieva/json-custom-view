@@ -37,7 +37,7 @@ Useful scripts:
 1. Fork the repository and create a branch from `main`.
 2. Make your change. Add or update tests in `tests/` when you change behaviour.
 3. Run `npm run editorconfig`, `npm run lint`, `npm test` and `npm run build` and make sure they all pass. CI runs the same checks on every pull request.
-4. If you change the public API or the settings (`src/api.ts`, `src/settings.ts`, `src/types.d.ts`), update `src/api.d.ts` and the settings table in `Readme.md` to match.
+4. If you change the public API or the settings (`src/api/api.ts`, `src/settings.ts`, `src/types.d.ts`), update `src/api/api.d.ts` and the settings table in `Readme.md` to match.
 5. If you change anything under `src/`, bump the `version` in `package.json` following [semantic versioning](https://semver.org/). Every merge to `main` is published to npm automatically.
 6. Open a pull request and fill in the template. Keep each pull request focused on one change.
 
