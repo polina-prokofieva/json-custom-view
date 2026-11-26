@@ -225,3 +225,82 @@ describe('keyboard navigation listeners', () => {
     container.remove();
   });
 });
+
+describe('generate return value', () => {
+  it('returns isRendered: true and no errors for valid data', () => {
+    expect(generate({ a: 1 }, container)).toEqual({
+      isRendered: true,
+      errors: [],
+    });
+  });
+
+  it('does not list warnings as errors', () => {
+    expect(generate({ a: 1 }, container, { arraysAsTable: 'a' })).toEqual({
+      isRendered: true,
+      errors: [],
+    });
+  });
+
+  it('returns the parse error for invalid JSON', () => {
+    expect(generate(invalidJson, container)).toEqual({
+      isRendered: false,
+      errors: [getParseErrorMessage()],
+    });
+  });
+
+  it('returns the error even when showNotifications is false', () => {
+    expect(
+      generate(invalidJson, container, { showNotifications: false })
+    ).toEqual({
+      isRendered: false,
+      errors: [getParseErrorMessage()],
+    });
+  });
+
+  it.each([
+    ['missing', undefined],
+    ['null', null],
+    ['a selector string', '#main'],
+  ])('returns an error when the node is %s', (_, node) => {
+    expect(generate({ a: 1 }, node)).toEqual({
+      isRendered: false,
+      errors: [
+        'The second parameter of the "generate" function should be a node element.',
+      ],
+    });
+  });
+
+  it('returns the no-data error for a missing root', () => {
+    expect(generate({ a: 1 }, container, { root: 'missing' })).toEqual({
+      isRendered: false,
+      errors: ['There is no data at root "missing".'],
+    });
+  });
+
+  it('returns the no-data error when there is no data', () => {
+    expect(generate(undefined, container)).toEqual({
+      isRendered: false,
+      errors: ['There is no data to render.'],
+    });
+  });
+
+  it('returns a single error when rendering fails after parsing', () => {
+    const result = generate({ '': 1 }, container, { capitalizeKeys: true });
+
+    expect(result.isRendered).toBe(false);
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0]).toBe(
+      container.querySelector('.notifications .error').textContent
+    );
+  });
+
+  it('does not carry errors over between calls', () => {
+    generate(invalidJson, container);
+    container.innerHTML = '';
+
+    expect(generate({ a: 1 }, container)).toEqual({
+      isRendered: true,
+      errors: [],
+    });
+  });
+});
