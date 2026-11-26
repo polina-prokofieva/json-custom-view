@@ -1,3 +1,9 @@
+## Demo
+
+---
+
+Try it in the [demo app](https://polina-prokofieva.github.io/json-custom-view-app/) ([source code](https://github.com/polina-prokofieva/json-custom-view-app)).
+
 ## Functions
 
 ---
