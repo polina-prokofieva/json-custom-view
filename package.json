@@ -15,8 +15,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve",
     "build-dev": "cross-env NODE_ENV=development webpack",
-    "build": "cross-env NODE_ENV=production webpack && cp src/api.d.ts build",
-    "copy-types": "cp src/api.d.ts build",
+    "build": "cross-env NODE_ENV=production webpack && cp src/api/api.d.ts build",
+    "copy-types": "cp src/api/api.d.ts build",
     "full-build": "npm run build && npm run copy-types",
     "editorconfig": "editorconfig-checker",
     "lint": "eslint .",

@@ -7,7 +7,7 @@ const devtool = devMode ? 'source-map' : undefined;
 
 const entry = devMode
   ? path.resolve(__dirname, './', 'main.js')
-  : path.resolve(__dirname, 'src', 'api.ts');
+  : path.resolve(__dirname, 'src', 'api', 'api.ts');
 
 const plugins = devMode
   ? [

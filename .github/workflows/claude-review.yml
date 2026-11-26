@@ -40,8 +40,8 @@ jobs:
             merge to `main` publishes to npm automatically:
             - If the PR changes anything under `src/`, `package.json` "version"
               must be bumped compared to `main`. Otherwise the publish fails.
-            - If the public API or the settings change (`src/api.ts`,
-              `src/settings.ts`, `src/types.d.ts`), `src/api.d.ts` and the
+            - If the public API or the settings change (`src/api/api.ts`,
+              `src/settings.ts`, `src/types.d.ts`), `src/api/api.d.ts` and the
               settings table in `Readme.md` must be updated to match.
 
             Post specific issues as inline comments with

@@ -1,8 +1,8 @@
-import { transform } from './transform';
-import { renderData, renderNotificationsInto } from './render/general';
-import { clearNotifications, addError } from './notifications';
-import { setSettings, checkSettings, getSettings } from './settings';
-import { GenerateResult, SettingsType, ValueType } from './types';
+import { transform } from '../transform';
+import { renderData, renderNotificationsInto } from '../render/general';
+import { clearNotifications, addError } from '../notifications';
+import { setSettings, checkSettings, getSettings } from '../settings';
+import { GenerateResult, SettingsType, ValueType } from '../types';
 
 export const convert = (data: ValueType): ValueType => {
   const parsed = typeof data === 'string' ? JSON.parse(data) : data;

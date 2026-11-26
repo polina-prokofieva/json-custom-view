@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { generate } from '../src/api';
+import { generate } from '../src/api/api';
 import { clearSettings } from '../src/settings';
 
 const invalidJson = '{ "a": 1, "include": ["src"], }';
