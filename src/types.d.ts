@@ -46,7 +46,9 @@ export type ObjectValueType = { [key: string]: ValueType };
 
 export type ArrayOrObjectValueType = ValueType[] | ObjectValueType;
 
-export type GenerateResult = {
+export interface GenerateResultType {
+  /** `true` if the data was rendered into `nodeElement`. */
   isRendered: boolean;
+  /** Error messages collected during the call; empty on success. */
   errors: string[];
-};
+}

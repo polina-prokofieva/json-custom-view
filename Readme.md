@@ -25,7 +25,19 @@ Try it in the [demo app](https://polina-prokofieva.github.io/json-custom-view-ap
 | **root**     | DOM Element      | `undefined` | a DOM-node where the data will be rendered |
 | **settings** | Object           | `{}`        | an object of settings                      |
 
-`generate` doesn't throw for invalid input. If `data` is not valid JSON, there is no data at `root`, or it can't be converted or rendered, the error is logged with `console.error` and shown as an error notification in `root` (unless `showNotifications` is `false`). In that case no data is rendered. If `root` is missing, the error is only logged.
+Returns an object `{ isRendered, errors }` (`GenerateResultType`):
+
+| **Field**      | **Type**         | **Description**                                                  |
+| -------------- | ---------------- | ---------------------------------------------------------------- |
+| **isRendered** | Boolean          | `true` if the data was rendered into `root`                      |
+| **errors**     | Array of Strings | error messages collected during the call; empty on success      |
+
+```js
+const { isRendered, errors } = generate(json, node, settings);
+if (!isRendered) console.warn(errors);
+```
+
+`generate` doesn't throw for invalid input. If `data` is not valid JSON, there is no data at `root`, or it can't be converted or rendered, the error is added to `errors`, logged with `console.error` and shown as an error notification in `root` (unless `showNotifications` is `false`). In that case no data is rendered and `isRendered` is `false`. If `root` is missing, the error is added to `errors` and logged. Warnings (for example about wrong settings) are not added to `errors`.
 
 ---
 
