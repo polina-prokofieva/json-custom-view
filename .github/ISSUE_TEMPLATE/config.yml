@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/polina-prokofieva/json-custom-view/security/advisories/new
+    about: Please report security issues privately, not in a public issue.
+  - name: Try the demo app
+    url: https://polina-prokofieva.github.io/json-custom-view-app/
+    about: Check how your JSON and settings render before opening an issue.
