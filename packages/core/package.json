@@ -18,6 +18,7 @@
     "build": "cross-env NODE_ENV=production webpack && cp src/api/api.d.ts build",
     "copy-types": "cp src/api/api.d.ts build",
     "full-build": "npm run build && npm run copy-types",
+    "prepack": "npm run build",
     "test": "jest",
     "test:watch": "jest --watch"
   },

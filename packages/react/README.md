@@ -2,7 +2,9 @@
 
 React component for [json-custom-view](https://www.npmjs.com/package/json-custom-view), a customizable JSON viewer that renders JSON as a collapsible tree or tables.
 
-> **Not published yet.** This package is marked `private` and is not part of the automated releases until its first version is ready.
+```sh
+npm install @json-custom-view/react
+```
 
 ## Usage
 

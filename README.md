@@ -16,7 +16,7 @@ This repository is a monorepo with these packages:
 | Package | Folder | Description |
 | ------- | ------ | ----------- |
 | [`json-custom-view`](https://www.npmjs.com/package/json-custom-view) | [`packages/core`](packages/core) | The viewer itself. Framework independent. **Full documentation is in its [README](packages/core/README.md).** |
-| `@json-custom-view/react` | [`packages/react`](packages/react) | React component that wraps the viewer. Not published yet. |
+| [`@json-custom-view/react`](https://www.npmjs.com/package/@json-custom-view/react) | [`packages/react`](packages/react) | React component that wraps the viewer. See its [README](packages/react/README.md). |
 
 ## Quick start
 
