@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/npm/l/json-custom-view.svg)](https://github.com/polina-prokofieva/json-custom-view/blob/main/package.json)
 [![CI](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml)
 
-The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.
+A customizable JSON viewer for the browser. It renders JSON data as a collapsible HTML tree or tables, with settings to hide, format and transform values. Written in TypeScript, with no runtime dependencies.
 
 ## Demo
 
