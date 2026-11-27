@@ -1,0 +1,24 @@
+# Release-please reads commit messages on main to decide version bumps, and a
+# squash merge uses the PR title as the commit message. This check makes sure
+# every PR title follows Conventional Commits, for example:
+#   fix: keep empty arrays when hideEmpty is off   -> patch release
+#   feat: add a capitalizeKeys setting             -> minor release
+#   feat!: rename generate() to render()           -> major release
+#   docs: / chore: / ci: / test: / build:          -> no release
+name: PR title
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  conventional-title:
+    name: Conventional Commits title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

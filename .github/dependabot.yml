@@ -5,6 +5,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Conventional Commits titles, so the PR title check passes and
+    # release-please treats these as chores (no release).
+    commit-message:
+      prefix: chore
+      include: scope
     groups:
       dev-dependencies:
         dependency-type: development
@@ -16,6 +21,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: ci
     groups:
       github-actions:
         patterns:

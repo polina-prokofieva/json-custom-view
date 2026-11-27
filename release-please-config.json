@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "node",
+  "bootstrap-sha": "0f4b503070eee0cef058c7dbe59f56f31b10799e",
+  "include-component-in-tag": true,
+  "plugins": ["node-workspace"],
+  "packages": {
+    "packages/core": {
+      "package-name": "json-custom-view",
+      "component": "json-custom-view",
+      "changelog-path": "CHANGELOG.md"
+    }
+  }
+}
