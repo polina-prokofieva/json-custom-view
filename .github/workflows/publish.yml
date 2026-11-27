@@ -1,28 +1,46 @@
-name: Publish to NPM
+# Release workflow. The file keeps the name publish.yml on purpose: npm trusted
+# publishing for json-custom-view is configured for this workflow file name.
+#
+# On every push to main, release-please opens or updates a Release PR for each
+# package that has releasable conventional commits (feat, fix, breaking changes).
+# Merging that Release PR bumps the version, updates CHANGELOG.md, creates a
+# GitHub release and tag, and the publish job below publishes to npm.
+# Merges that are not a Release PR publish nothing.
+name: Release
 
 on:
   push:
     branches:
       - main
 
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
-  test:
-    name: Jest and Lint
+  release-please:
+    name: Release PR
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      core-release-created: ${{ steps.release.outputs['packages/core--release_created'] }}
+      core-tag: ${{ steps.release.outputs['packages/core--tag_name'] }}
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: googleapis/release-please-action@v4
+        id: release
         with:
-          node-version: 22
-      - run: npm ci
-      - run: npm run editorconfig
-      - run: npm run lint
-      - run: npm run test
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
-  build:
-    name: Build and publish
-    needs: test
+  publish-core:
+    name: Publish json-custom-view
+    needs: release-please
+    if: needs.release-please.outputs.core-release-created == 'true'
     runs-on: ubuntu-latest
     # Trusted publishing: npm checks this workflow's OIDC identity instead of a token.
     # Configured on npmjs.com under the package's Settings → Trusted Publisher.
@@ -32,13 +50,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.release-please.outputs.core-tag }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: "https://registry.npmjs.org"
       - name: Update npm (trusted publishing needs npm 11.5.1 or newer)
         run: npm install -g npm@11
-      - name: Install dependencies and build 🔧
-        run: npm ci && npm run full-build
+      - name: Install dependencies 🔧
+        run: npm ci
+      - name: Check, test and build
+        run: |
+          npm run lint
+          npm run test --workspace=json-custom-view
+          npm run build --workspace=json-custom-view
       - name: Publish package on NPM 📦
+        working-directory: packages/core
         run: npm publish

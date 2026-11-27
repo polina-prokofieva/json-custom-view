@@ -36,13 +36,23 @@ jobs:
             Focus on correctness bugs, regressions and missing tests. Skip style
             nitpicks that the editorconfig check already covers.
 
-            This repo has release rules a reviewer must enforce, because every
-            merge to `main` publishes to npm automatically:
-            - If the PR changes anything under `src/`, `package.json` "version"
-              must be bumped compared to `main`. Otherwise the publish fails.
-            - If the public API or the settings change (`src/api/api.ts`,
-              `src/settings.ts`, `src/types.d.ts`), `src/api/api.d.ts` and the
-              settings table in `Readme.md` must be updated to match.
+            This repo is an npm workspaces monorepo (`packages/core` is the
+            `json-custom-view` package, `packages/react` is
+            `@json-custom-view/react`). Releases are automated by release-please,
+            so a reviewer must enforce these rules:
+            - The PR title must follow Conventional Commits, and its type must
+              match the change: `fix:` for bug fixes, `feat:` for new features,
+              `!` or `BREAKING CHANGE:` for breaking changes, and `docs:`,
+              `chore:`, `ci:`, `test:`, `build:` or `refactor:` for changes that
+              should not release. Say so if the type looks wrong.
+            - Outside Release PRs from release-please, `version` in any
+              `package.json`, `.release-please-manifest.json` and `CHANGELOG.md`
+              must not be edited by hand.
+            - If the public API or the settings of `json-custom-view` change
+              (`packages/core/src/api/api.ts`, `packages/core/src/settings.ts`,
+              `packages/core/src/types.d.ts`), `packages/core/src/api/api.d.ts`
+              and the settings table in `packages/core/README.md` must be
+              updated to match.
 
             Post specific issues as inline comments with
             `mcp__github_inline_comment__create_inline_comment`. Then post one

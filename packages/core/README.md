@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/json-custom-view.svg)](https://www.npmjs.com/package/json-custom-view)
 [![npm downloads](https://img.shields.io/npm/dm/json-custom-view.svg)](https://www.npmjs.com/package/json-custom-view)
-[![license](https://img.shields.io/npm/l/json-custom-view.svg)](https://github.com/polina-prokofieva/json-custom-view/blob/main/package.json)
+[![license](https://img.shields.io/npm/l/json-custom-view.svg)](https://github.com/polina-prokofieva/json-custom-view/blob/main/packages/core/package.json)
 [![CI](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/polina-prokofieva/json-custom-view/actions/workflows/test.yml)
 
 A customizable JSON viewer for the browser. It renders JSON data as a collapsible HTML tree or tables, with settings to hide, format and transform values. Written in TypeScript, with no runtime dependencies.
@@ -110,4 +110,4 @@ generate(addresses, root, { arraysAsTable: [''] });
 
 ---
 
-Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started, and please follow the [Code of Conduct](CODE_OF_CONDUCT.md). To report a security issue, see [SECURITY.md](SECURITY.md).
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](https://github.com/polina-prokofieva/json-custom-view/blob/main/CONTRIBUTING.md) to get started, and please follow the [Code of Conduct](https://github.com/polina-prokofieva/json-custom-view/blob/main/CODE_OF_CONDUCT.md). To report a security issue, see [SECURITY.md](https://github.com/polina-prokofieva/json-custom-view/blob/main/SECURITY.md).
