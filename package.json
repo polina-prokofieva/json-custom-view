@@ -19,9 +19,9 @@
   "author": "Polina Prokofieva",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/eslintrc": "^3.3.7",
     "@eslint/js": "^9.20.0",
-    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/eslint-plugin": "^8.74.0",
     "@typescript-eslint/parser": "^8.23.0",
     "editorconfig-checker": "^5.0.1",
     "eslint": "^9.20.0",
