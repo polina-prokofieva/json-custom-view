@@ -73,8 +73,13 @@ jobs:
 
   publish-react:
     name: Publish @json-custom-view/react
-    needs: release-please
-    if: needs.release-please.outputs.react-release-created == 'true'
+    # Waits for the core publish, so a React release that needs a new
+    # json-custom-view version never reaches npm before that version does.
+    needs: [release-please, publish-core]
+    if: >-
+      !cancelled() &&
+      needs.release-please.outputs.react-release-created == 'true' &&
+      (needs.publish-core.result == 'success' || needs.publish-core.result == 'skipped')
     runs-on: ubuntu-latest
     # Trusted publishing, configured on npmjs.com for @json-custom-view/react.
     permissions:
