@@ -1,7 +1,7 @@
 {
   "name": "json-custom-view",
-  "version": "1.2.5",
-  "description": "The JavaScript (frontend module) which process JSON data and render it on a web page with various settings.",
+  "version": "1.2.6",
+  "description": "Customizable JSON viewer for the browser. Renders JSON data as a collapsible HTML tree or tables, with settings to hide, format and transform values. Written in TypeScript, no dependencies.",
   "main": "build/api.js",
   "types": "build/api.d.ts",
   "files": [
@@ -30,11 +30,20 @@
     "url": "git+https://github.com/polina-prokofieva/json-custom-view.git"
   },
   "keywords": [
-    "javascript",
-    "typescript",
-    "frontend",
     "json",
-    "data"
+    "json-viewer",
+    "json-view",
+    "json-display",
+    "json-renderer",
+    "json-to-html",
+    "json-tree",
+    "json-table",
+    "collapsible",
+    "customizable",
+    "visualization",
+    "vanilla-js",
+    "typescript",
+    "frontend"
   ],
   "author": "Polina Prokofieva",
   "license": "ISC",
