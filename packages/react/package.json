@@ -1,6 +1,6 @@
 {
   "name": "@json-custom-view/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React component for json-custom-view: a customizable JSON viewer that renders JSON as a collapsible tree or tables.",
   "type": "module",
   "main": "dist/index.js",
