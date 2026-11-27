@@ -30,3 +30,7 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run build
+      - name: Check that the npm packages contain their build output
+        run: |
+          npm pack --dry-run --json --workspace=json-custom-view | grep -q '"path": "build/api.js"'
+          npm pack --dry-run --json --workspace=@json-custom-view/react | grep -q '"path": "dist/index.js"'
