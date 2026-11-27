@@ -31,6 +31,9 @@ jobs:
       - run: npm run test
       - run: npm run build
       - name: Check that the npm packages contain their build output
+        # --ignore-scripts skips prepack, so this checks what "npm run build" produced.
         run: |
-          npm pack --dry-run --json --workspace=json-custom-view | grep -q '"path": "build/api.js"'
-          npm pack --dry-run --json --workspace=@json-custom-view/react | grep -q '"path": "dist/index.js"'
+          core=$(npm pack --dry-run --json --ignore-scripts --workspace=json-custom-view)
+          grep -q '"path": "build/api.js"' <<< "$core"
+          react=$(npm pack --dry-run --json --ignore-scripts --workspace=@json-custom-view/react)
+          grep -q '"path": "dist/index.js"' <<< "$react"
