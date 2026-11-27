@@ -29,6 +29,8 @@ jobs:
     outputs:
       core-release-created: ${{ steps.release.outputs['packages/core--release_created'] }}
       core-tag: ${{ steps.release.outputs['packages/core--tag_name'] }}
+      react-release-created: ${{ steps.release.outputs['packages/react--release_created'] }}
+      react-tag: ${{ steps.release.outputs['packages/react--tag_name'] }}
 
     steps:
       - uses: googleapis/release-please-action@v4
@@ -67,4 +69,40 @@ jobs:
           npm run build --workspace=json-custom-view
       - name: Publish package on NPM 📦
         working-directory: packages/core
+        run: npm publish
+
+  publish-react:
+    name: Publish @json-custom-view/react
+    # Waits for the core publish, so a React release that needs a new
+    # json-custom-view version never reaches npm before that version does.
+    needs: [release-please, publish-core]
+    if: >-
+      !cancelled() &&
+      needs.release-please.outputs.react-release-created == 'true' &&
+      (needs.publish-core.result == 'success' || needs.publish-core.result == 'skipped')
+    runs-on: ubuntu-latest
+    # Trusted publishing, configured on npmjs.com for @json-custom-view/react.
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.release-please.outputs.react-tag }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+      - name: Update npm (trusted publishing needs npm 11.5.1 or newer)
+        run: npm install -g npm@11
+      - name: Install dependencies 🔧
+        run: npm ci
+      - name: Check and test
+        run: |
+          npm run lint
+          npm run test --workspace=@json-custom-view/react
+      - name: Publish package on NPM 📦
+        # prepack builds dist/ before the tarball is made.
+        working-directory: packages/react
         run: npm publish

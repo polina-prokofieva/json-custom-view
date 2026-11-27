@@ -1,7 +1,6 @@
 {
   "name": "@json-custom-view/react",
   "version": "0.1.0",
-  "private": true,
   "description": "React component for json-custom-view: a customizable JSON viewer that renders JSON as a collapsible tree or tables.",
   "type": "module",
   "main": "dist/index.js",
@@ -18,6 +17,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
     "test": "jest"
   },
   "jest": {
@@ -66,6 +66,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.7.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "typescript": "^4.9.5"
   }
 }

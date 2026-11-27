@@ -47,7 +47,9 @@ jobs:
               should not release. Say so if the type looks wrong.
             - Outside Release PRs from release-please, `version` in any
               `package.json`, `.release-please-manifest.json` and `CHANGELOG.md`
-              must not be edited by hand.
+              must not be edited by hand. The one exception: a PR that adds a
+              new package to `release-please-config.json` also adds its
+              starting version to the manifest, matching its `package.json`.
             - If the public API or the settings of `json-custom-view` change
               (`packages/core/src/api/api.ts`, `packages/core/src/settings.ts`,
               `packages/core/src/types.d.ts`), `packages/core/src/api/api.d.ts`
