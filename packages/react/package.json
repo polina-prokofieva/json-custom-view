@@ -33,12 +33,20 @@
     "directory": "packages/react"
   },
   "keywords": [
-    "json",
-    "json-viewer",
     "react",
     "react-component",
+    "json",
+    "json-viewer",
+    "json-view",
+    "react-json-view",
     "json-tree",
-    "json-table"
+    "json-table",
+    "json-renderer",
+    "collapsible",
+    "customizable",
+    "visualization",
+    "typescript",
+    "json-custom-view"
   ],
   "author": "Polina Prokofieva",
   "license": "ISC",
